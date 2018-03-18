@@ -8,6 +8,7 @@ public class About {
 	
 	@Id
 	private int id;
+	private String title;
 	private String content;
 	private String image;
 	
@@ -44,6 +45,14 @@ public class About {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	
 	
