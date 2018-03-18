@@ -1,0 +1,71 @@
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+
+/*thiết lập font cho toàn web*/
+@font-face {
+    font-family: myFont;
+    src: url("fonts/muli.ttf");
+}
+/*
+#header {
+    position: fixed;  /*luôn hiển thị đứng yên 1 chỗ khi user sử dụng web
+    width: 100%;
+    z-index: 100;  /*để nó luôn nằm trên cùng trang web, bên trên all đối tượng khác
+    height: 75px;
+    background-color: #fff;
+}*/
+
+.navbar-brand {
+	font-size: 20px;
+	color: #05984f;
+}
+
+.menu-home li {
+    display: inline-block;
+    width: 130px;
+    height: 50px;
+    line-height: 50px;
+    /*bằng height để canh giữa*/
+    position: relative;
+}
+
+.menu-std li {
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+    /*bằng height để canh giữa*/
+    position: relative;
+}
+
+
+
+#navbar a {
+	padding: 20px;
+	width: 130px;
+	text-align: center;
+    text-decoration: none;
+    /*bỏ under line*/
+    color: #fff;
+    font-size: 20px;
+    display: block;
+}
+
+#navbar a:hover {
+    background-color: #05984f;
+    transition: 0.75s;
+}
+
+.stylish-input-group .input-group-addon{
+    background: white !important; 
+	border-top-right-radius: 50px;
+	border-bottom-right-radius: 50px;
+}
+.stylish-input-group .form-control{
+    border-right:0; 
+	border-color:#ccc;
+	border-top-left-radius: 50px;
+	border-bottom-left-radius: 50px;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}

@@ -1,0 +1,162 @@
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+
+/*thiáº¿t láº­p font cho toÃ n web*/
+@font-face {
+    font-family: myFont;
+    src: url("fonts/muli.ttf");
+}
+#header {
+     /*luÃ´n hiá»ƒn thá»‹ Ä‘á»©ng yÃªn 1 chá»— khi user sá»­ dá»¥ng web*/
+    width: 100%;
+    z-index: 100;  /*Ä‘á»ƒ nÃ³ luÃ´n náº±m trÃªn cÃ¹ng trang web, bÃªn trÃªn all Ä‘á»‘i tÆ°á»£ng khÃ¡c*/
+    height: 75px;
+    background-color: #fff;
+}
+
+.navbar-brand { /*logo*/
+	font-size: 20px;
+	color: #05984f;
+}
+
+.menu-home li {
+    display: inline-block;
+    width: 130px;
+    height: 50px;
+    line-height: 50px;
+    /*báº±ng height Ä‘á»ƒ canh giá»¯a*/
+    position: relative;
+}
+
+.menu-std li {
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+    /*báº±ng height Ä‘á»ƒ canh giá»¯a*/
+    position: relative;
+}
+
+
+#navbar a {
+	padding: 20px;
+	width: 100%;
+	text-align: center;
+    text-decoration: none;
+    /*bá»� under line*/
+    color: #fff;
+    font-size: 20px;
+    display: block;
+}
+
+#navbar a:hover{
+    background-color: #05984f;
+    transition: 0.75s;
+}
+
+.stylish-input-group .input-group-addon{
+    background: white !important; 
+	border-top-right-radius: 50px;
+	border-bottom-right-radius: 50px;
+}
+.stylish-input-group .form-control{
+    border-right:0; 
+	border-color:#ccc;
+	border-top-left-radius: 50px;
+	border-bottom-left-radius: 50px;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+
+/*==Xử lý các menu con - CẤP 1==*/
+
+#navbar .dropdown-menu a{
+    width: 290px; /*bằng với độ rộng của thẻ a mẹ*/
+    background-color: #343a40 !important;
+    margin-top: -8px;
+    margin-bottom: -7px;
+}
+#navbar .dropdown-menu a:hover{
+    background-color: #05984f !important;
+}
+
+#navbar ul li > .dropdown-menu{ /*==chọn sub-menu đầu tiên trong thẻ li đó==*/
+    display: none;       /*==cho các sub-menu ẩn đi==*/
+    position: absolute;  /*==(2)==*/ /*==menu con nổi lên trên li (mẹ nó) đã cố định==*/
+                         /*==.sub-menu thành kiểu absolute để nó luôn luôn nằm trong phạm vi menu mẹ (relative), tức là nằm trong #menu li ấy.==*/
+    transition: 0.75s;
+    margin-top: -1px; !important;
+}
+
+#navbar ul li:hover .dropdown-menu{ /*==khi thẻ <li> đc hover (rê chuột vào) thì ta hiển thị ra sub-menu của nó==*/
+    display: block;
+}
+
+
+
+
+
+#menu {
+    float: right;
+}
+
+#menu ul {
+    list-style-type: none;  /*bá»� cÃ¡c dáº¥m cháº¥m Ä‘áº§u dÃ²ng máº·c Ä‘á»‹nh cá»§a má»™t tháº» ul li*/
+    text-align: center;  /*text Home, About...luÃ´n náº±m á»Ÿ tt Ä‘Ãª Ä‘áº£m báº£o khi gÃª chuá»™t vÃ o nÃ³ váº«n náº±m á»Ÿ tt*/
+    width: 100%;
+}
+#menu ul li{
+    width: 100%;
+    display: inline-block; /*==cÃ¡c tháº» <li> náº±m ngang trÃªn menu ul==*/
+    height: 76px;
+    line-height: 74px;
+    position: relative; /*==cá»‘ Ä‘á»‹nh li mÃ  chÃºng ta hover, thiáº¿t láº­p nÃ³ vá»›i vá»‹ trÃ­ ta Ä‘áº·t ra-nguyÃªn thá»§y, k so vá»›i báº¥t cá»© tháº» máº¹ nÃ o, form hay mÃ n hÃ¬nh mÃ¡y==*/
+}
+
+#menu ul li a {
+    text-decoration: none;  /*bá»� under line máº·c Ä‘á»‹nh cá»§a tháº» a*/
+    color: #05984f;
+    font-size: 20px;
+    display: block; /*Cho cÃ¡c tháº» a áº©n Ä‘i Ä‘á»ƒ Ä‘áº£m báº£o khi hover nÃ³ láº¥y cáº£ vÃ¹ng Home, chá»© k pháº£i láº¥y vÃ¹ng Home*/
+}
+
+#menu ul li a:hover, a.on {
+    color: #fff;
+    background-color: #05984f;
+    transition: 0.75s; /*hiá»‡u á»©ng lÃ m cháº­m chuyá»ƒn Ä‘á»•i trong 0.75s
+    nháº¥n vÃ o menu sáº½ tháº¥y rÃµ hiá»‡u á»©ng -> lÃ m chuyá»ƒn Ä‘á»™ng tá»«ng thá»ƒ Ä‘Ã³*/
+}
+/*==DROPDOWN MENU==*/
+/*==Xá»­ lÃ½ cÃ¡c menu con - Cáº¤P 1==*/
+#menu ul li > .dropdown-menu{ /*==chá»�n sub-menu Ä‘áº§u tiÃªn trong tháº» li Ä‘Ã³==*/
+    display: none;       /*==cho cÃ¡c sub-menu áº©n Ä‘i==*/
+    position: absolute;  /*==(2)==*/ /*==menu con ná»•i lÃªn trÃªn li (máº¹ nÃ³) Ä‘Ã£ cá»‘ Ä‘á»‹nh==*/
+                         /*==.sub-menu thÃ nh kiá»ƒu absolute Ä‘á»ƒ nÃ³ luÃ´n luÃ´n náº±m trong pháº¡m vi menu máº¹ (relative), tá»©c lÃ  náº±m trong #menu li áº¥y.==*/
+    transition: 0.75s;
+    margin-top: -4.5px;
+    padding: 0px;
+}
+
+#menu ul li:hover .dropdown-menu{ /*==khi tháº» <li> Ä‘c hover (rÃª chuá»™t vÃ o) thÃ¬ ta hiá»ƒn thá»‹ ra sub-menu cá»§a nÃ³==*/
+    display: block;
+    background: #fff;
+    font-weight: bold;
+}
+
+.button {
+  color: #aaa;
+  cursor: pointer;
+  vertical-align: middle;
+  margin-top: -4px;
+}
+
+.edit:hover {
+  color: #0a79df;
+}
+
+.delete:hover {
+  color: #dc2a2a;
+}
+table{
+    font-size: 15px;
+}
