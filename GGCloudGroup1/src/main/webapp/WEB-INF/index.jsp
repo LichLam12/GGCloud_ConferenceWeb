@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -196,15 +200,16 @@
     
 
     <!-- About us -->
+    <c:forEach var="row" items="${aboutslist}">
     <div id="about" class="container marketing">
         <div class="row featurette">
             <div class="col-md-7">
-                <h2 class="featurette-heading" style="padding: 50px 0">Teachers hall of frame.</h2>
-                <p class="lead">Monggogo Toeic is the leader in the English Language Training (ELT) industry in Vietnam with millions of learners enrolling for its English courses since its foundation.</p>
-                <p class="lead">Monggogo Toeic has built up the biggest ELT staff in Vietnam with more than 1,350 highly qualified, experienced, dedicated teachers and teaching assistants. Among the teachers, 45% possess a Master’s or Ph.D. degree.</p>
+                <h2 class="featurette-heading" style="padding: 50px 0"></h2>
+                <p class="lead">${row.content}</p>
+                
             </div>
             <div class="col-md-5">
-                <img class="featurette-image img-fluid mx-auto" style="width: 500px; height: 500px;" src="Style/images/teacher1.jpg" data-holder-rendered="true">
+                <img class="featurette-image img-fluid mx-auto" style="width: 500px; height: 500px;" src="${row.image}" data-holder-rendered="true">
             </div>
         </div>
 
@@ -212,12 +217,12 @@
 
         <div class="row featurette">
             <div class="col-md-7 order-md-2">
-                <h2 class="featurette-heading" style="padding: 50px 0">Educational Oppotunities.</h2>
-                <p class="lead">Monggogo Toeic has diverse educational oppotunities. We offer a full range of English courses from basic TOEIC to advanced levels. </p>
-                <p class="lead">These include General English, Examination Preparation, Overseas Study Preparation and courses specifically designed to meet the needs pf professional working adults.</p>
+                <h2 class="featurette-heading" style="padding: 50px 0"></h2>
+                <p class="lead">${row.content}</p>
+                
             </div>
             <div class="col-md-5 order-md-1">
-                <img class="featurette-image img-fluid mx-auto" style="width: 500px; height: 500px;" src="Style/images/educational.jpg" data-holder-rendered="true">
+                <img class="featurette-image img-fluid mx-auto" style="width: 500px; height: 500px;" src="${row.image}" data-holder-rendered="true">
             </div>
         </div>
 
@@ -225,7 +230,7 @@
 
         <div class="row featurette">
             <div class="col-md-7">
-                <h2 class="featurette-heading" style="padding: 50px 0">Teaching methods.</h2>
+                <h2 class="featurette-heading" style="padding: 50px 0"></h2>
                 <p class="lead">With research and understanding of learner psychology, we have been helping thousands of students overcome obstacles to becoming bold in Talking (Open English), Open Emotion (self-expression), Motivation (motivation), Emotion.</p>
             </div>
             <div class="col-md-5">
@@ -233,7 +238,7 @@
             </div>
         </div>
     </div>
-
+</c:forEach>
 
     <!-- Classes -->
     <div id="classes">
