@@ -13,14 +13,14 @@ public class HomeController {
 	
 	@GetMapping("/news")
 	public String News() {
-		return "News";
+		return "news";
 	}
 	
 	
-//	@GetMapping("/event")
-//	public String Event() {
-//		return "Event";
-//	}
+	@GetMapping("/management")
+	public String Event() {
+		return "managingpage";
+	}
 	
 	
 }
