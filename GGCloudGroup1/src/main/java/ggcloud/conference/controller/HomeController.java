@@ -16,4 +16,11 @@ public class HomeController {
 		return "News";
 	}
 	
+	
+//	@GetMapping("/event")
+//	public String Event() {
+//		return "Event";
+//	}
+	
+	
 }

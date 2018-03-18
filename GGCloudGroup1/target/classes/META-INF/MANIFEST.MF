@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: Spring Boot
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: onlyo
+Built-By: dell
 Implementation-Vendor-Id: com.ggcloud
-Build-Jdk: 1.8.0_151
+Build-Jdk: 1.8.0_144
 Implementation-URL: http://projects.spring.io/spring-boot/GGCloudGroup
  1/
 Created-By: Maven Integration for Eclipse
