@@ -238,7 +238,7 @@
 					<div class="row featurette">
 						<div class="col-md-7 order-md-2">
 							<h2 class="featurette-heading" style="padding: 50px 0">${row.title}</h2>
-							<p class="lead">${row.content}</p>
+							<p class="lead" >${row.content}</p>
 
 						</div>
 						<div class="col-md-5 order-md-1">
