@@ -274,18 +274,24 @@
 					<h2>Events</h2>
 					<c:forEach var="row" items="${eventlist}"  begin="0" end="0">
 					<b>${row.eventName}</b>
-					<p><fmt:formatDate type="DATE"  dateStyle="short"  value = "${row.eventDate}" ></fmt:formatDate>  ${row.eventTime} - ${row.eventLocation}</p>
+					<p><fmt:formatDate type="DATE"  dateStyle="short"  value = "${row.eventDate}" ></fmt:formatDate> <fmt:formatDate type = "time" 
+         	timeStyle="short" value = "${row.eventTime}" />   - ${row.eventLocation}</p>
 					</c:forEach>
 					<c:forEach var="row" items="${eventlist}"  begin="1" end="1">
 					<b>${row.eventName}</b>
-					<p><fmt:formatDate type="DATE"  dateStyle="short"  value = "${row.eventDate}" ></fmt:formatDate>  ${row.eventTime} - ${row.eventLocation}</p>
+					<p><fmt:formatDate type="DATE"  dateStyle="short"  value = "${row.eventDate}" ></fmt:formatDate> <fmt:formatDate type = "time" 
+         	timeStyle="short" value = "${row.eventTime}" /> - ${row.eventLocation}</p>
 					</c:forEach>
 					<c:forEach var="row" items="${eventlist}"  begin="2" end="2">
 					<b>${row.eventName}</b>
-					<p><fmt:formatDate type="DATE"  dateStyle="short"  value = "${row.eventDate}" ></fmt:formatDate>  ${row.eventTime} - ${row.eventLocation}</p>
+					<p><fmt:formatDate type="DATE"  dateStyle="short"  value = "${row.eventDate}" ></fmt:formatDate>  <fmt:formatDate type = "time" 
+         	timeStyle="short" value = "${row.eventTime}" /> - ${row.eventLocation}</p>
 					</c:forEach>
-					<b>Toeic speaking 110+:</b>
-					<p>Saturday, Sunday (19:00 - 21:00) - Classroom 5</p>
+						<c:forEach var="row" items="${eventlist}"  begin="3" end="3">
+					<b>${row.eventName}</b>
+					<p><fmt:formatDate type="DATE"  dateStyle="short"  value = "${row.eventDate}" ></fmt:formatDate>  <fmt:formatDate type = "time" 
+         	timeStyle="short" value = "${row.eventTime}" /> - ${row.eventLocation}</p>
+					</c:forEach>
 					<a href="ForwardToClasses"><h5>See more. . .</h5></a>
 				</div>
 				<div class="col-sm-3">
@@ -366,7 +372,7 @@
 				<div class="item col-lg-3 col-sm-4 col-xs-6 rounded float-left">
 					<div class="dtl05">
 						<img src="Style/images/blog/new1.jpg" alt=""
-							class="rounded float-left"> <a href="ForwardToNews"><div
+							class="rounded float-left"> <a href="/news"><div
 								class="dtl">
 								<h3>Opening MongGOGO TOEIC 24/7</h3>
 								<p>By John Lam.</p>
