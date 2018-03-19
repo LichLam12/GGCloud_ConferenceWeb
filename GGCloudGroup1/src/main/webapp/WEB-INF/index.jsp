@@ -274,15 +274,15 @@
 					<h2>Events</h2>
 					<c:forEach var="row" items="${eventlist}"  begin="0" end="0">
 					<b>${row.eventName}</b>
-					<p>${row.eventDate}  ${row.eventTime} - ${row.eventLocation}</p>
+					<p><fmt:formatDate type="DATE"  dateStyle="short"  value = "${row.eventDate}" ></fmt:formatDate>  ${row.eventTime} - ${row.eventLocation}</p>
 					</c:forEach>
 					<c:forEach var="row" items="${eventlist}"  begin="1" end="1">
 					<b>${row.eventName}</b>
-					<p>${row.eventDate}  ${row.eventTime} - ${row.eventLocation}</p>
+					<p><fmt:formatDate type="DATE"  dateStyle="short"  value = "${row.eventDate}" ></fmt:formatDate>  ${row.eventTime} - ${row.eventLocation}</p>
 					</c:forEach>
 					<c:forEach var="row" items="${eventlist}"  begin="2" end="2">
 					<b>${row.eventName}</b>
-					<p>${row.eventDate}  ${row.eventTime} - ${row.eventLocation}</p>
+					<p><fmt:formatDate type="DATE"  dateStyle="short"  value = "${row.eventDate}" ></fmt:formatDate>  ${row.eventTime} - ${row.eventLocation}</p>
 					</c:forEach>
 					<b>Toeic speaking 110+:</b>
 					<p>Saturday, Sunday (19:00 - 21:00) - Classroom 5</p>
@@ -310,17 +310,17 @@
 					<h2>Teachers</h2>
 					<p>
 					<c:forEach var="row" items="${eventlist}"  begin="0" end="0">
-						<img src="${row.lecturerAvatar}"> Mr. Lich Lam
+						<img src="${row.lecturerAvatar}"> ${row.lecturerName}
 						</c:forEach>
 					</p>
 					
 					<p>
 					<c:forEach var="row" items="${eventlist}"  begin="1" end="1">
-						<img class="img-circle img-responsive"  src="${row.lecturerAvatar}"> Mr. Phuc
+						<img  src="${row.lecturerAvatar}">${row.lecturerName}
 						</c:forEach>
 					</p>
 					<p>
-						<img src="Style/images/teams/team-3.png"> Ms. Hieu
+						<img src="Style/images/teams/team-3.png"> ${row.lecturerName}
 					</p>
 				</div>
 			</div>
