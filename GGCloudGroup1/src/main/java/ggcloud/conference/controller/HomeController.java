@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.google.gson.Gson;
 
 import ggcloud.conference.service.AboutService;
+import ggcloud.conference.service.EventService;
 import ggcloud.conference.service.NewsService;
 import ggcloud.conference.model.News;
 
@@ -24,13 +25,17 @@ public class HomeController {
 	
 	@Autowired
 	private NewsService newService;
+	@Autowired
 	private AboutService aboutService;
-
+	
+	@Autowired
+	private EventService eventService;
 
 	
 	@GetMapping("/home")
 	public String Home(HttpServletRequest request) {
 		request.setAttribute("aboutslist", aboutService.findAllAbout());
+		request.setAttribute("eventlist", eventService.findAllEvent());
 		request.setAttribute("mode", "MODE_TASKS");
 		return "index";
 	}

@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity(name = "event")
 public class Event {
 	
@@ -15,6 +17,7 @@ public class Event {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
     private String eventName;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date eventDate;
     private Time eventTime;
     private String eventLocation;
@@ -63,7 +66,8 @@ public class Event {
 	public void setEventName(String eventName) {
 		this.eventName = eventName;
 	}
-
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	public Date getEventDate() {
 		return eventDate;
 	}

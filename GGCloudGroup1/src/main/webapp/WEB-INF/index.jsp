@@ -223,7 +223,7 @@
 					<div class="row featurette">
 						<div class="col-md-7">
 							<h2 class="featurette-heading" style="padding: 50px 0">${row.title}</h2>
-							<p class="lead">${row.content}</p>
+							<p class="lead"    style="width:650px; word-wrap:break-word;">${row.content}</p>
 
 						</div>
 						<div class="col-md-5">
@@ -238,7 +238,7 @@
 					<div class="row featurette">
 						<div class="col-md-7 order-md-2">
 							<h2 class="featurette-heading" style="padding: 50px 0">${row.title}</h2>
-							<p class="lead" >${row.content}</p>
+							<p class="lead"     style="width:400px; word-wrap:break-word;">${row.content}</p>
 
 						</div>
 						<div class="col-md-5 order-md-1">
@@ -254,7 +254,7 @@
 				<div class="row featurette">
 					<div class="col-md-7">
 						<h2 class="featurette-heading" style="padding: 50px 0">${row.title}</h2>
-						<p class="lead">${row.content}</p>
+						<p class="lead"  style="width:400px; word-wrap:break-word;">${row.content}</p>
 					</div>
 					<div class="col-md-5">
 						<img class="featurette-image img-fluid mx-auto"
@@ -271,13 +271,19 @@
 		<div class="container marketing lead">
 			<div class="row">
 				<div class="col-sm-6">
-					<h2>Classes</h2>
-					<b>Basic English communication:</b>
-					<p>Tuesday, Thursday (19:00 - 21:00) - Classroom 1</p>
-					<b>English communication work:</b>
-					<p>Monday, Wednesday, Friday (19:00 - 21:00) - Classroom 2</p>
-					<b>Toeic 700+:</b>
-					<p>Saturday, Sunday (17:00 - 19:00) - Classroom 4</p>
+					<h2>Events</h2>
+					<c:forEach var="row" items="${eventlist}"  begin="0" end="0">
+					<b>${row.eventName}</b>
+					<p>${row.eventDate}  ${row.eventTime} - ${row.eventLocation}</p>
+					</c:forEach>
+					<c:forEach var="row" items="${eventlist}"  begin="1" end="1">
+					<b>${row.eventName}</b>
+					<p>${row.eventDate}  ${row.eventTime} - ${row.eventLocation}</p>
+					</c:forEach>
+					<c:forEach var="row" items="${eventlist}"  begin="2" end="2">
+					<b>${row.eventName}</b>
+					<p>${row.eventDate}  ${row.eventTime} - ${row.eventLocation}</p>
+					</c:forEach>
 					<b>Toeic speaking 110+:</b>
 					<p>Saturday, Sunday (19:00 - 21:00) - Classroom 5</p>
 					<a href="ForwardToClasses"><h5>See more. . .</h5></a>
