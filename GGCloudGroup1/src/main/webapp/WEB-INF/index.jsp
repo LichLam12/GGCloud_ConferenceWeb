@@ -238,7 +238,7 @@
 					<div class="row featurette">
 						<div class="col-md-7 order-md-2">
 							<h2 class="featurette-heading" style="padding: 50px 0">${row.title}</h2>
-							<p class="lead"     style="width:400px; word-wrap:break-word;">${row.content}</p>
+							<p class="lead"   style="width:650px; word-wrap:break-word;">${row.content}</p>
 
 						</div>
 						<div class="col-md-5 order-md-1">
@@ -254,7 +254,7 @@
 				<div class="row featurette">
 					<div class="col-md-7">
 						<h2 class="featurette-heading" style="padding: 50px 0">${row.title}</h2>
-						<p class="lead"  style="width:400px; word-wrap:break-word;">${row.content}</p>
+						<p class="lead"  style="width:650px; word-wrap:break-word;">${row.content}</p>
 					</div>
 					<div class="col-md-5">
 						<img class="featurette-image img-fluid mx-auto"
@@ -309,10 +309,15 @@
 				<div class="col-sm-3">
 					<h2>Teachers</h2>
 					<p>
-						<img src="Style/images/teams/team-1.png"> Mr. Lich Lam
+					<c:forEach var="row" items="${eventlist}"  begin="0" end="0">
+						<img src="${row.lecturerAvatar}"> Mr. Lich Lam
+						</c:forEach>
 					</p>
+					
 					<p>
-						<img src="Style/images/teams/team-2.png"> Mr. Phuc
+					<c:forEach var="row" items="${eventlist}"  begin="1" end="1">
+						<img class="img-circle img-responsive"  src="${row.lecturerAvatar}"> Mr. Phuc
+						</c:forEach>
 					</p>
 					<p>
 						<img src="Style/images/teams/team-3.png"> Ms. Hieu
