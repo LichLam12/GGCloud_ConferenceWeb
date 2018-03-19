@@ -40,7 +40,7 @@
        
         	
         	
-        	 $.get("manage-news", function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+        	 $.get("load-newslist", function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
  		        //var $table = $("<table>").appendTo($("#somediv")); // Create HTML <table> element and append it to HTML DOM element with ID "somediv".
  		        if (responseJson.check == "fail") {
 		                    //$('#message').text("List isEmpty! Name not found!");
@@ -58,16 +58,8 @@
  		                				.append($("<i>").addClass("fa fa-pencil edit"))
  		                			   )
  		                				.click(function(){
- 		                		           	 $.post("act_Options",{action: '3',optionID : product.optionID}, 
- 		                		           		function(responseJson) { 
-	 		                		           		if (responseJson.check == "fail") {
-		 		               		                  	alert("Loaddata failed!");
-		 		               		                    return;
-	 		               		       				 }
- 		                		     		        	$("#contentGrID2").val(responseJson.optionID);
- 		                		     		        	$("#content4").val(responseJson.content);
- 		                		     		    }
- 		                		           	 );
+ 		                					$("#contentGrID2").val(product.id);
+             		     		        	$("#content4").val(product.content);
  		                		           	 event.preventDefault();
   		                					$("#modal-4options").show();
 
@@ -80,15 +72,16 @@
  		                				.click(function(){
  		                					var retVal = confirm("Do you really want to delete this?");          	
 	 		           	                    if( retVal == true ){
-	 		           	                    	$.post("act_Options",{action: '4',optionID : product.optionID}, 
+	 		           	                    	$.get("delete-news",{id : product.id}, 
 	   		                						function(responseJson) {  
 		   		                						if (responseJson.check == "fail") {
 			 		               		                  	alert("Deleting failed!");
 			 		               		                    return;
 		 		               		       				 }
-	   		                							reload();
+	   		                							
 		                		     		    	}
 		                		           	 	);
+	 		           	                    reload();
 		                		           	 	event.preventDefault();
 	 		           	                       return true;
 	 		           	                    }
@@ -105,7 +98,7 @@
         	 
         	 
         	 function reload(){
-        		 $.get("act_Options", function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+        		 $.get("load-newslist", function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
       		        //var $table = $("<table>").appendTo($("#somediv")); // Create HTML <table> element and append it to HTML DOM element with ID "somediv".
       		        if (responseJson.check == "fail") {
       		        	alert("Loaddata failed!");
@@ -117,23 +110,15 @@
              		 });
       		        $.each(responseJson, function(index, product) {    // Iterate over the JSON array.
       		            $("<tr>").appendTo($table).addClass('article-loop')                      // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
-      		          .append($("<td>").text(product.optionID).css('width','400px'))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
+      		          .append($("<td>").text(product.id).css('width','400px'))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
 		                .append($("<td>").text(product.content))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
 		                .append($("<td>")
 		                		.append($("<a>")
 		                				.append($("<i>").addClass("fa fa-pencil edit"))
 		                			   )
 		                				.click(function(){
-		                		           	 $.post("act_Options",{action: '3',optionID : product.optionID}, 
-		                		           		function(responseJson) { 
-	 		                		           		if (responseJson.check == "fail") {
-		 		               		                  	alert("Loaddata failed!");
-		 		               		                    return;
-	 		               		       				 }
-		                		     		        	$("#contentGrID2").val(responseJson.optionID);
-		                		     		        	$("#content4").val(responseJson.content);
-		                		     		    }
-		                		           	 );
+		                					$("#contentGrID2").val(product.id);
+             		     		        	$("#content4").val(product.content);
 		                		           	 event.preventDefault();
 		                					$("#modal-4options").show();
 
@@ -146,15 +131,15 @@
 		                				.click(function(){
 		                					var retVal = confirm("Do you really want to delete this?");          	
 	 		           	                    if( retVal == true ){
-	 		           	                    	$.post("act_Options",{action: '4',optionID : product.optionID}, 
+	 		           	                    	$.get("delete-news",{id : product.id}, 
 	   		                						function(responseJson) {  
 		   		                						if (responseJson.check == "fail") {
 			 		               		                  	alert("Deleting failed!");
 			 		               		                    return;
 		 		               		       				 }
-	   		                							reload();
 		                		     		    	}
 		                		           	 	);
+	 		           	                    reload();
 		                		           	 	event.preventDefault();
 	 		           	                       return true;
 	 		           	                    }
@@ -171,7 +156,7 @@
         	 }
 
         	$('#add1').click(function(){
-           	 $.post("act_Options",{action: '1',content : $('#content3').val()}, function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+           	 $.get("add-news",{content : $('#content3').val()}, function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
            		if (responseJson.check == "fail") {
                     var retVal = confirm("Please enter your full details with your request!\nDo you want to continute?");          	
                     if( retVal == true ){
@@ -182,63 +167,7 @@
                        return false;
                     }
         		}
-           		 //xóa table cũ đi
-           		 $.each(responseJson, function(index, product) { 
-           			$("#productTable > tbody > tr").remove();
-           		 });
-           	 //Load lại toàn bộ dữ liệu mới sau khi insert
-           		 $.each(responseJson, function(index, product) {    // Iterate over the JSON array.
-     		        	$("#productTable > tbody").append(
-     		        	$("<tr>").addClass('article-loop')                      // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
-     		        	.append($("<td>").text(product.optionID).css('width','400px'))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
- 		                .append($("<td>").text(product.content))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
- 		                .append($("<td>")
- 		                		.append($("<a>")
- 		                				.append($("<i>").addClass("fa fa-pencil edit"))
- 		                			   )
- 		                				.click(function(){
- 		                		           	 $.post("act_Options",{action: '3',optionID : product.optionID}, 
- 		                		           		function(responseJson) { 
-	 		                		           		if (responseJson.check == "fail") {
-		 		               		                  	alert("Loaddata failed!");
-		 		               		                    return;
-	 		               		       				 }
- 		                		     		        	$("#contentGrID2").val(responseJson.optionID);
- 		                		     		        	$("#content4").val(responseJson.content);
- 		                		     		    }
- 		                		           	 );
- 		                		           	 event.preventDefault();
-  		                					$("#modal-4options").show();
-
- 		                				})
- 		                )
- 		                .append($("<td>")
- 		                		.append($("<a>")
- 		                				.append($("<i>").addClass("fa fa-trash remove"))
- 		                				)
- 		                				.click(function(){
- 		                					var retVal = confirm("Do you really want to delete this?");          	
-	 		           	                    if( retVal == true ){
-	 		           	                    	$.post("act_Options",{action: '4',optionID : product.optionID}, 
-	   		                						function(responseJson) {  
-		   		                						if (responseJson.check == "fail") {
-			 		               		                  	alert("Deleting failed!");
-			 		               		                    return;
-		 		               		       				 }
-	   		                							reload();
-		                		     		    	}
-		                		           	 	);
-		                		           	 	event.preventDefault();
-	 		           	                       return true;
-	 		           	                    }
-	 		           	                    else{
-	 		           	                       return false;
-	 		           	                    }
-   		                					
-   		                				})
-   		                		)
-   		                );
-     		        });
+           		reload();
            		autopage();$('.article-loop').paginate(6);
      		    });
            	 event.preventDefault(); // Important! Prevents submitting the form
@@ -247,7 +176,7 @@
         	
         	
         	$('#edit1').click(function(){
-           	 $.post("act_Options",{action: '2',optionID : $('#contentGrID2').val(),content : $('#content4').val()},
+           	 $.get("edit-news",{id : $('#contentGrID2').val(),content : $('#content4').val()},
            	 function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
            		if (responseJson.check == "fail") {
                     var retVal = confirm("Please enter your full details with your request!\nDo you want to continute?");          	
@@ -259,63 +188,7 @@
                        return false;
                     }
         		}
-           		 //xóa table cũ đi
-           		 $.each(responseJson, function(index, product) { 
-           			$("#productTable > tbody > tr").remove();
-           		 });
-           	 //Load lại toàn bộ dữ liệu mới sau khi insert
-           		 $.each(responseJson, function(index, product) {    // Iterate over the JSON array.
-     		        	$("#productTable > tbody").append(
-     		        	$("<tr>").addClass('article-loop')                      // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
-     		        	.append($("<td>").text(product.optionID).css('width','400px'))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
- 		                .append($("<td>").text(product.content))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
- 		                .append($("<td>")
- 		                		.append($("<a>")
- 		                				.append($("<i>").addClass("fa fa-pencil edit"))
- 		                			   )
- 		                				.click(function(){
- 		                		           	 $.post("act_Options",{action: '3',optionID : product.optionID}, 
- 		                		           		function(responseJson) { 
-	 		                		           		if (responseJson.check == "fail") {
-		 		               		                  	alert("Loaddata failed!");
-		 		               		                    return;
-	 		               		       				 }
- 		                		     		        	$("#contentGrID2").val(responseJson.optionID);
- 		                		     		        	$("#content4").val(responseJson.content);
- 		                		     		    }
- 		                		           	 );
- 		                		           	 event.preventDefault();
-  		                					$("#modal-4options").show();
-
- 		                				})
- 		                )
- 		                .append($("<td>")
- 		                		.append($("<a>")
- 		                				.append($("<i>").addClass("fa fa-trash remove"))
- 		                				)
- 		                				.click(function(){
- 		                					var retVal = confirm("Do you really want to delete this?");          	
-	 		           	                    if( retVal == true ){
-	 		           	                    	$.post("act_Options",{action: '4',optionID : product.optionID}, 
-	   		                						function(responseJson) {  
-		   		                						if (responseJson.check == "fail") {
-			 		               		                  	alert("Deleting failed!");
-			 		               		                    return;
-		 		               		       				 }
-	   		                							reload();
-		                		     		    	}
-		                		           	 	);
-		                		           	 	event.preventDefault();
-	 		           	                       return true;
-	 		           	                    }
-	 		           	                    else{
-	 		           	                       return false;
-	 		           	                    }
-   		                					
-   		                				})
-   		                		)
-   		                );
-     		        });
+           		 reload();
            		autopage();$('.article-loop').paginate(6);
      		    });
            	 event.preventDefault(); // Important! Prevents submitting the form
@@ -323,6 +196,7 @@
 	        
         });
 	</script>
+	
 </head>
 <body>
 	<!-- Header -->
@@ -640,34 +514,34 @@
     <!-- Authority Manegement -->
     
      <div class="container tieude" id="content-gr">
-         		<h2 class="text-center" style="color: red;font-weight: bold;margin-bottom: 20px !important;">OPTION MANEGEMENT</h2>
+         		<h2 class="text-center" style="color: red;font-weight: bold;margin-bottom: 20px !important;">NEWS MANEGEMENT</h2>
         <p class="text-right">
-        <a class="md-trigger btn" data-modal="modal-3options" id="btn_left"><button type="submit" class="btn add-employee"><i class="fa fa-plus" aria-hidden="true"></i>Add Option</button></a>
+        <a class="md-trigger btn" data-modal="modal-3options" id="btn_left"><button type="submit" class="btn add-employee"><i class="fa fa-plus" aria-hidden="true"></i>Add New</button></a>
         </p>
 	
 				<div class="table-responsive">
 					<table class="table table-bordered table-hover table-striped paginated" id="productTable">
 						<thead>
 							<tr class="text-center">
-								<th class="text-center">Option ID</th>
+								<th class="text-center">News ID</th>
                                 <th class="text-center">Content</th>
 							</tr>
 						</thead>
 						<tbody id="row" class="text-center">
-						<!--  
-						<c:forEach var="list" items="${authority }" >
+						
+						<%-- <c:forEach var="list" items="${newss }" >
 							<tr class="text-center">
-                                <td>${list.authorityID }</td>
-                                <td>${list.authorityName }</td>
+                                <td>${list.id }</td>
+                                <td>${list.content }</td>
 								<td class="text-center">
-								     <a href="Display_EditAuthority?temp=${list.authorityID }">
+								     <a href="Display_EditAuthority?temp=${list.id }">
 								     	<i class="fa fa-pencil edit"></i></a>
-								     <a href="DeleteAuthority?temp=${list.authorityID }">
+								     <a href="DeleteAuthority?temp=${list.id }">
 								    	<i class="fa fa-trash remove"></i></a>
 								</td>
 							</tr>
-						</c:forEach>
-						-->
+						</c:forEach> --%>
+						
 						</tbody>
 					</table>
 				<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>

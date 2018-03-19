@@ -30,17 +30,17 @@ public class NewsService {
 	}
 
 	// Xóa tin tức
-	public void Delete(int id) {
+	public void DeleteNew(int id) {
 		newsRespository.delete(id);
 	}
 
 	// Tìm kiếm tin tức
-	public News findNews(int id) {
+	public News findOneNews(int id) {
 		return newsRespository.findOne(id);
 	}
 
 	// Lưu tin tức khi cập nhật
-	public void Save(News newa) {
+	public void SaveNew(News newa) {
 		newsRespository.save(newa);
 	}
 	

@@ -4,12 +4,15 @@ import java.sql.Time;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name = "event")
 public class Event {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
     private String eventName;
     private Date eventDate;
@@ -34,6 +37,17 @@ public class Event {
 		this.lecturerName = lecturerName;
 	}
 
+	public Event(String eventName, Date eventDate, Time eventTime, String eventLocation, String lecturerAvatar,
+			String lecturerName) {
+		super();
+		this.eventName = eventName;
+		this.eventDate = eventDate;
+		this.eventTime = eventTime;
+		this.eventLocation = eventLocation;
+		this.lecturerAvatar = lecturerAvatar;
+		this.lecturerName = lecturerName;
+	}
+	
 	public int getId() {
 		return id;
 	}
