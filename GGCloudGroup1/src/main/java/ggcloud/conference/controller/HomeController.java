@@ -51,10 +51,7 @@ public class HomeController {
 		return "managingpage";
 	}
 	
-	/*@PostConstruct
-	void initialiseSession() {
-	    FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-	}*/
+	
 	@GetMapping("/manage-news")
 	public String NewsManagementPage(HttpServletRequest request) {
 		/*request.setAttribute("newss", newService.findAllNews());
@@ -118,46 +115,13 @@ public class HomeController {
 		
 	}
 	
-	@SuppressWarnings("unused")
-	@GetMapping("/add-news")
-	public void AddNews(@RequestParam String content, HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		
-		News newsvar= new News(content);
-		newService.SaveNew(newsvar);
-		
-		PrintWriter out=response.getWriter(); //Ä‘á»ƒ cho code gá»�n hÆ¡n
-
-		 if(newsvar != null) {
-
-			 if (newService.findAllNews() != null) {
-		            response.setContentType("application/json");
-		            //Import gson-2.2.2.jar
-		            Gson gson = new Gson();
-		            String objectToReturn = gson.toJson(newService.findAllNews()); //Convert List -> Json
-		            out.write(objectToReturn); //Ä�Æ°a Json tráº£ vá»� Ajax
-		            out.flush();
-					//response.getWriter().write(objectToReturn);
-		        } else {
-		            response.setContentType("application/json");
-		            out.write("{\"check\":\"fail\"}");
-		            out.flush();
-		        }
-		 }
-		 else {
-	            response.setContentType("application/json");
-	            out.write("{\"check\":\"fail\"}");
-	            out.flush();
-	        }
-		
-	}
 	
 	@GetMapping("/edit-news")
-	public void EditNews(@RequestParam int id, @RequestParam String content, HttpServletRequest request,
+	public void AddEditNews(@RequestParam int id, @RequestParam String content, HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		
 		News newsvar= new News(id,content);
-		newService.SaveNew(newsvar);
+		newService.UpdateNew(newsvar);
 		PrintWriter out=response.getWriter(); //Ä‘á»ƒ cho code gá»�n hÆ¡n
 
 		 if(newService.findOneNews(id) != null) {

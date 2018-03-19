@@ -156,7 +156,7 @@
         	 }
 
         	$('#add1').click(function(){
-           	 $.get("add-news",{content : $('#content3').val()}, function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+           	 $.get("edit-news",{id : $('#contentGrID').val(),content : $('#content3').val()}, function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
            		if (responseJson.check == "fail") {
                     var retVal = confirm("Please enter your full details with your request!\nDo you want to continute?");          	
                     if( retVal == true ){
@@ -264,16 +264,16 @@
 
             <form id="login_form_option" class="was-validated" action="" method="">
                 <fieldset>
-                <!--  
+                  
                         <div>
-                            <label for="text">Authority ID</label>
+                            <label for="text">ID</label>
                             <span class="red_right_add2e" id="contentGrID_error_message"></span>
-                            <!-- cột hiện lỗi validate
+                            <!-- cột hiện lỗi validate -->
                         </div>
                         <div>
-                            <input type="text" name="authorityID" id="contentGrID" placeholder="Enter Authority ID">
+                            <input type="text" name="authorityID" id="contentGrID" placeholder="Enter Id">
                         </div>
-                        -->
+                        
                         <div>
                             <label for="text">Content</label>
                             <span class="red_right_add2e" id="content_error_message3" style="margin-right:70px;"></span>
@@ -281,7 +281,7 @@
                         </div>
                         <div>
                             <textarea type="text" name="content" id="content3" cols="38" rows="2"
-                             placeholder="Enter Authority Name"></textarea>
+                             placeholder="Enter content"></textarea>
                         </div>
                 </fieldset>
                 <div>
@@ -430,7 +430,7 @@
         <div class="md-content">
             <h4 class="h4-repair-contentGr">
                 <span>
-                        Edit Authority
+                        Edit News
                         <button type="button" class="close" data-dismiss="modal-4options" aria-label="Close" id="closebtn1">
                               <span aria-hidden="true">&times;</span>
                         </button>                
@@ -440,10 +440,10 @@
             <form id="login_form_option2" class="was-validated" action="" method="post">
                 <fieldset>
                         <div>
-                            <label for="text">Authority ID</label>
+                            <label for="text">ID</label>
                         </div>
                         <div>
-                            <input type="text" name="optionID" id="contentGrID2" placeholder="Enter Authority ID" 
+                            <input type="text" name="optionID" id="contentGrID2" placeholder="Enter Id" 
                               disabled>
                         </div>
                         
@@ -454,7 +454,7 @@
                         </div>
                         <div>
                             <textarea type="text" name="content" id="content4" cols="38" rows="2"
-                             placeholder="Enter Authority Name"></textarea>
+                             placeholder="Enter content"></textarea>
                         </div>
                 </fieldset>
                 <div>
@@ -523,7 +523,7 @@
 					<table class="table table-bordered table-hover table-striped paginated" id="productTable">
 						<thead>
 							<tr class="text-center">
-								<th class="text-center">News ID</th>
+								<th class="text-center">ID</th>
                                 <th class="text-center">Content</th>
 							</tr>
 						</thead>

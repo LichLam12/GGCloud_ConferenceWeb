@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import ggcloud.conference.dao.NewsRespository;
 import ggcloud.conference.model.News;
 
-
 @Service
 @Transactional
 public class NewsService {
@@ -39,9 +38,13 @@ public class NewsService {
 		return newsRespository.findOne(id);
 	}
 
-	// Lưu tin tức khi cập nhật
-	public void SaveNew(News newa) {
-		newsRespository.save(newa);
+	// LÆ°u tin tá»©c khi cáº­p nháº­t
+	public void AddNew(News news) {
+		newsRespository.save(news);
 	}
-	
+
+	// LÆ°u tin tá»©c khi cáº­p nháº­t
+	public void UpdateNew(News news) {
+		newsRespository.save(news);
+	}
 }
