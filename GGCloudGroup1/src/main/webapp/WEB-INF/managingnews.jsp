@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="icon/m.ico">
 
-    <title>Monggogo Toeic - Admin</title>
+    <title>The Future Conference - Admin</title>
 
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
@@ -37,76 +37,10 @@
     <script type="text/javascript">
         $(document).ready(function(){
         	$("#modal-4options").hide();
-        	
-        	function autopage(){
-//         		$('.page-number').remove(); //k xóa là nó sinh ra phân trang hoài
-//         		$('table.paginated').each(function() {
-// 					var currentPage = 0;
-// 					var numPerPage = 6;  /* Muốn hiển thị 1 page có bao nhiêu hàng */
-// 					var $table = $(this);
-// 					$table.bind('repaginate', function() {
-// 						$table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
-// 					});
-// 					$table.trigger('repaginate');
-// 					var numRows = $table.find('tbody tr').length;
-// 					var numPages = Math.ceil(numRows / numPerPage);
-// 					var $pager = $('<div class="pager"></div>');
-//                    var pre="",next="next";
-//                    if(numPages>1){
-//                    	pre="pre";
-//                    	next="next";
-//                    }else{
-//                    	pre="";
-//                    	next="";
-//                    }
-//                    if(numPages>1){
-//                        $('<span class="page-number"></span>').text(pre).bind('click', {
-//                                newPage: page
-//                            }, function(event) {
-//                                currentPage = currentPage-1;
-//                            if(currentPage<0){
-//                                currentPage=0;
-//                            }else if(currentPage>numPages){
-//                                currentPage=numPages-1;
-//                            }
-//                                    $table.trigger('repaginate');
-//                                    $(this).addClass('active').siblings().removeClass('active');
-
-//                            }).appendTo($pager).addClass('clickable');
-//                    }
-// 					for (var page = 0; page < numPages; page++) {
-// 						$('<span class="page-number"></span>').text(page + 1).bind('click', {
-// 							newPage: page
-// 						}, function(event) {
-// 							currentPage = event.data['newPage'];
-// 							$table.trigger('repaginate');
-// 							$(this).addClass('active').siblings().removeClass('active');
-// 						}).appendTo($pager).addClass('clickable');
-// 					}
-// 					if(numPages>1){
-//                    $('<span class="page-number"></span>').text(next).bind('click', {
-//                                newPage: page
-//                            }, function(event) {
-//                                currentPage = currentPage+1;
-//                        if(currentPage<0){
-//                                currentPage=0;
-//                            }else if(currentPage>numPages){
-//                                currentPage=numPages-1;
-//                            }
-                       
-//                            if(currentPage<numPages){                                                                                             $table.trigger('repaginate');
-//                                $(this).addClass('active').siblings().removeClass('active');
-
-//                            }
-//                            }).appendTo($pager).addClass('clickable');
-                   
-// 					$pager.insertAfter($table).find('span.page-number:first').addClass('active');
-// 					}
-// 				});
-        	}
+       
         	
         	
-        	 $.get("act_Options", function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+        	 $.get("manage-news", function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
  		        //var $table = $("<table>").appendTo($("#somediv")); // Create HTML <table> element and append it to HTML DOM element with ID "somediv".
  		        if (responseJson.check == "fail") {
 		                    //$('#message').text("List isEmpty! Name not found!");
@@ -117,7 +51,7 @@
  		        var $table = document.getElementById("row");
  		        $.each(responseJson, function(index, product) {    // Iterate over the JSON array.
  		            $("<tr>").appendTo($table).addClass('article-loop')                      // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
- 		                .append($("<td>").text(product.optionID).css('width','400px'))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
+ 		                .append($("<td>").text(product.id).css('width','400px'))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
  		                .append($("<td>").text(product.content))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
  		                .append($("<td>")
  		                		.append($("<a>")
