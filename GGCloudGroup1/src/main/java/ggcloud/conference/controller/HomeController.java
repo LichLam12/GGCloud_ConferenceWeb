@@ -54,9 +54,7 @@ public class HomeController {
 	
 	@GetMapping("/manage-news")
 	public String NewsManagementPage(HttpServletRequest request) {
-		/*request.setAttribute("newss", newService.findAllNews());
-		request.setAttribute("announcement", "Show data successfull");
-		request.setAttribute("mode", "LIST");*/
+		
 		return "managingnews";
 	}
 	
@@ -66,7 +64,9 @@ public class HomeController {
 		System.out.println("Success!");
 		//request.setAttribute("newss", newService.findAllNews());
 		PrintWriter out=response.getWriter(); //Ä‘á»ƒ cho code gá»�n hÆ¡n
-
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("utf-8");
+		
 		 if (newService.findAllNews() != null) {
 	            response.setContentType("application/json");
 	            //Import gson-2.2.2.jar
@@ -99,7 +99,9 @@ public class HomeController {
 		newService.findOneNews(id);
 		
 		PrintWriter out=response.getWriter(); //Ä‘á»ƒ cho code gá»�n hÆ¡n
-
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("utf-8");
+		
 		 if (newService.findOneNews(id) != null) {
 	            response.setContentType("application/json");
 	            //Import gson-2.2.2.jar
@@ -115,15 +117,55 @@ public class HomeController {
 		
 	}
 	
-	
-	@GetMapping("/edit-news")
-	public void AddEditNews(@RequestParam int id, @RequestParam String content, HttpServletRequest request,
+	@GetMapping("/add-news")
+	public void AddNews(@RequestParam int id, @RequestParam String title, @RequestParam String openingline, @RequestParam String image1,
+			@RequestParam String content1, @RequestParam String image2, @RequestParam String content2, @RequestParam String writer,
+			HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		
-		News newsvar= new News(id,content);
+		
+		News newsvar= new News(id,title,openingline,image1,content1,image2,content2,writer);
+		PrintWriter out=response.getWriter(); //Ä‘á»ƒ cho code gá»�n hÆ¡n
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("utf-8");
+		
+		 if(newService.findOneNews(id) == null) {
+				newService.UpdateNew(newsvar);
+
+			 if (newService.findAllNews() != null) {
+		            response.setContentType("application/json");
+		            //Import gson-2.2.2.jar
+		            Gson gson = new Gson();
+		            String objectToReturn = gson.toJson(newService.findAllNews()); //Convert List -> Json
+		            out.write(objectToReturn); //Ä�Æ°a Json tráº£ vá»� Ajax
+		            out.flush();
+					//response.getWriter().write(objectToReturn);
+		        } else {
+		            response.setContentType("application/json");
+		            out.write("{\"check\":\"fail\"}");
+		            out.flush();
+		        }
+		 }
+		 else {
+	            response.setContentType("application/json");
+	            out.write("{\"check\":\"fail\"}");
+	            out.flush();
+	        }	
+	}
+	
+	@GetMapping("/edit-news")
+	public void AddEditNews(@RequestParam int id, @RequestParam String title, @RequestParam String openingline, @RequestParam String image1,
+			@RequestParam String content1, @RequestParam String image2, @RequestParam String content2, @RequestParam String writer,
+			HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		
+		
+		News newsvar= new News(id,title,openingline,image1,content1,image2,content2,writer);
 		newService.UpdateNew(newsvar);
 		PrintWriter out=response.getWriter(); //Ä‘á»ƒ cho code gá»�n hÆ¡n
-
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("utf-8");
+		
 		 if(newService.findOneNews(id) != null) {
 
 			 if (newService.findAllNews() != null) {

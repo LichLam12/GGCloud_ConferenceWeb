@@ -38,6 +38,72 @@
         $(document).ready(function(){
         	$("#modal-4options").hide();
        
+        	function autopage(){
+        		$('.page-number').remove(); //k xóa là nó sinh ra phân trang hoài
+        		$('table.paginated').each(function() {
+					var currentPage = 0;
+					var numPerPage = 2;  /* Muốn hiển thị 1 page có bao nhiêu hàng */
+					var $table = $(this);
+					$table.bind('repaginate', function() {
+						$table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+					});
+					$table.trigger('repaginate');
+					var numRows = $table.find('tbody tr').length;
+					var numPages = Math.ceil(numRows / numPerPage);
+					var $pager = $('<div class="pager"></div>');
+                   var pre="",next="next";
+                   if(numPages>1){
+                   	pre="<";
+                   	next=">";
+                   }else{
+                   	pre="";
+                   	next="";
+                   }
+                   if(numPages>1){
+                       $('<span class="page-number"></span>').text(pre).bind('click', {
+                               newPage: page
+                           }, function(event) {
+                               currentPage = currentPage-1;
+                           if(currentPage<0){
+                               currentPage=0;
+                           }else if(currentPage>numPages){
+                               currentPage=numPages-1;
+                           }
+                                   $table.trigger('repaginate');
+                                   $(this).addClass('active').siblings().removeClass('active');
+
+                           }).appendTo($pager).addClass('clickable');
+                   }
+					for (var page = 0; page < numPages; page++) {
+						$('<span class="page-number"></span>').text(page + 1).bind('click', {
+							newPage: page
+						}, function(event) {
+							currentPage = event.data['newPage'];
+							$table.trigger('repaginate');
+							$(this).addClass('active').siblings().removeClass('active');
+						}).appendTo($pager).addClass('clickable');
+					}
+					if(numPages>1){
+                   $('<span class="page-number"></span>').text(next).bind('click', {
+                               newPage: page
+                           }, function(event) {
+                               currentPage = currentPage+1;
+                       if(currentPage<0){
+                               currentPage=0;
+                           }else if(currentPage>numPages){
+                               currentPage=numPages-1;
+                           }
+                       
+                           if(currentPage<numPages){                                                                                             $table.trigger('repaginate');
+                               $(this).addClass('active').siblings().removeClass('active');
+
+                           }
+                           }).appendTo($pager).addClass('clickable');
+                   
+					$pager.insertAfter($table).find('span.page-number:first').addClass('active').css({'margin-left':'500px'});
+					}
+				});
+        	}
         	
         	
         	 $.get("load-newslist", function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
@@ -50,16 +116,29 @@
 		        }
  		        var $table = document.getElementById("row");
  		        $.each(responseJson, function(index, product) {    // Iterate over the JSON array.
- 		            $("<tr>").appendTo($table).addClass('article-loop')                      // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
- 		                .append($("<td>").text(product.id).css('width','400px'))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
- 		                .append($("<td>").text(product.content))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
- 		                .append($("<td>")
+ 		            $("<tr>").appendTo($table)                      // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
+ 		                .append($("<td>").text(product.id).css('width','100px'))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
+ 		                .append($("<td>").text(product.title)) 
+ 		                 .append($("<td>").text(product.openingline))  
+ 		                  .append($("<td>").text(product.image1))  
+ 		                   .append($("<td>").text(product.content1))  
+ 		                   .append($("<td>").text(product.image2))  
+ 		                   .append($("<td>").text(product.content2))  
+ 		                    .append($("<td>").text(product.writer))
+ 		                    .append($("<td>")
  		                		.append($("<a>")
  		                				.append($("<i>").addClass("fa fa-pencil edit"))
  		                			   )
  		                				.click(function(){
  		                					$("#contentGrID2").val(product.id);
-             		     		        	$("#content4").val(product.content);
+             		     		        	$("#content4").val(product.title);
+             		     		        	$("#content11").val(product.openingline);
+             		     		        	$("#content12").val(product.image1);
+             		     		        	$("#content13").val(product.content1);
+             		     		        	$("#content14").val(product.image2);
+             		     		        	$("#content15").val(product.content2);
+             		     		        	$("#content16").val(product.writer);            		     		        	
+             		     		        	
  		                		           	 event.preventDefault();
   		                					$("#modal-4options").show();
 
@@ -93,7 +172,8 @@
  		                		)
  		                		// Create HTML <td> element, set its text content with price of currently iterated product and append it to the <tr>.
  		        });
- 		       autopage();$('.article-loop').paginate(6);
+ 		       /* $('.article-loop').paginate(2); */
+ 		       autopage();
  		    });
         	 
         	 
@@ -110,15 +190,28 @@
              		 });
       		        $.each(responseJson, function(index, product) {    // Iterate over the JSON array.
       		            $("<tr>").appendTo($table).addClass('article-loop')                      // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
-      		          .append($("<td>").text(product.id).css('width','400px'))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
-		                .append($("<td>").text(product.content))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
-		                .append($("<td>")
+      		          .append($("<td>").text(product.id).css('width','100px'))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
+      		        .append($("<td>").text(product.title)) 
+	                 .append($("<td>").text(product.openingline))  
+	                  .append($("<td>").text(product.image1))  
+	                   .append($("<td>").text(product.content1))  
+	                   .append($("<td>").text(product.image2))  
+	                   .append($("<td>").text(product.content2))  
+	                    .append($("<td>").text(product.writer))   
+      		          .append($("<td>")
 		                		.append($("<a>")
 		                				.append($("<i>").addClass("fa fa-pencil edit"))
 		                			   )
 		                				.click(function(){
 		                					$("#contentGrID2").val(product.id);
-             		     		        	$("#content4").val(product.content);
+             		     		        	$("#content4").val(product.title);
+             		     		        	$("#content11").val(product.openingline);
+             		     		        	$("#content12").val(product.image1);
+             		     		        	$("#content13").val(product.content1);
+             		     		        	$("#content14").val(product.image2);
+             		     		        	$("#content15").val(product.content2);
+             		     		        	$("#content16").val(product.writer);
+             		     		        	
 		                		           	 event.preventDefault();
 		                					$("#modal-4options").show();
 
@@ -151,12 +244,15 @@
       		                		)
       		                		// Create HTML <td> element, set its text content with price of currently iterated product and append it to the <tr>.
       		        });
-      		      autopage();$('.article-loop').paginate(6);
+      		      autopage();
       		    });
         	 }
 
         	$('#add1').click(function(){
-           	 $.get("edit-news",{id : $('#contentGrID').val(),content : $('#content3').val()}, function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+           	 $.get("add-news",{id : $('#contentGrID').val(),title : $('#content3').val(), openingline : $('#content5').val(),
+           		image1 : $('#content6').val(), content1 : $('#content7').val(), image2 : $('#content8').val(), 
+           		content2 : $('#content9').val(), writer : $('#content10').val(),
+           		 }, function(responseJson) {         
            		if (responseJson.check == "fail") {
                     var retVal = confirm("Please enter your full details with your request!\nDo you want to continute?");          	
                     if( retVal == true ){
@@ -168,7 +264,7 @@
                     }
         		}
            		reload();
-           		autopage();$('.article-loop').paginate(6);
+           		autopage();
      		    });
            	 event.preventDefault(); // Important! Prevents submitting the form
         		
@@ -176,8 +272,10 @@
         	
         	
         	$('#edit1').click(function(){
-           	 $.get("edit-news",{id : $('#contentGrID2').val(),content : $('#content4').val()},
-           	 function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+           	 $.get("edit-news",{id : $('#contentGrID2').val(), title : $('#content4').val(), openingline : $('#content11').val(),
+            		image1 : $('#content12').val(), content1 : $('#content13').val(), image2 : $('#content14').val(), 
+               		content2 : $('#content15').val(), writer : $('#content16').val(),
+           		 }, function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
            		if (responseJson.check == "fail") {
                     var retVal = confirm("Please enter your full details with your request!\nDo you want to continute?");          	
                     if( retVal == true ){
@@ -189,7 +287,7 @@
                     }
         		}
            		 reload();
-           		autopage();$('.article-loop').paginate(6);
+           		autopage();
      		    });
            	 event.preventDefault(); // Important! Prevents submitting the form
             });  
@@ -209,7 +307,7 @@
 		<div class="collapse navbar-collapse lead" id="navbar">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="ForwarToLoginedHome?username=${perinfo.username }">HOME <span class="sr-only">(current)</span></a>
+					<a class="nav-link" href="home">HOME <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="ForwardToPerinfo_Ques?username=${perinfo.username }">PERSIONAL INFO</a>
@@ -217,9 +315,9 @@
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">MANAGEMENT</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown03">
-						<a class="dropdown-item" href="ForwardToContentGr?username=${perinfo.username }">CONTENT</a>
-						<a class="dropdown-item" href="ForwardToQuestion?username=${perinfo.username }">QUESTION</a>
-						<a class="dropdown-item" href="ForwardToOptions?username=${perinfo.username }">OPTION</a>
+						<a class="dropdown-item" href="manage-news">NEWS</a>
+						<a class="dropdown-item" href="">EVENT</a>
+						<a class="dropdown-item" href="">ABOUT</a>
 					</div>
 				</li>
 				<li class="nav-item">
@@ -262,7 +360,7 @@
                 </span>
             </h4>
 
-            <form id="login_form_option" class="was-validated" action="" method="">
+            <form id="login_form_option" class="was-validated pre-scrollable2" action="" method="">
                 <fieldset>
                   
                         <div>
@@ -271,17 +369,77 @@
                             <!-- cột hiện lỗi validate -->
                         </div>
                         <div>
-                            <input type="text" name="authorityID" id="contentGrID" placeholder="Enter Id">
+                            <input type="text" name="authorityID" id="contentGrID" placeholder="Enter Id (required)">
                         </div>
                         
                         <div>
-                            <label for="text">Content</label>
+                            <label for="text">Title</label>
                             <span class="red_right_add2e" id="content_error_message3" style="margin-right:70px;"></span>
                             <!-- cột hiện lỗi validate -->
                         </div>
                         <div>
-                            <textarea type="text" name="content" id="content3" cols="38" rows="2"
+                            <textarea type="text" name="content" id="content3" cols="40" rows="2"
+                             placeholder="Enter title (required)"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label for="text">Opening Line</label>
+                            <span class="red_right_add2e" id="content_error_message5" style="margin-right:70px;"></span>
+                            <!-- cột hiện lỗi validate -->
+                        </div>
+                        <div>
+                            <textarea type="text" id="content5" cols="40" rows="3"
+                             placeholder="Enter opening line (required)"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label for="text">Image1</label>
+                            <span class="red_right_add2e" id="content_error_message6" style="margin-right:70px;"></span>
+                            <!-- cột hiện lỗi validate -->
+                        </div>
+                        <div>
+                            <textarea type="text" id="content6" cols="40" rows="1"
+                             placeholder="Enter image (required)"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label for="text">Content1</label>
+                            <span class="red_right_add2e" id="content_error_message7" style="margin-right:70px;"></span>
+                            <!-- cột hiện lỗi validate -->
+                        </div>
+                        <div>
+                            <textarea type="text" id="content7" cols="40" rows="5"
+                             placeholder="Enter content (required)"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label for="text">Image2</label>
+                            <span class="red_right_add2e" id="content_error_message8" style="margin-right:70px;"></span>
+                            <!-- cột hiện lỗi validate -->
+                        </div>
+                        <div>
+                            <textarea type="text" id="content8" cols="40" rows="1"
+                             placeholder="Enter image"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label for="text">Content1</label>
+                            <span class="red_right_add2e" id="content_error_message9" style="margin-right:70px;"></span>
+                            <!-- cột hiện lỗi validate -->
+                        </div>
+                        <div>
+                            <textarea type="text" id="content9" cols="40" rows="5"
                              placeholder="Enter content"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label for="text">Writer</label>
+                            <span class="red_right_add2e" id="content_error_message10" style="margin-right:70px;"></span>
+                            <!-- cột hiện lỗi validate -->
+                        </div>
+                        <div>
+                            <input type="text" id="content10" cols="40" rows="5"
+                             placeholder="Enter writer name" />
                         </div>
                 </fieldset>
                 <div>
@@ -437,24 +595,84 @@
                 </span>
             </h4>
 
-            <form id="login_form_option2" class="was-validated" action="" method="post">
+            <form id="login_form_option2" class="was-validated pre-scrollable2" action="" method="post">
                 <fieldset>
                         <div>
                             <label for="text">ID</label>
                         </div>
                         <div>
-                            <input type="text" name="optionID" id="contentGrID2" placeholder="Enter Id" 
+                            <input type="text" name="optionID" id="contentGrID2" placeholder="Enter Id (required)" 
                               disabled>
                         </div>
                         
                         <div>
-                            <label for="text">Content</label>
+                            <label for="text">Title</label>
                             <span class="red_right_add2e" id="content_error_message4" style="margin-right:70px;"></span>
                             <!-- cột hiện lỗi validate -->
                         </div>
                         <div>
-                            <textarea type="text" name="content" id="content4" cols="38" rows="2"
+                            <textarea type="text" name="content" id="content4" cols="40" rows="2"
+                             placeholder="Enter title (required)"></textarea>
+                        </div>                  
+                        
+                        <div>
+                            <label for="text">Opening Line</label>
+                            <span class="red_right_add2e" id="content_error_message11" style="margin-right:70px;"></span>
+                            <!-- cột hiện lỗi validate -->
+                        </div>
+                        <div>
+                            <textarea type="text" id="content11" cols="40" rows="3"
+                             placeholder="Enter opening line (required)"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label for="text">Image1</label>
+                            <span class="red_right_add2e" id="content_error_message12" style="margin-right:70px;"></span>
+                            <!-- cột hiện lỗi validate -->
+                        </div>
+                        <div>
+                            <textarea type="text" id="content12" cols="40" rows="1"
+                             placeholder="Enter image (required)"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label for="text">Content1</label>
+                            <span class="red_right_add2e" id="content_error_message13" style="margin-right:70px;"></span>
+                            <!-- cột hiện lỗi validate -->
+                        </div>
+                        <div>
+                            <textarea type="text" id="content13" cols="40" rows="5"
+                             placeholder="Enter content (required)"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label for="text">Image2</label>
+                            <span class="red_right_add2e" id="content_error_message14" style="margin-right:70px;"></span>
+                            <!-- cột hiện lỗi validate -->
+                        </div>
+                        <div>
+                            <textarea type="text" id="content14" cols="40" rows="1"
+                             placeholder="Enter image"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label for="text">Content1</label>
+                            <span class="red_right_add2e" id="content_error_message15" style="margin-right:70px;"></span>
+                            <!-- cột hiện lỗi validate -->
+                        </div>
+                        <div>
+                            <textarea type="text" id="content15" cols="40" rows="5"
                              placeholder="Enter content"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label for="text">Writer</label>
+                            <span class="red_right_add2e" id="content_error_message16" style="margin-right:70px;"></span>
+                            <!-- cột hiện lỗi validate -->
+                        </div>
+                        <div>
+                            <input type="text" id="content16" cols="40" rows="5"
+                             placeholder="Enter writer name" />
                         </div>
                 </fieldset>
                 <div>
@@ -513,18 +731,24 @@
    
     <!-- Authority Manegement -->
     
-     <div class="container tieude" id="content-gr">
+     <div class="container tieude" id="content-gr" style="margin-left:100px;margin-right:100px;">
          		<h2 class="text-center" style="color: red;font-weight: bold;margin-bottom: 20px !important;">NEWS MANEGEMENT</h2>
         <p class="text-right">
         <a class="md-trigger btn" data-modal="modal-3options" id="btn_left"><button type="submit" class="btn add-employee"><i class="fa fa-plus" aria-hidden="true"></i>Add New</button></a>
         </p>
 	
 				<div class="table-responsive">
-					<table class="table table-bordered table-hover table-striped paginated" id="productTable">
+					<table class="table table-bordered table-hover table-striped paginated pre-scrollable2" id="productTable">
 						<thead>
 							<tr class="text-center">
 								<th class="text-center">ID</th>
-                                <th class="text-center">Content</th>
+								<th class="text-center">____Title____</th>
+                                <th class="text-center">___________OpeningLine___________</th>
+                                <th class="text-center">Image1</th>
+                                <th class="text-center">___________________Content1___________________</th>
+                                <th class="text-center">Image2</th>
+                                <th class="text-center">___________________Content2___________________</th>
+                                <th class="text-center">Writer</th>                
 							</tr>
 						</thead>
 						<tbody id="row" class="text-center">
@@ -544,13 +768,58 @@
 						
 						</tbody>
 					</table>
-				<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-					<script src="Style/js/pag.js"></script>
+			<!-- 	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+					<script src="Style/js/pag.js"></script> -->
 				</div>
 		<script src="Style/js/classie.js"></script>
    	<script src="Style/js/modalEffects.js"></script>
     </div>
-     
+     <style>
+    div.pager {
+    text-align: center;
+}
+
+div.pager span {
+    display: inline-block;
+    width: 32px;
+    height: 38px;
+    text-align: center;
+    cursor: pointer;
+    background: #f2f2f2;
+    color: #000;
+    margin-top: 15px;
+	font-size: 16px;
+	margin-right: 0px;
+	font-weight: normal;
+	border: 1px solid #d9d9d9;
+	padding-top:5px;
+}
+
+div.pager span.active {
+    background: #d9d9d9;
+    color: #4d88ff;
+}
+div.pager span:hover {
+    background: #d9d9d9;
+    color: #4d88ff;
+}
+    </style>
+     <style>
+    #content-gr{
+  		overflow-y: auto;
+    }
+    </style>
+    <script>
+    $(window).resize(function() { /*nếu như size của cửa sổ HTML thay đổi thì ẩn thanh underbanner đi*/
+        if($(window).width()<1024){
+        	$('#content-gr').css({'margin-left':'70px','margin-right':'20px'});
+        }
+        else{
+        	$('#content-gr').css({'margin-left':'100px','margin-right':'100px'});
+
+        }
+}); 
+    </script>
      
       <!-- javascript xử lý cái nút close -->
         <script type="text/javascript">
@@ -788,6 +1057,7 @@
     not actually part of the plugin */
     $('.article-loop').paginate(6);
     </script>
+
 
 
     <!-- Bootstrap core JavaScript

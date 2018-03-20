@@ -109,27 +109,11 @@
 	<div id="new1" class="container lead">
 		<h1 class="text-center">MONGGOGO CHÍNH THỨC ĐI VÀO HOẠT ĐỘNG</h1>
 		<p><b>Ngày 29/07/2017, trung tâm Anh ngữ Mongogo Toeic đã tưng bừng khai trương cơ sở thứ 12 tại thành phố Nha Trang, tỉnh Khánh Hòa.</b></p>
-		<p>Từ nay, quý Phụ huynh có thể đăng ký cho con em đến tham quan lớp học đạt chuẩn Quốc tế và kiểm tra trình độ Anh ngữ, thi xếp lớp miễn phí và ghi danh cho Bé theo học tại số 68 Thống Nhất, P. Vạn Thắng, TP. Nha Trang, Khánh Hòa để nhận được các ưu đãi đặc biệt nhân dịp khai trương.</p>
-		<img src="http://vass.edu.vn/Resource/Portal87/News/Upload/IMG0205.jpg" class="rounded mx-auto d-block" alt="..." width="650px">
-		<br>
-		<p>Mongogo Toeic là thành viên Hệ thống Trường Việt Mỹ với 13 năm kinh nghiệm đào tạo Anh văn Mẫu giáo từ 4-6 tuổi, Anh văn thiếu nhi từ 7-12 tuổi, Anh văn thiếu niên từ 13-16 tuổi, giao tiếp quốc tế từ 17 tuổi trở lên.</p>
-		<img src="http://vass.edu.vn/Resource/Portal87/News/Upload/203758641618892044801944229576273285756506n.jpg" class="rounded mx-auto d-block" alt="..." width="650px">
-		<br>
-		<p>Với đội ngũ giáo viên nước ngoài và Việt Nam giàu kinh nghiệm, yêu nghề và phương pháp giảng dạy sáng tạo với giáo trình Anh ngữ mới nhất English World của  tổ chức giáo dục danh tiếng Macmillan – Anh Quốc được triển khai thành công tại 130  quốc gia, nên kết quả các KỲ THI CAMBRIDGE YOUNG LEARNERS ENGLISH VASS English luôn đạt được 100% học viên đạt loại Giỏi từ 10-15 shields, hơn 30% đạt điểm TUYỆT ĐỐI 15/15 shields.</p>
-		<img src="http://vass.edu.vn/Resource/Portal87/News/Upload/IMG0116.jpg" class="rounded mx-auto d-block" alt="..." width="650px">
-		<br>
-		<p>Mongogo Toeic không ngừng nỗ lực, thay đổi từng ngày để truyền cảm hứng cho tất cả những bạn mong muốn học tốt tiếng Anh, đem đến sự tiến bộ từng ngày cho các học viên. Hãy trải nghiệm cùng môi trường chuyên nghiệp, năng động, sáng tạo của VASS cho tới khi cảm thấy tự tin giao tiếp với người nước ngoài và đầy năng lượng vươn tới đỉnh cao trong sự nghiệp.</p>
-		<img src="http://vass.edu.vn/Resource/Portal87/News/Upload/T-2(1).jpg" class="rounded mx-auto d-block" alt="..." width="650px">
-		<br>
-		<p>Thông tin chi tiết xin vui lòng liên hệ:<br>
-
-Anh ngữ Việt Mỹ VASS - Cơ sở Nha Trang : 68 Thống Nhất, Phường Vạn Thắng, TP. Nha Trang, tỉnh Khánh Hòa.<br>
-
-Điện thoại : 02583 818 808</p>
-		<img src="http://vass.edu.vn/Resource/Portal87/News/Upload/T(1).jpg" class="rounded mx-auto d-block" alt="..." width="650px">
-		<br>
-		<p>Bạn có thể chiêm ngưỡng các tác phẩm khác của Melaquino tại <a href="https://www.instagram.com/melaquino/">đây</a>.</p>
-		<br>
+		<img src="http://vass.edu.vn/Resource/Portal87/News/Upload/IMG0205.jpg" class="rounded mx-auto d-block" width="650px">
+		<p>Với đội ngũ giáo viên nước ngoài và Việt <br> Nam \n giàu kinh nghiệm, yêu nghề và phương pháp giảng dạy sáng tạo với giáo trình Anh ngữ mới nhất English World của  tổ chức giáo dục danh tiếng Macmillan – Anh Quốc được triển khai thành công tại 130  quốc gia, nên kết quả các KỲ THI CAMBRIDGE YOUNG LEARNERS ENGLISH VASS English luôn đạt được 100% học viên đạt loại Giỏi từ 10-15 shields, hơn 30% đạt điểm TUYỆT ĐỐI 15/15 shields.</p>
+		<img src="http://vass.edu.vn/Resource/Portal87/News/Upload/IMG0116.jpg" class="rounded mx-auto d-block" width="650px">
+		<p>Từ nay, quý Phụ huynh có thể đăng ký cho con e/nm đến\n tham quan lớp học đạt\nchuẩn Quốc tế và kiểm tra trình độ Anh ngữ, thi xếp lớp miễn phí và ghi danh cho Bé theo học tại số 68 Thống Nhất, P. Vạn Thắng, TP. Nha Trang, Khánh Hòa để nhận được các ưu đãi đặc biệt nhân dịp khai trương.</p>
+		
 		<p class="text-right">Nguồn: kenh14.vn</p>
 	</div>
 

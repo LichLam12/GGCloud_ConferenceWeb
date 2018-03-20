@@ -38,12 +38,7 @@ public class NewsService {
 		return newsRespository.findOne(id);
 	}
 
-	// LÆ°u tin tá»©c khi cáº­p nháº­t
-	public void AddNew(News news) {
-		newsRespository.save(news);
-	}
-
-	// LÆ°u tin tá»©c khi cáº­p nháº­t
+	//Add & Update news
 	public void UpdateNew(News news) {
 		newsRespository.save(news);
 	}

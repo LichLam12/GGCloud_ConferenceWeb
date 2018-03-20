@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Event {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
     private String eventName;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
