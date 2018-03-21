@@ -111,7 +111,7 @@
 		<p><b>Ngày 29/07/2017, trung tâm Anh ngữ Mongogo Toeic đã tưng bừng khai trương cơ sở thứ 12 tại thành phố Nha Trang, tỉnh Khánh Hòa.</b></p>
 		<img src="http://vass.edu.vn/Resource/Portal87/News/Upload/IMG0205.jpg" class="rounded mx-auto d-block" width="650px">
 		<p>Với đội ngũ giáo viên nước ngoài và Việt <br> Nam \n giàu kinh nghiệm, yêu nghề và phương pháp giảng dạy sáng tạo với giáo trình Anh ngữ mới nhất English World của  tổ chức giáo dục danh tiếng Macmillan – Anh Quốc được triển khai thành công tại 130  quốc gia, nên kết quả các KỲ THI CAMBRIDGE YOUNG LEARNERS ENGLISH VASS English luôn đạt được 100% học viên đạt loại Giỏi từ 10-15 shields, hơn 30% đạt điểm TUYỆT ĐỐI 15/15 shields.</p>
-		<img src="http://vass.edu.vn/Resource/Portal87/News/Upload/IMG0116.jpg" class="rounded mx-auto d-block" width="650px">
+		<img src="https://drive.google.com/file/d/1Yjs71zio7q-2ZFeWgKHaNKi8pH81bTww/view?usp=sharing" class="rounded mx-auto d-block" width="650px">
 		<p>Từ nay, quý Phụ huynh có thể đăng ký cho con e/nm đến\n tham quan lớp học đạt\nchuẩn Quốc tế và kiểm tra trình độ Anh ngữ, thi xếp lớp miễn phí và ghi danh cho Bé theo học tại số 68 Thống Nhất, P. Vạn Thắng, TP. Nha Trang, Khánh Hòa để nhận được các ưu đãi đặc biệt nhân dịp khai trương.</p>
 		
 		<p class="text-right">Nguồn: kenh14.vn</p>

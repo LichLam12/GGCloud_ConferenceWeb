@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -43,31 +44,6 @@
 <!-- validate from by jquery -->
 <script src="Style/js/bootstrap.js"></script>
 
-
-<script type="text/javascript">
-        $(document).ready(function(){
-        	
-        	
-        	
-        	$('#btn_register').click(function(){
-        		var sex=0;
-        		if(document.getElementById('sex11').checked == true){
-   		        		sex=0;
-		        }else{
-   		        		sex=1;
-		        }
-           	 $.post("act_Student",{action: '1',username2 : $('#username2').val(),password : $('#password2').val(),
-           		fullName : $('#fullname2').val(),sex : sex,
-           		doB : $('#doB2').val(),phoneNumber : $('#phonenumber2').val(),
-           		email : $('#email2').val(),address : $('#address2').val()},
-           		function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
-           			alert("Congratulations! Try login and experience website with MongGOGO TOEIC.");
-     		    	
-           		});
-            });  
- 
-        }); 
-	</script>
 </head>
 <body>
 	<style>
@@ -269,66 +245,40 @@
 	<!-- Classes -->
 	<div id="classes">
 		<div class="container marketing lead">
-			<div class="row">
+		
+			<div class="row">			
 				<div class="col-sm-6">
 					<h2>Events</h2>
-					<c:forEach var="row" items="${eventlist}"  begin="0" end="0">
-					<b>${row.eventName}</b>
-					<p><fmt:formatDate type="DATE"  dateStyle="short"  value = "${row.eventDate}" ></fmt:formatDate> <fmt:formatDate type = "time" 
-         	timeStyle="short" value = "${row.eventTime}" />   - ${row.eventLocation}</p>
-					</c:forEach>
-					<c:forEach var="row" items="${eventlist}"  begin="1" end="1">
-					<b>${row.eventName}</b>
-					<p><fmt:formatDate type="DATE"  dateStyle="short"  value = "${row.eventDate}" ></fmt:formatDate> <fmt:formatDate type = "time" 
-         	timeStyle="short" value = "${row.eventTime}" /> - ${row.eventLocation}</p>
-					</c:forEach>
-					<c:forEach var="row" items="${eventlist}"  begin="2" end="2">
-					<b>${row.eventName}</b>
-					<p><fmt:formatDate type="DATE"  dateStyle="short"  value = "${row.eventDate}" ></fmt:formatDate>  <fmt:formatDate type = "time" 
-         	timeStyle="short" value = "${row.eventTime}" /> - ${row.eventLocation}</p>
-					</c:forEach>
-						<c:forEach var="row" items="${eventlist}"  begin="3" end="3">
-					<b>${row.eventName}</b>
-					<p><fmt:formatDate type="DATE"  dateStyle="short"  value = "${row.eventDate}" ></fmt:formatDate>  <fmt:formatDate type = "time" 
-         	timeStyle="short" value = "${row.eventTime}" /> - ${row.eventLocation}</p>
-					</c:forEach>
-					<a href="ForwardToClasses"><h5>See more. . .</h5></a>
 				</div>
 				<div class="col-sm-3">
 					<h2>Benefits</h2>
-					<p></p>
-					<p>
-						<i class="fa fa-check" aria-hidden="true"></i>Free resources
-					</p>
-					<p>
-						<i class="fa fa-check" aria-hidden="true"></i>Study every time and
-						everywhere
-					</p>
-					<p>
-						<i class="fa fa-check" aria-hidden="true"></i>Exclusive Monggogo
-						software
-					</p>
-					<p>
-						<i class="fa fa-check" aria-hidden="true"></i>Correct vocabulary
-					</p>
 				</div>
 				<div class="col-sm-3">
 					<h2>Teachers</h2>
-					<p>
-					<c:forEach var="row" items="${eventlist}"  begin="0" end="0">
-						<img src="${row.lecturerAvatar}"> ${row.lecturerName}
-						</c:forEach>
-					</p>
+				</div>	   			
+			</div>
+			
+			<div class="row">	
+				<c:forEach var="row" items="${eventlist }"  begin="0" end="3">			
 					
+				<div class="col-sm-6">
+					
+					<b>${row.eventname }</b>
+					<p><fmt:formatDate type="DATE"  dateStyle="short"  value = "${row.eventdate }" ></fmt:formatDate> <fmt:formatDate type = "time" 
+         			timeStyle="short" value = "${row.eventtime }" /> - ${row.eventlocation }</p>					
+					
+				</div>
+				<div class="col-sm-3">
 					<p>
-					<c:forEach var="row" items="${eventlist}"  begin="1" end="1">
-						<img  src="${row.lecturerAvatar}">${row.lecturerName}
-						</c:forEach>
-					</p>
-					<p>
-						<img src="Style/images/teams/team-3.png"> ${row.lecturerName}
+						<i class="fa fa-check" aria-hidden="true"></i>${row.benefit }
 					</p>
 				</div>
+				<div class="col-sm-3">					
+					<p>
+						<img src="${row.lectureravatar }"> ${row.lecturername }
+					</p>
+				</div>	
+				      </c:forEach>			
 			</div>
 
 		</div>

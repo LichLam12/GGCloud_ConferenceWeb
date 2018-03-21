@@ -4,52 +4,43 @@ import java.sql.Time;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+/*import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;*/
 import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Entity(name = "event")
+@Entity(name = "eventtable")
 public class Event {
 	
 	@Id
 	private int id;
-    private String eventName;
+    private String eventname;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-    private Date eventDate;
-    private Time eventTime;
-    private String eventLocation;
-    private String lecturerAvatar;
-    private String lecturerName;
+    private Date eventdate;
+    private Time eventtime;
+    private String eventlocation;
+    private String lectureravatar;
+    private String lecturername;
+    private String benefit;
     
 	public Event() {
 		super();
 	}
 
-	public Event(int id, String eventName, Date eventDate, Time eventTime, String eventLocation, String lecturerAvatar,
-			String lecturerName) {
+	public Event(int id, String eventname, Date eventdate, Time eventtime, String eventlocation,
+			String lectureravatar, String lecturername, String benefit) {
 		super();
 		this.id = id;
-		this.eventName = eventName;
-		this.eventDate = eventDate;
-		this.eventTime = eventTime;
-		this.eventLocation = eventLocation;
-		this.lecturerAvatar = lecturerAvatar;
-		this.lecturerName = lecturerName;
+		this.eventname = eventname;
+		this.eventdate = eventdate;
+		this.eventtime = eventtime;
+		this.eventlocation = eventlocation;
+		this.lectureravatar = lectureravatar;
+		this.lecturername = lecturername;
+		this.benefit = benefit;
 	}
 
-	public Event(String eventName, Date eventDate, Time eventTime, String eventLocation, String lecturerAvatar,
-			String lecturerName) {
-		super();
-		this.eventName = eventName;
-		this.eventDate = eventDate;
-		this.eventTime = eventTime;
-		this.eventLocation = eventLocation;
-		this.lecturerAvatar = lecturerAvatar;
-		this.lecturerName = lecturerName;
-	}
-	
 	public int getId() {
 		return id;
 	}
@@ -58,55 +49,61 @@ public class Event {
 		this.id = id;
 	}
 
-	public String getEventName() {
-		return eventName;
+	public String getEventname() {
+		return eventname;
 	}
 
-	public void setEventName(String eventName) {
-		this.eventName = eventName;
+	public void setEventname(String eventname) {
+		this.eventname = eventname;
 	}
+
+	public Date getEventdate() {
+		return eventdate;
+	}
+
+	public void setEventdate(Date eventdate) {
+		this.eventdate = eventdate;
+	}
+
+	public Time getEventtime() {
+		return eventtime;
+	}
+
+	public void setEventtime(Time eventtime) {
+		this.eventtime = eventtime;
+	}
+
+	public String getEventlocation() {
+		return eventlocation;
+	}
+
+	public void setEventlocation(String eventlocation) {
+		this.eventlocation = eventlocation;
+	}
+
+	public String getLectureravatar() {
+		return lectureravatar;
+	}
+
+	public void setLectureravatar(String lectureravatar) {
+		this.lectureravatar = lectureravatar;
+	}
+
+	public String getLecturername() {
+		return lecturername;
+	}
+
+	public void setLecturername(String lecturername) {
+		this.lecturername = lecturername;
+	}
+
+	public String getBenefit() {
+		return benefit;
+	}
+
+	public void setBenefit(String benefit) {
+		this.benefit = benefit;
+	} 
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
-	public Date getEventDate() {
-		return eventDate;
-	}
-
-	public void setEventDate(Date eventDate) {
-		this.eventDate = eventDate;
-	}
-
-	public Time getEventTime() {
-		return eventTime;
-	}
-
-	public void setEventTime(Time eventTime) {
-		this.eventTime = eventTime;
-	}
-
-	public String getEventLocation() {
-		return eventLocation;
-	}
-
-	public void setEventLocation(String eventLocation) {
-		this.eventLocation = eventLocation;
-	}
-
-	public String getLecturerAvatar() {
-		return lecturerAvatar;
-	}
-
-	public void setLecturerAvatar(String lecturerAvatar) {
-		this.lecturerAvatar = lecturerAvatar;
-	}
-
-	public String getLecturerName() {
-		return lecturerName;
-	}
-
-	public void setLecturerName(String lecturerName) {
-		this.lecturerName = lecturerName;
-	}
-    
-    
-    
+	
 }

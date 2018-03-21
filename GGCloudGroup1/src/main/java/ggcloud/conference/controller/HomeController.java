@@ -36,8 +36,8 @@ public class HomeController {
 	public String Home(HttpServletRequest request) {
 		request.setAttribute("aboutslist", aboutService.findAllAbout());
 		request.setAttribute("eventlist", eventService.findAllEvent());
-		request.setAttribute("mode", "MODE_TASKS");
-		return "index";
+/*		request.setAttribute("mode", "MODE_TASKS");
+*/		return "index";
 	}
 	
 	@GetMapping("/news")
