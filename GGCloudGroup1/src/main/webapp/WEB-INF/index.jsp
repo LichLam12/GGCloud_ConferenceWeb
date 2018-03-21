@@ -331,7 +331,7 @@
 				</div>
 				<div class="item col-lg-3 col-sm-4 col-xs-6 rounded mx-auto d-block">
 					<div class="dtl05">
-						<img src="Style/images/blog/new2.jpg" alt=""> <a
+						<img src="Style/images/blog/new2.jpg" alt="/news"> <a
 							href="ForwardToNews"><div class="dtl">
 								<h3>BUSINESS IN BRIEF 26/12</h3>
 								<p>By John Doe.</p>

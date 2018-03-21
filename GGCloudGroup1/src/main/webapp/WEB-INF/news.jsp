@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -106,16 +108,27 @@
 
 
 	<!-- New -->
-	<div id="new1" class="container lead">
-		<h1 class="text-center">MONGGOGO CHÍNH THỨC ĐI VÀO HOẠT ĐỘNG</h1>
-		<p><b>Ngày 29/07/2017, trung tâm Anh ngữ Mongogo Toeic đã tưng bừng khai trương cơ sở thứ 12 tại thành phố Nha Trang, tỉnh Khánh Hòa.</b></p>
-		<img src="http://vass.edu.vn/Resource/Portal87/News/Upload/IMG0205.jpg" class="rounded mx-auto d-block" width="650px">
-		<p>Với đội ngũ giáo viên nước ngoài và Việt <br> Nam \n giàu kinh nghiệm, yêu nghề và phương pháp giảng dạy sáng tạo với giáo trình Anh ngữ mới nhất English World của  tổ chức giáo dục danh tiếng Macmillan – Anh Quốc được triển khai thành công tại 130  quốc gia, nên kết quả các KỲ THI CAMBRIDGE YOUNG LEARNERS ENGLISH VASS English luôn đạt được 100% học viên đạt loại Giỏi từ 10-15 shields, hơn 30% đạt điểm TUYỆT ĐỐI 15/15 shields.</p>
-		<img src="https://drive.google.com/file/d/1Yjs71zio7q-2ZFeWgKHaNKi8pH81bTww/view?usp=sharing" class="rounded mx-auto d-block" width="650px">
-		<p>Từ nay, quý Phụ huynh có thể đăng ký cho con e/nm đến\n tham quan lớp học đạt\nchuẩn Quốc tế và kiểm tra trình độ Anh ngữ, thi xếp lớp miễn phí và ghi danh cho Bé theo học tại số 68 Thống Nhất, P. Vạn Thắng, TP. Nha Trang, Khánh Hòa để nhận được các ưu đãi đặc biệt nhân dịp khai trương.</p>
-		
-		<p class="text-right">Nguồn: kenh14.vn</p>
-	</div>
+	<c:forEach var="row" items="${newslist}" >
+		<div id="new1" class="container lead">
+			<h1 class="text-center">${row.title}</h1>
+			<h3>${row.openingline}</h3>
+			<p>
+				<b>${row.content1}</b>
+			</p>
+			<img
+				src="${row.image1}"
+				class="rounded mx-auto d-block" width="650px">
+			<p>
+				${row.content2}
+			</p>
+			<img
+				src="${row.image2}"
+				class="rounded mx-auto d-block" width="650px">
+			
+
+			<p class="text-right">Nguồn: kenh14.vn</p>
+		</div>
+	</c:forEach>
 
 
 

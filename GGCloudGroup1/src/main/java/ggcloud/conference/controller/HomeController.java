@@ -41,7 +41,8 @@ public class HomeController {
 	}
 	
 	@GetMapping("/news")
-	public String News() {
+	public String News(HttpServletRequest request) {
+		request.setAttribute("newslist", newService.findAllNews());
 		return "news";
 	}
 	
