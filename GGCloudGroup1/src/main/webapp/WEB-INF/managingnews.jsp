@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<!-- <html xmlns:th="http://www.thymeleaf.org">
+ --><%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -774,6 +775,34 @@
 		<script src="Style/js/classie.js"></script>
    	<script src="Style/js/modalEffects.js"></script>
     </div>
+    
+    
+    
+    
+    
+    <div th:if="${message}">
+		<h2 th:text="${message}"/>
+	</div>
+
+	<div>
+		<form method="POST" enctype="multipart/form-data" action="/">
+			<table>
+				<tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+				<tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+			</table>
+		</form>
+	</div>
+
+	<div>
+		<ul>
+			<li th:each="file : ${files}">
+				<a th:href="${file}" th:text="${file}" />
+				<div th:if="${linktai}"><a th:href="${linktai}" th:text="${linktai}" /></div>				
+			</li>
+		</ul>
+	</div>
+    
+    
      <style>
     div.pager {
     text-align: center;
