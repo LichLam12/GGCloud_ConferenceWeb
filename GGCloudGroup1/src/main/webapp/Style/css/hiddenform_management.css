@@ -2564,7 +2564,7 @@ input {
 
 	.md-modal113 {
 	position: fixed;
-	top: 10%;
+	top: 5%; /* //10% */
 	left: 0;
 	right: 0;
 	width: 50%;

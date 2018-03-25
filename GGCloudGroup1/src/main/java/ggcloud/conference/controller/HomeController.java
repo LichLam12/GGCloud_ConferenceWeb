@@ -20,6 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 
 import ggcloud.conference.model.News;
+import ggcloud.conference.model.About;
+import ggcloud.conference.model.Event;
+
 import ggcloud.conference.service.AboutService;
 import ggcloud.conference.service.EventService;
 import ggcloud.conference.service.NewsService;
@@ -61,6 +64,8 @@ public class HomeController {
 	public String Home(HttpServletRequest request) {
 		request.setAttribute("aboutslist", aboutService.findAllAbout());
 		request.setAttribute("eventlist", eventService.findAllEvent());
+		request.setAttribute("newslist", newService.findAllNews());
+
 		/*
 		 * request.setAttribute("mode", "MODE_TASKS");
 		 */ return "index";
@@ -72,48 +77,15 @@ public class HomeController {
 		return "news";
 	}
 
-	@GetMapping("/management")
-	public String Event() {
-		return "managingpage";
-	}
 
+	
+	//=============================================================================Managing about
 	@GetMapping("/manage-news")
 	public String NewsManagementPage(Model model, HttpServletRequest request) {
 		model.addAttribute("linkTai",linkTai);
 		return "managingnews";
 	}
 
-	@PostMapping("/uploadfile")
-	public void uploadFile(@RequestParam MultipartFile file, Model model,  HttpServletResponse response) throws Exception {
-		PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
-
-		Drive service = getDriveService();
-		
-		File fileMetadata = new File();
-		fileMetadata.setTitle(file.getOriginalFilename());
-
-		java.io.File filePath = new java.io.File("upload-dir/" + file.getOriginalFilename());
-		filePath.createNewFile();
-		
-		FileContent mediaContent = new FileContent(file.getContentType(), filePath);
-		File f = service.files().insert(fileMetadata, mediaContent)
-		    .setFields("id")
-		    .execute();
-		
-		linkTai = "http://drive.google.com/open?id="+f.getId();
-
-		Path sourceFile = Paths.get("upload-dir/"+file.getOriginalFilename());
-		
-		response.setContentType("application/json");
-		// Import gson-2.2.2.jar
-		Gson gson = new Gson();
-		String objectToReturn = gson.toJson(linkTai); // Convert List -> Json
-		out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
-		out.flush();
-		
-/*		return "redirect:/manage-news";
-*/	}
-	
 	@GetMapping("/load-newslist")
 	public void ShowNewsList(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -241,6 +213,173 @@ public class HomeController {
 		}
 	}
 
+	
+	//=============================================================================Managing about
+	@GetMapping("/manage-about")
+	public String AboutManagementPage(Model model, HttpServletRequest request) {
+		
+		return "managingabout";
+	}
+
+	@GetMapping("/load-aboutlist")
+	public void ShowAboutList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		System.out.println("Success!");
+		// request.setAttribute("newss", newService.findAllNews());
+		PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("utf-8");
+
+		if (newService.findAllNews() != null) {
+			response.setContentType("application/json");
+			// Import gson-2.2.2.jar
+			Gson gson = new Gson();
+			String objectToReturn = gson.toJson(aboutService.findAllAbout()); // Convert List -> Json
+			out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
+			out.flush();
+			// response.getWriter().write(objectToReturn);
+		} else {
+			response.setContentType("application/json");
+			out.write("{\"check\":\"fail\"}");
+			out.flush();
+		}
+	}
+
+	@GetMapping("/delete-about")
+	public void DeleteAbout(@RequestParam int id, HttpServletRequest request) {
+		try {
+			aboutService.Delete(id);;
+			System.out.println("Delete Successfull");
+		} catch (Exception e) {
+			System.out.println("Delete Error");
+		}
+	}
+
+	@GetMapping("/show-one-about")
+	public void ShowOneAbout(@RequestParam int id, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+
+		aboutService.findAbout(id);
+
+		PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("utf-8");
+
+		if (aboutService.findAbout(id) != null) {
+			response.setContentType("application/json");
+			// Import gson-2.2.2.jar
+			Gson gson = new Gson();
+			String objectToReturn = gson.toJson(aboutService.findAbout(id)); // Convert List -> Json
+			out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
+			out.flush();
+		} else {
+			response.setContentType("application/json");
+			out.write("{\"check\":\"fail\"}");
+			out.flush();
+		}
+
+	}
+
+	@GetMapping("/add-about")
+	public void AddAbout(@RequestParam int id, @RequestParam String title, @RequestParam String content,
+			@RequestParam String image, HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+
+		About aboutvar = new About(id,title,content,image);
+		PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("utf-8");
+
+		if (aboutService.findAbout(id) == null) {
+			aboutService.Save(aboutvar);
+
+			if (newService.findAllNews() != null) {
+				response.setContentType("application/json");
+				// Import gson-2.2.2.jar
+				Gson gson = new Gson();
+				String objectToReturn = gson.toJson(aboutService.findAllAbout()); // Convert List -> Json
+				out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
+				out.flush();
+				// response.getWriter().write(objectToReturn);
+			} else {
+				response.setContentType("application/json");
+				out.write("{\"check\":\"fail\"}");
+				out.flush();
+			}
+		} else {
+			response.setContentType("application/json");
+			out.write("{\"check\":\"fail\"}");
+			out.flush();
+		}
+	}
+
+	@GetMapping("/edit-about")
+	public void AddEditAbout(@RequestParam int id, @RequestParam String title, @RequestParam String content,
+			@RequestParam String image, HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+
+		About aboutvar = new About(id,title,content,image);
+		aboutService.Save(aboutvar);
+		PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("utf-8");
+
+		if (aboutService.findAbout(id) != null) {
+
+			if (aboutService.findAllAbout() != null) {
+				response.setContentType("application/json");
+				// Import gson-2.2.2.jar
+				Gson gson = new Gson();
+				String objectToReturn = gson.toJson(aboutService.findAllAbout()); // Convert List -> Json
+				out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
+				out.flush();
+				// response.getWriter().write(objectToReturn);
+			} else {
+				response.setContentType("application/json");
+				out.write("{\"check\":\"fail\"}");
+				out.flush();
+			}
+		} else {
+			response.setContentType("application/json");
+			out.write("{\"check\":\"fail\"}");
+			out.flush();
+		}
+	}
+	
+	
+	//=============================================================================Uploadfile to drive
+	@PostMapping("/uploadfile")
+	public void uploadFile(@RequestParam MultipartFile file, Model model,  HttpServletResponse response) throws Exception {
+		PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
+
+		Drive service = getDriveService();
+		
+		File fileMetadata = new File();
+		fileMetadata.setTitle(file.getOriginalFilename());
+
+		java.io.File filePath = new java.io.File("upload-dir/" + file.getOriginalFilename());
+		filePath.createNewFile();
+		
+		FileContent mediaContent = new FileContent(file.getContentType(), filePath);
+		File f = service.files().insert(fileMetadata, mediaContent)
+		    .setFields("id")
+		    .execute();
+		
+		linkTai = "http://drive.google.com/open?id="+f.getId();
+
+		Path sourceFile = Paths.get("upload-dir/"+file.getOriginalFilename());
+		
+		response.setContentType("application/json");
+		// Import gson-2.2.2.jar
+		Gson gson = new Gson();
+		String objectToReturn = gson.toJson(linkTai); // Convert List -> Json
+		out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
+		out.flush();
+		
+/*		return "redirect:/manage-news";
+*/	}
+	
+	
 	/** Application name. */
     private static final String APPLICATION_NAME =
         "Drive API Java Quickstart";

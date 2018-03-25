@@ -108,7 +108,7 @@
         	}
         	
         	
-        	 $.get("load-newslist", function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+        	 $.get("load-eventlist", function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
  		        //var $table = $("<table>").appendTo($("#somediv")); // Create HTML <table> element and append it to HTML DOM element with ID "somediv".
  		        if (responseJson.check == "fail") {
 		                    //$('#message').text("List isEmpty! Name not found!");
@@ -120,26 +120,26 @@
  		        $.each(responseJson, function(index, product) {    // Iterate over the JSON array.
  		            $("<tr>").appendTo($table)                      // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
  		                .append($("<td>").text(product.id).css('width','100px'))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
- 		                .append($("<td>").text(product.title)) 
- 		                 .append($("<td>").text(product.openingline))  
- 		                  .append($("<td>").text(product.image1))  
- 		                   .append($("<td>").text(product.content1))  
- 		                   .append($("<td>").text(product.image2))  
- 		                   .append($("<td>").text(product.content2))  
- 		                    .append($("<td>").text(product.writer))
+ 		               .append($("<td>").text(product.eventname)) 
+ 		              .append($("<td>").text(product.eventdate))  
+ 		               .append($("<td>").text(product.eventtime))  		 
+ 		               .append($("<td>").text(product.eventlocation)) 
+ 		              .append($("<td>").text(product.lectureravatar))  
+ 		               .append($("<td>").text(product.lecturername))  
+ 		               .append($("<td>").text(product.benefit)) 
  		                    .append($("<td>")
  		                		.append($("<a>")
  		                				.append($("<i>").addClass("fa fa-pencil edit"))
  		                			   )
  		                				.click(function(){
  		                					$("#contentGrID2").val(product.id);
-             		     		        	$("#content4").val(product.title);
-             		     		        	$("#content11").val(product.openingline);
-             		     		        	$("#content12").val(product.image1);
-             		     		        	$("#content13").val(product.content1);
-             		     		        	$("#content14").val(product.image2);
-             		     		        	$("#content15").val(product.content2);
-             		     		        	$("#content16").val(product.writer);            		     		        	
+             		     		        	$("#content4").val(product.eventname);
+             		     		        	$("#content11").val(product.eventdate);
+             		     		        	$("#content12").val(product.eventtime);
+             		     		        	$("#content13").val(product.eventlocation);
+             		     		        	$("#content14").val(product.lectureravatar);
+             		     		        	$("#content15").val(product.lecturername);
+             		     		        	$("#content16").val(product.benefit);            		     		        	
              		     		        	
  		                		           	 event.preventDefault();
   		                					$("#modal-4options").show();
@@ -153,7 +153,7 @@
  		                				.click(function(){
  		                					var retVal = confirm("Do you really want to delete this?");          	
 	 		           	                    if( retVal == true ){
-	 		           	                    	$.get("delete-news",{id : product.id}, 
+	 		           	                    	$.get("delete-event",{id : product.id}, 
 	   		                						function(responseJson) {  
 		   		                						if (responseJson.check == "fail") {
 			 		               		                  	alert("Deleting failed!");
@@ -180,7 +180,7 @@
         	 
         	 
         	 function reload(){
-        		 $.get("load-newslist", function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
+        		 $.get("load-eventlist", function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
       		        //var $table = $("<table>").appendTo($("#somediv")); // Create HTML <table> element and append it to HTML DOM element with ID "somediv".
       		        if (responseJson.check == "fail") {
       		        	alert("Loaddata failed!");
@@ -193,26 +193,26 @@
       		        $.each(responseJson, function(index, product) {    // Iterate over the JSON array.
       		            $("<tr>").appendTo($table).addClass('article-loop')                      // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
       		          .append($("<td>").text(product.id).css('width','100px'))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
-      		        .append($("<td>").text(product.title)) 
-	                 .append($("<td>").text(product.openingline))  
-	                  .append($("<td>").text(product.image1))  
-	                   .append($("<td>").text(product.content1))  
-	                   .append($("<td>").text(product.image2))  
-	                   .append($("<td>").text(product.content2))  
-	                    .append($("<td>").text(product.writer))   
+      		        .append($("<td>").text(product.eventname)) 
+		              .append($("<td>").text(product.eventdate))  
+		               .append($("<td>").text(product.eventtime))  		 
+		               .append($("<td>").text(product.eventlocation)) 
+		              .append($("<td>").text(product.lectureravatar))  
+		               .append($("<td>").text(product.lecturername))  
+		               .append($("<td>").text(product.benefit))   
       		          .append($("<td>")
 		                		.append($("<a>")
 		                				.append($("<i>").addClass("fa fa-pencil edit"))
 		                			   )
 		                				.click(function(){
 		                					$("#contentGrID2").val(product.id);
-             		     		        	$("#content4").val(product.title);
-             		     		        	$("#content11").val(product.openingline);
-             		     		        	$("#content12").val(product.image1);
-             		     		        	$("#content13").val(product.content1);
-             		     		        	$("#content14").val(product.image2);
-             		     		        	$("#content15").val(product.content2);
-             		     		        	$("#content16").val(product.writer);
+             		     		        	$("#content4").val(product.eventname);
+             		     		        	$("#content11").val(product.eventdate);
+             		     		        	$("#content12").val(product.eventtime);
+             		     		        	$("#content13").val(product.eventlocation);
+             		     		        	$("#content14").val(product.lectureravatar);
+             		     		        	$("#content15").val(product.lecturername);
+             		     		        	$("#content16").val(product.benefit);  
              		     		        	
 		                		           	 event.preventDefault();
 		                					$("#modal-4options").show();
@@ -226,7 +226,7 @@
 		                				.click(function(){
 		                					var retVal = confirm("Do you really want to delete this?");          	
 	 		           	                    if( retVal == true ){
-	 		           	                    	$.get("delete-news",{id : product.id}, 
+	 		           	                    	$.get("delete-event",{id : product.id}, 
 	   		                						function(responseJson) {  
 		   		                						if (responseJson.check == "fail") {
 			 		               		                  	alert("Deleting failed!");
@@ -251,9 +251,9 @@
         	 }
 
         	$('#add1').click(function(){
-           	 $.get("add-news",{id : $('#contentGrID').val(),title : $('#content3').val(), openingline : $('#content5').val(),
-           		image1 : $('#content6').val(), content1 : $('#content7').val(), image2 : $('#content8').val(), 
-           		content2 : $('#content9').val(), writer : $('#content10').val(),
+           	 $.get("add-event",{id : $('#contentGrID').val(),eventname : $('#content3').val(), eventdate : $('#content5').val(),
+           		eventtime : $('#content6').val(), eventlocation : $('#content7').val(), lectureravatar : $('#content8').val(), 
+           		lecturername : $('#content9').val(), benefit : $('#content10').val(),
            		 }, function(responseJson) {         
            		if (responseJson.check == "fail") {
                     var retVal = confirm("Please enter your full details with your request!\nDo you want to continute?");          	
@@ -274,9 +274,9 @@
         	
         	
         	$('#edit1').click(function(){
-           	 $.get("edit-news",{id : $('#contentGrID2').val(), title : $('#content4').val(), openingline : $('#content11').val(),
-            		image1 : $('#content12').val(), content1 : $('#content13').val(), image2 : $('#content14').val(), 
-               		content2 : $('#content15').val(), writer : $('#content16').val(),
+           	 $.get("edit-event",{id : $('#contentGrID2').val(), eventname : $('#content4').val(), eventdate : $('#content11').val(),
+           		eventtime : $('#content12').val(), eventlocation : $('#content13').val(), lectureravatar : $('#content14').val(), 
+            		lecturername : $('#content15').val(), benefit : $('#content16').val(),
            		 }, function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
            		if (responseJson.check == "fail") {
                     var retVal = confirm("Please enter your full details with your request!\nDo you want to continute?");          	
@@ -293,53 +293,6 @@
      		    });
            	 event.preventDefault(); // Important! Prevents submitting the form
             });  
-        	
-        	
-        	
-        	 $("#btn_upload").click(function (event) {
-
-        	        //stop submit the form, we will post it manually.
-        	        event.preventDefault();
-
-        	        // Get form
-        	        var form = $('#uploadfile')[0];
-
-        			// Create an FormData object 
-        	        var data = new FormData(form);
-
-        			// If you want to add an extra field for the FormData
-/*         	        data.append("CustomField", "This is some extra data, testing");
- */
-        			// disabled the submit button
-        	        $("#btn_upload").prop("disabled", true);
-
-        	        $.ajax({
-        	            type: "POST",
-        	            enctype: 'multipart/form-data',
-        	            url: "uploadfile",
-        	            data: data,
-        	            processData: false,
-        	            contentType: false,
-        	            cache: false,
-        	            timeout: 600000,
-        	            success: function (data) {
-
-        	                $("#result").text(data);
-        	                console.log("SUCCESS : ", data);
-        	                $("#btn_upload").prop("disabled", false);
-
-        	            },
-        	            error: function (e) {
-
-        	                $("#result").text(e.responseText);
-        	                console.log("ERROR : ", e);
-        	                $("#btn_upload").prop("disabled", false);
-
-        	            }
-        	        });
-
-        	    });
-
 	        
         });
 	</script>
@@ -365,8 +318,8 @@
 					<a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">MANAGEMENT</a>
 					<div class="dropdown-menu" aria-labelledby="dropdown03">
 						<a class="dropdown-item" href="manage-news">NEWS</a>
-						<a class="dropdown-item" href="">EVENT</a>
-						<a class="dropdown-item" href="">ABOUT</a>
+						<a class="dropdown-item" href="manage-event">EVENT</a>
+						<a class="dropdown-item" href="manage-about">ABOUT</a>
 					</div>
 				</li>
 				<li class="nav-item">
@@ -402,7 +355,7 @@
         <div class="md-content">
             <h4>
                 <span>
-                        Add News 
+                        Add Option 
                         <button type="button" class="close" data-dismiss="modal-3options" aria-label="Close" id="closebtn">
                               <span aria-hidden="true">&times;</span>
                         </button>

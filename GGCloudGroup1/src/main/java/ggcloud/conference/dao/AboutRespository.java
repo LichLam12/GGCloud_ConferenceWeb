@@ -6,5 +6,6 @@ import ggcloud.conference.model.About;
 
 public interface AboutRespository extends CrudRepository<About, Integer>{
 
+
 }
 

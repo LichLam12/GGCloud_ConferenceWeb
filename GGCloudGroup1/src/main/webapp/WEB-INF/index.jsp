@@ -319,89 +319,117 @@
 			</div>
 			<!-- Three columns of text below the carousel -->
 			<div class="row" style="margin-top: 60px">
+			
+			<c:forEach var="row" items="${newslist }"  begin="0" end="0">			
+			
 				<div class="item col-lg-3 col-sm-4 col-xs-6 rounded float-left">
 					<div class="dtl05">
 						<img src="Style/images/blog/new1.jpg" alt=""
 							class="rounded float-left"> <a href="/news"><div
 								class="dtl">
-								<h3>Opening MongGOGO TOEIC 24/7</h3>
-								<p>By John Lam.</p>
+								<h3>${row.title } </h3>
+								<p>By ${row.writer } </p>
 							</div></a>
 					</div>
 				</div>
+				</c:forEach>
+			
+			<c:forEach var="row" items="${newslist }"  begin="1" end="1">			
+			
 				<div class="item col-lg-3 col-sm-4 col-xs-6 rounded mx-auto d-block">
 					<div class="dtl05">
 						<img src="Style/images/blog/new2.jpg" alt="/news"> <a
 							href="ForwardToNews"><div class="dtl">
-								<h3>BUSINESS IN BRIEF 26/12</h3>
-								<p>By John Doe.</p>
+								<h3>${row.title } </h3>
+								<p>By ${row.writer } </p>
 							</div></a>
 					</div>
 				</div>
+			</c:forEach>
+			
+			<c:forEach var="row" items="${newslist }"  begin="2" end="2">			
+			
 				<div class="item col-lg-3 col-sm-4 col-xs-6 rounded float-right">
 					<div class="dtl05">
 						<img src="Style/images/blog/new3.jpg" alt=""> <a
 							href="ForwardToNews"><div class="dtl">
-								<h3>Social News 26/12</h3>
-								<p>By John Doe.</p>
+								<h3>${row.title } </h3>
+								<p>By ${row.writer } </p>
 							</div></a>
 					</div>
 				</div>
+			</c:forEach>
+			
+		    <c:forEach var="row" items="${newslist }"  begin="3" end="3">			
+			
 				<div class="item col-lg-3 col-sm-4 col-xs-6 rounded float-right">
 					<div class="dtl05">
 						<img src="Style/images/blog/new4.jpg" alt=""> <a
 							href="ForwardToNews">
 							<div class="dtl">
-								<h3>Visiting a 150-year-old pink church in Saigon</h3>
-								<p>By John Doe.</p>
+								<h3>${row.title } </h3>
+								<p>By ${row.writer } </p>
 							</div>
 						</a>
 					</div>
 				</div>
+			</c:forEach>
+				
+			<c:forEach var="row" items="${newslist }"  begin="4" end="4">			
+			
 				<div class="item col-lg-3 col-sm-4 col-xs-6 rounded float-left">
 					<div class="dtl05">
-						<img src="Style/images/blog/new5.jpg" alt=""
-							class="rounded float-left"> <a href="ForwardToNews">
-							<div class="dtl">
-								<h3>What's on December 25-31</h3>
-								<p>By John Doe.</p>
-							</div>
-						</a>
+						<img src="Style/images/blog/new1.jpg" alt=""
+							class="rounded float-left"> <a href="/news"><div
+								class="dtl">
+								<h3>${row.title } </h3>
+								<p>By ${row.writer } </p>
+							</div></a>
 					</div>
 				</div>
+				</c:forEach>
+			
+			<c:forEach var="row" items="${newslist }"  begin="5" end="5">			
+			
 				<div class="item col-lg-3 col-sm-4 col-xs-6 rounded mx-auto d-block">
 					<div class="dtl05">
-						<img src="Style/images/blog/new6.jpg" alt=""> <a
-							href="ForwardToNews">
-							<div class="dtl">
-								<h3>What's on December 25-31</h3>
-								<p>By John Doe.</p>
-							</div>
-						</a>
+						<img src="Style/images/blog/new2.jpg" alt="/news"> <a
+							href="ForwardToNews"><div class="dtl">
+								<h3>${row.title } </h3>
+								<p>By ${row.writer } </p>
+							</div></a>
 					</div>
 				</div>
+			</c:forEach>
+			
+			<c:forEach var="row" items="${newslist }"  begin="6" end="6">			
+			
 				<div class="item col-lg-3 col-sm-4 col-xs-6 rounded float-right">
 					<div class="dtl05">
-						<img src="Style/images/blog/new7.jpg" alt=""> <a
-							href="ForwardToNews">
-							<div class="dtl">
-								<h3>Merry Christmas Festival 24/12</h3>
-								<p>By John Doe.</p>
-							</div>
-						</a>
+						<img src="Style/images/blog/new3.jpg" alt=""> <a
+							href="ForwardToNews"><div class="dtl">
+								<h3>${row.title } </h3>
+								<p>By ${row.writer } </p>
+							</div></a>
 					</div>
 				</div>
+			</c:forEach>
+			
+		    <c:forEach var="row" items="${newslist }"  begin="7" end="7">			
+			
 				<div class="item col-lg-3 col-sm-4 col-xs-6 rounded float-right">
 					<div class="dtl05">
-						<img src="Style/images/blog/new8.jpg" alt=""> <a
+						<img src="Style/images/blog/new4.jpg" alt=""> <a
 							href="ForwardToNews">
 							<div class="dtl">
-								<h3>Happy Valentine with MongGOGO TOEIC</h3>
-								<p>By John Doe.</p>
+								<h3>${row.title } </h3>
+								<p>By ${row.writer } </p>
 							</div>
 						</a>
 					</div>
 				</div>
+			</c:forEach>	
+				
 			</div>
 		</div>
 	</div>
@@ -414,7 +442,7 @@
 			<h1 class="w3-container w3-center w3-animate-zoom">STAY
 				CONNECTED WITH US</h1>
 			<p>Let your email address now to subscribe to the latest news
-				from Monggogo Toeic!</p>
+				from The Future Conference!</p>
 
 
 			<div id="mc_embed_signup">
@@ -451,81 +479,55 @@
 
 	<!-- Footer -->
 	<footer id=contact>
-	<div class="splitter"></div>
-	<ul>
-		<li>
-			<div class="text">
-				<h4>MONGGOGO TOEIC</h4>
-				<div>
-					<p class="lead">
-						<i class="fa fa-map" aria-hidden="true"></i>Address: 1040 Vo Van
-						Ngan, Thu Duc District, HCMC
-					</p>
-					<p class="lead">
-						<i class="fa fa-address-book" aria-hidden="true"></i>Phone: (088)
-						6677022
-					</p>
-					<p class="lead">
-						<i class="fa fa-envelope-open" aria-hidden="true"></i>Email:
-						monggogotoeic@edu.vn
-					</p>
-					<a href="#">Read more...</a>
-				</div>
-			</div>
-		</li>
+        <div class="splitter"></div>
+        <ul>
+            <li>
+                <div class="text">
+                    <h4>THE FUTURE CONFERENCE</h4>
+                    <div>
+                        <p class="lead"><i class="fa fa-map" aria-hidden="true" style="padding-right: 12px"></i>Address: 1040 Vo Van Ngan, Thu Duc District, HCMC</p>
+                        <p class="lead"><i class="fa fa-address-book" aria-hidden="true" style="padding-right: 12px"></i>Phone: (088) 6677022</p>
+                        <p class="lead"><i class="fa fa-envelope-open" aria-hidden="true" style="padding-right: 12px"></i>Email: thefutureconference@edu.vn</p>
+                        <a href="#">Read more...</a></div>
+                </div>
+            </li>
 
-		<li>
-			<div class="text">
-				<h4>SOCIAL</h4>
-				<p class="lead social-icons">
-					Connect us: <a href="https://www.facebook.com/" target="_blank">
-						<i class="fa fa-facebook-square"></i>
-					</a> <a href="https://twitter.com/?lang=vi/" class="tw" target="_blank">
-						<i class="fa fa-twitter-square"></i>
-					</a> <a href="" class="rs"> <i class="fa fa-rss-square"
-						target="_blank"></i></a> <a href="https://www.youtube.com/" class="yt"
-						target="_blank"> <i class="fa fa-youtube-square"></i></a> <a
-						href="https://www.linkedin.com/" class="li" target="_blank"> <i
-						class="fa fa-linkedin-square"></i></a> <a
-						href="https://plus.google.com/discover?hl=vi/" class="gp"
-						target="_blank"> <i class="fa fa-google-plus-square"></i></a>
-				</p>
+            <li>
+                <div class="text">
+                    <h4>SOCIAL</h4>
+                    <p class="lead social-icons">Connect us:
+                        <a href=""> <i class="fa fa-facebook-square"></i></a>
+                        <a href="" class="tw"> <i class="fa fa-twitter-square"></i></a>
+                        <a href="" class="rs"> <i class="fa fa-rss-square"></i></a>
+                        <a href="" class="yt"> <i class="fa fa-youtube-square"></i></a>
+                        <a href="" class="li"> <i class="fa fa-linkedin-square"></i></a>
+                        <a href="" class="gp"> <i class="fa fa-google-plus-square"></i></a>
+                    </p>
 
 
-				<p class="lead">Please rate your overall experience:</p>
-				<fieldset class="rating">
-					<input type="radio" id="star5" name="rating" value="5" /><label
-						class="full" for="star5" title="Awesome - 5 stars"></label> <input
-						type="radio" id="star4half" name="rating" value="4 and a half" /><label
-						class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-					<input type="radio" id="star4" name="rating" value="4" /><label
-						class="full" for="star4" title="Pretty good - 4 stars"></label> <input
-						type="radio" id="star3half" name="rating" value="3 and a half" /><label
-						class="half" for="star3half" title="Meh - 3.5 stars"></label> <input
-						type="radio" id="star3" name="rating" value="3" /><label
-						class="full" for="star3" title="Meh - 3 stars"></label> <input
-						type="radio" id="star2half" name="rating" value="2 and a half" /><label
-						class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-					<input type="radio" id="star2" name="rating" value="2" /><label
-						class="full" for="star2" title="Kinda bad - 2 stars"></label> <input
-						type="radio" id="star1half" name="rating" value="1 and a half" /><label
-						class="half" for="star1half" title="Meh - 1.5 stars"></label> <input
-						type="radio" id="star1" name="rating" value="1" /><label
-						class="full" for="star1" title="Sucks big time - 1 star"></label>
-					<input type="radio" id="starhalf" name="rating" value="half" /><label
-						class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-				</fieldset>
+                    <p class="lead">Please rate your overall experience:</p>
+                    <fieldset class="rating">
+                        <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="Awesome - 5 stars"></label>
+                        <input type="radio" id="star4half" name="rating" value="4 and a half" /><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+                        <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" title="Pretty good - 4 stars"></label>
+                        <input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+                        <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3" title="Meh - 3 stars"></label>
+                        <input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+                        <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+                        <input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+                        <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="Sucks big time - 1 star"></label>
+                        <input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+                    </fieldset>
 
-			</div>
-		</li>
-	</ul>
+                </div>
+            </li>
+        </ul>
 
-	<div class="bar">
-		<div class="clear"></div>
-		<div class="copyright lead">&copy; 2017 Monggogo Toeic All
-			Rights Reserved</div>
-	</div>
-	</footer>
+        <div class="bar">
+            <div class="clear"></div>
+            <div class="copyright lead">&copy; 2017 The Future Conference All Rights Reserved</div>
+        </div>
+    </footer>
 
 	<script>
               //Nút send ở phần Follow trang chủ
