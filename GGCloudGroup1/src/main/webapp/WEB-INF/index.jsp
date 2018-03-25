@@ -264,8 +264,7 @@
 				<div class="col-sm-6">
 					
 					<b>${row.eventname }</b>
-					<p><fmt:formatDate type="DATE"  dateStyle="short"  value = "${row.eventdate }" ></fmt:formatDate> <fmt:formatDate type = "time" 
-         			timeStyle="short" value = "${row.eventtime }" /> - ${row.eventlocation }</p>					
+					<p><fmt:formatDate value="${row.eventdate }" pattern="yyyy-MM-dd" /> ${row.eventtime } - ${row.eventlocation }</p>					
 					
 				</div>
 				<div class="col-sm-3">
