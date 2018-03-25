@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,6 +49,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -79,7 +84,7 @@ public class HomeController {
 
 
 	
-	//=============================================================================Managing about
+	//=============================================================================Managing news
 	@GetMapping("/manage-news")
 	public String NewsManagementPage(Model model, HttpServletRequest request) {
 		model.addAttribute("linkTai",linkTai);
@@ -213,6 +218,141 @@ public class HomeController {
 		}
 	}
 
+	
+	
+	//=============================================================================Managing event
+		@GetMapping("/manage-event")
+		public String EventManagementPage(Model model, HttpServletRequest request) {
+			model.addAttribute("linkTai",linkTai);
+			return "managingevent";
+		}
+
+		@GetMapping("/load-eventlist")
+		public void ShowEventList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+			System.out.println("Success!");
+			// request.setAttribute("newss", newService.findAllNews());
+			PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
+			response.setContentType("text/html;charset=UTF-8");
+			request.setCharacterEncoding("utf-8");
+
+			if (eventService.findAllEvent() != null) {
+				response.setContentType("application/json");
+				// Import gson-2.2.2.jar
+				Gson gson = new Gson();
+				String objectToReturn = gson.toJson(eventService.findAllEvent()); // Convert List -> Json
+				out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
+				out.flush();
+				// response.getWriter().write(objectToReturn);
+			} else {
+				response.setContentType("application/json");
+				out.write("{\"check\":\"fail\"}");
+				out.flush();
+			}
+		}
+
+		@GetMapping("/delete-event")
+		public void DeleteEvent(@RequestParam int id, HttpServletRequest request) {
+			try {
+				eventService.Delete(id);
+				System.out.println("Delete Successfull");
+			} catch (Exception e) {
+				System.out.println("Delete Error");
+			}
+		}
+
+		@GetMapping("/add-event")
+		public void AddEvent(@RequestParam int id, @RequestParam String eventname, @RequestParam String eventdate,
+				@RequestParam String eventtime, @RequestParam String eventlocation, @RequestParam String lectureravatar,
+				@RequestParam String lecturername, @RequestParam String benefit, HttpServletRequest request,
+				HttpServletResponse response) throws IOException {
+
+			DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				Date startDate = sdf.parse(eventdate);
+				java.sql.Date sqlDate = new java.sql.Date(startDate.getTime());
+				System.out.println(sqlDate);
+				
+
+				Event eventvar = new Event(id, eventname, startDate, eventtime, eventlocation, lectureravatar, lecturername, benefit);
+				PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
+				response.setContentType("text/html;charset=UTF-8");
+				request.setCharacterEncoding("utf-8");
+
+				if (eventService.findEvent(id) == null) {
+					eventService.Save(eventvar);
+
+					if (eventService.findAllEvent() != null) {
+						response.setContentType("application/json");
+						// Import gson-2.2.2.jar
+						Gson gson = new Gson();
+						String objectToReturn = gson.toJson(eventService.findAllEvent()); // Convert List -> Json
+						out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
+						out.flush();
+						// response.getWriter().write(objectToReturn);
+					} else {
+						response.setContentType("application/json");
+						out.write("{\"check\":\"fail\"}");
+						out.flush();
+					}
+				} else {
+					response.setContentType("application/json");
+					out.write("{\"check\":\"fail\"}");
+					out.flush();
+				}
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			
+		}
+
+		@GetMapping("/edit-event")
+		public void AddEditEvent(@RequestParam int id, @RequestParam String eventname, @RequestParam String eventdate,
+				@RequestParam String eventtime, @RequestParam String eventlocation, @RequestParam String lectureravatar,
+				@RequestParam String lecturername, @RequestParam String benefit, HttpServletRequest request,
+				HttpServletResponse response) throws IOException {
+
+			DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				Date startDate = sdf.parse(eventdate);
+				java.sql.Date sqlDate = new java.sql.Date(startDate.getTime());
+				System.out.println(sqlDate);
+				
+				Event eventvar = new Event(id, eventname, startDate, eventtime, eventlocation, lectureravatar, lecturername, benefit);
+				eventService.Save(eventvar);
+				PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
+				response.setContentType("text/html;charset=UTF-8");
+				request.setCharacterEncoding("utf-8");
+
+				if (eventService.findEvent(id) != null) {
+
+					if (eventService.findAllEvent() != null) {
+						response.setContentType("application/json");
+						// Import gson-2.2.2.jar
+						Gson gson = new Gson();
+						String objectToReturn = gson.toJson(eventService.findAllEvent()); // Convert List -> Json
+						out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
+						out.flush();
+						// response.getWriter().write(objectToReturn);
+					} else {
+						response.setContentType("application/json");
+						out.write("{\"check\":\"fail\"}");
+						out.flush();
+					}
+				} else {
+					response.setContentType("application/json");
+					out.write("{\"check\":\"fail\"}");
+					out.flush();
+				}
+				
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+		}
+	
+	
 	
 	//=============================================================================Managing about
 	@GetMapping("/manage-about")

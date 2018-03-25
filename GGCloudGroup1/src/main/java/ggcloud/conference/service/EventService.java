@@ -36,7 +36,7 @@ public class EventService {
 	}
 
 	// Tìm kiếm tin tức
-	public Event findAbout(int id) {
+	public Event findEvent(int id) {
 		return eventRespository.findOne(id);
 	}
 

@@ -44,7 +44,7 @@
         		$('.page-number').remove(); //k xóa là nó sinh ra phân trang hoài
         		$('table.paginated').each(function() {
 					var currentPage = 0;
-					var numPerPage = 2;  /* Muốn hiển thị 1 page có bao nhiêu hàng */
+					var numPerPage = 3;  /* Muốn hiển thị 1 page có bao nhiêu hàng */
 					var $table = $(this);
 					$table.bind('repaginate', function() {
 						$table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
@@ -117,11 +117,14 @@
 		                    return;
 		        }
  		        var $table = document.getElementById("row");
- 		        $.each(responseJson, function(index, product) {    // Iterate over the JSON array.
+ 		        $.each(responseJson, function(index, product) {
+ 		        	
+ 		        	var edate = new Date(product.eventdate);
+ 		        	
  		            $("<tr>").appendTo($table)                      // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
  		                .append($("<td>").text(product.id).css('width','100px'))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
  		               .append($("<td>").text(product.eventname)) 
- 		              .append($("<td>").text(product.eventdate))  
+ 		              	.append($("<td>").text(edate.getDate() + "/" + (edate.getMonth() + 1) + "/" + edate.getFullYear())) 
  		               .append($("<td>").text(product.eventtime))  		 
  		               .append($("<td>").text(product.eventlocation)) 
  		              .append($("<td>").text(product.lectureravatar))  
@@ -132,10 +135,58 @@
  		                				.append($("<i>").addClass("fa fa-pencil edit"))
  		                			   )
  		                				.click(function(){
+ 		                					
+ 		                					if(edate.getHours()==9 && edate.getMinutes()==0 && edate.getSeconds()==0){
+	                		     		        	$("#examTime2").val("90000");
+             		     		        	}
+             		     		        	else if(edate.getHours()==9 && edate.getMinutes()==30 && edate.getSeconds()==0){
+	                		     		        	$("#examTime2").val("93000");
+             		     		        	}
+             		     		        	else if(edate.getHours()==10 && edate.getMinutes()==0 && edate.getSeconds()==0){
+	                		     		        	$("#examTime2").val("100000");
+             		     		        	}  
+             		     		        	else if(edate.getHours()==13 && edate.getMinutes()==0 && edate.getSeconds()==0){
+	                		     		        	$("#examTime2").val("130000");
+             		     		        	}
+             		     		        	else if(edate.getHours()==13 && edate.getMinutes()==30 && edate.getSeconds()==0){
+	                		     		        	$("#examTime2").val("133000");
+             		     		        	}
+             		     		        	else if(edate.getHours()==14 && edate.getMinutes()==0 && edate.getSeconds()==0){
+	                		     		        	$("#examTime2").val("140000");
+             		     		        	}
+             		     		        	else if(edate.getHours()==14 && edate.getMinutes()==30 && edate.getSeconds()==0){
+	                		     		        	$("#examTime2").val("143000");
+             		     		        	}
+             		     		        	else if(edate.getHours()==15 && edate.getMinutes()==0 && edate.getSeconds()==0){
+	                		     		        	$("#examTime2").val("150000");
+             		     		        	}
+             		     		        	else if(edate.getHours()==15 && edate.getMinutes()==30 && edate.getSeconds()==0){
+	                		     		        	$("#examTime2").val("153000");
+             		     		        	}
+             		     		        	else if(edate.getHours()==16 && edate.getMinutes()==0 && edate.getSeconds()==0){
+	                		     		        	$("#examTime2").val("160000");
+             		     		        	}
+             		     		        	else if(edate.getHours()==16 && edate.getMinutes()==30 && edate.getSeconds()==0){
+	                		     		        	$("#examTime2").val("163000");
+             		     		        	}
+ 		                					
+ 		                					
+ 		                					if(edate.getDate()<10 && (edate.getMonth()+1)<10){
+	                		     		        	$("#examDate2").val(edate.getFullYear()+ "-0" +(edate.getMonth()+1)+ "-0" +edate.getDate());
+            		     		        	}
+            		     		        	else if(edate.getDate()<10 && (edate.getMonth()+1)>=10){ 	
+	                		     		        	$("#examDate2").val(edate.getFullYear()+ "-" +(edate.getMonth()+1)+ "-0" +edate.getDate());
+	                		     		        	
+            		     		        	}
+            		     		        	else if((edate.getMonth()+1)<10 && edate.getDate()>=10){
+            		     		        		$("#examDate2").val(edate.getFullYear()+ "-0" +(edate.getMonth()+1)+ "-" +edate.getDate());
+            		     		        	}
+            		     		        	else{
+	                		     		        	$("#examDate2").val(edate.getFullYear()+ "-" +(edate.getMonth()+1)+ "-" +edate.getDate());
+            		     		        	}
+ 		                					
  		                					$("#contentGrID2").val(product.id);
              		     		        	$("#content4").val(product.eventname);
-             		     		        	$("#content11").val(product.eventdate);
-             		     		        	$("#content12").val(product.eventtime);
              		     		        	$("#content13").val(product.eventlocation);
              		     		        	$("#content14").val(product.lectureravatar);
              		     		        	$("#content15").val(product.lecturername);
@@ -190,12 +241,15 @@
       		      	$.each(responseJson, function(index, product) { 
              			$("#productTable > tbody > tr").remove();
              		 });
-      		        $.each(responseJson, function(index, product) {    // Iterate over the JSON array.
+      		        $.each(responseJson, function(index, product) {
+      		        	
+      		        	var edate = new Date(product.eventdate);
+      		        	
       		            $("<tr>").appendTo($table).addClass('article-loop')                      // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
       		          .append($("<td>").text(product.id).css('width','100px'))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
       		        .append($("<td>").text(product.eventname)) 
-		              .append($("<td>").text(product.eventdate))  
-		               .append($("<td>").text(product.eventtime))  		 
+					.append($("<td>").text(edate.getDate() + "/" + (edate.getMonth() + 1) + "/" + edate.getFullYear()))
+					.append($("<td>").text(product.eventtime))  		 
 		               .append($("<td>").text(product.eventlocation)) 
 		              .append($("<td>").text(product.lectureravatar))  
 		               .append($("<td>").text(product.lecturername))  
@@ -205,15 +259,62 @@
 		                				.append($("<i>").addClass("fa fa-pencil edit"))
 		                			   )
 		                				.click(function(){
-		                					$("#contentGrID2").val(product.id);
-             		     		        	$("#content4").val(product.eventname);
-             		     		        	$("#content11").val(product.eventdate);
-             		     		        	$("#content12").val(product.eventtime);
-             		     		        	$("#content13").val(product.eventlocation);
-             		     		        	$("#content14").val(product.lectureravatar);
-             		     		        	$("#content15").val(product.lecturername);
-             		     		        	$("#content16").val(product.benefit);  
-             		     		        	
+		                					if(edate.getHours()==9 && edate.getMinutes()==0 && edate.getSeconds()==0){
+                		     		        	$("#examTime2").val("90000");
+         		     		        	}
+         		     		        	else if(edate.getHours()==9 && edate.getMinutes()==30 && edate.getSeconds()==0){
+                		     		        	$("#examTime2").val("93000");
+         		     		        	}
+         		     		        	else if(edate.getHours()==10 && edate.getMinutes()==0 && edate.getSeconds()==0){
+                		     		        	$("#examTime2").val("100000");
+         		     		        	}  
+         		     		        	else if(edate.getHours()==13 && edate.getMinutes()==0 && edate.getSeconds()==0){
+                		     		        	$("#examTime2").val("130000");
+         		     		        	}
+         		     		        	else if(edate.getHours()==13 && edate.getMinutes()==30 && edate.getSeconds()==0){
+                		     		        	$("#examTime2").val("133000");
+         		     		        	}
+         		     		        	else if(edate.getHours()==14 && edate.getMinutes()==0 && edate.getSeconds()==0){
+                		     		        	$("#examTime2").val("140000");
+         		     		        	}
+         		     		        	else if(edate.getHours()==14 && edate.getMinutes()==30 && edate.getSeconds()==0){
+                		     		        	$("#examTime2").val("143000");
+         		     		        	}
+         		     		        	else if(edate.getHours()==15 && edate.getMinutes()==0 && edate.getSeconds()==0){
+                		     		        	$("#examTime2").val("150000");
+         		     		        	}
+         		     		        	else if(edate.getHours()==15 && edate.getMinutes()==30 && edate.getSeconds()==0){
+                		     		        	$("#examTime2").val("153000");
+         		     		        	}
+         		     		        	else if(edate.getHours()==16 && edate.getMinutes()==0 && edate.getSeconds()==0){
+                		     		        	$("#examTime2").val("160000");
+         		     		        	}
+         		     		        	else if(edate.getHours()==16 && edate.getMinutes()==30 && edate.getSeconds()==0){
+                		     		        	$("#examTime2").val("163000");
+         		     		        	}
+		                					
+		                					
+		                					if(edate.getDate()<10 && (edate.getMonth()+1)<10){
+                		     		        	$("#examDate2").val(edate.getFullYear()+ "-0" +(edate.getMonth()+1)+ "-0" +edate.getDate());
+        		     		        	}
+        		     		        	else if(edate.getDate()<10 && (edate.getMonth()+1)>=10){ 	
+                		     		        	$("#examDate2").val(edate.getFullYear()+ "-" +(edate.getMonth()+1)+ "-0" +edate.getDate());
+                		     		        	
+        		     		        	}
+        		     		        	else if((edate.getMonth()+1)<10 && edate.getDate()>=10){
+        		     		        		$("#examDate2").val(edate.getFullYear()+ "-0" +(edate.getMonth()+1)+ "-" +edate.getDate());
+        		     		        	}
+        		     		        	else{
+                		     		        	$("#examDate2").val(edate.getFullYear()+ "-" +(edate.getMonth()+1)+ "-" +edate.getDate());
+        		     		        	}
+		                					
+		                				$("#contentGrID2").val(product.id);
+         		     		        	$("#content4").val(product.eventname);
+         		     		        	$("#content13").val(product.eventlocation);
+         		     		        	$("#content14").val(product.lectureravatar);
+         		     		        	$("#content15").val(product.lecturername);
+         		     		        	$("#content16").val(product.benefit);     
+         		     		        	
 		                		           	 event.preventDefault();
 		                					$("#modal-4options").show();
 
@@ -251,8 +352,8 @@
         	 }
 
         	$('#add1').click(function(){
-           	 $.get("add-event",{id : $('#contentGrID').val(),eventname : $('#content3').val(), eventdate : $('#content5').val(),
-           		eventtime : $('#content6').val(), eventlocation : $('#content7').val(), lectureravatar : $('#content8').val(), 
+           	 $.get("add-event",{id : $('#contentGrID').val(),eventname : $('#content3').val(), eventdate : $('#examDate').val(),
+           		eventtime : $('#examTime').val(), eventlocation : $('#content7').val(), lectureravatar : $('#content8').val(), 
            		lecturername : $('#content9').val(), benefit : $('#content10').val(),
            		 }, function(responseJson) {         
            		if (responseJson.check == "fail") {
@@ -274,8 +375,8 @@
         	
         	
         	$('#edit1').click(function(){
-           	 $.get("edit-event",{id : $('#contentGrID2').val(), eventname : $('#content4').val(), eventdate : $('#content11').val(),
-           		eventtime : $('#content12').val(), eventlocation : $('#content13').val(), lectureravatar : $('#content14').val(), 
+           	 $.get("edit-event",{id : $('#contentGrID2').val(), eventname : $('#content4').val(), eventdate : $('#examDate2').val(),
+           		eventtime : $('#examTime2').val(), eventlocation : $('#content13').val(), lectureravatar : $('#content14').val(), 
             		lecturername : $('#content15').val(), benefit : $('#content16').val(),
            		 }, function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
            		if (responseJson.check == "fail") {
@@ -355,7 +456,7 @@
         <div class="md-content">
             <h4>
                 <span>
-                        Add Option 
+                        Add Event 
                         <button type="button" class="close" data-dismiss="modal-3options" aria-label="Close" id="closebtn">
                               <span aria-hidden="true">&times;</span>
                         </button>
@@ -371,77 +472,79 @@
                             <!-- cột hiện lỗi validate -->
                         </div>
                         <div>
-                            <input type="text" name="authorityID" id="contentGrID" placeholder="Enter Id (required)">
+                            <input type="text" name="authorityID" id="contentGrID" placeholder="Enter Id (required)" required>
                         </div>
                         
                         <div>
-                            <label for="text">Title</label>
+                            <label for="text">Event Name</label>
                             <span class="red_right_add2e" id="content_error_message3" style="margin-right:70px;"></span>
                             <!-- cột hiện lỗi validate -->
                         </div>
                         <div>
                             <textarea type="text" name="content" id="content3" cols="40" rows="2"
-                             placeholder="Enter title (required)"></textarea>
+                             placeholder="Enter event name (required)" required></textarea>
                         </div>
                         
                         <div>
-                            <label for="text">Opening Line</label>
-                            <span class="red_right_add2e" id="content_error_message5" style="margin-right:70px;"></span>
-                            <!-- cột hiện lỗi validate -->
-                        </div>
-                        <div>
-                            <textarea type="text" id="content5" cols="40" rows="3"
-                             placeholder="Enter opening line (required)"></textarea>
+                                <label for="time" class="lbl_time">Event Date</label> 
+                                <input name="examDate" type="date" id="examDate" class="input_time" required />
                         </div>
                         
                         <div>
-                            <label for="text">Image1</label>
-                            <span class="red_right_add2e" id="content_error_message6" style="margin-right:70px;"></span>
-                            <!-- cột hiện lỗi validate -->
-                        </div>
-                        <div>
-                            <textarea type="text" id="content6" cols="40" rows="1"
-                             placeholder="Enter image (required)"></textarea>
+                            <label for="text" class="lbl_contentgr">Event Time</label>
+                            <select name="examTime" id="examTime" class="custom-select d-block my-3 select_contentgr" required>
+                                        <option value="90000">9h00</option>
+                                        <option value="93000">9h30</option>
+                                        <option value="100000">10h00</option>
+                                        <option value="130000">13h00</option>
+                                        <option value="133000">13h30</option>
+                                        <option value="140000">14h00</option>
+                                        <option value="143000">14h30</option>
+                                        <option value="150000">15h00</option>
+                                        <option value="153000">15h30</option>
+                                        <option value="160000">16h00</option>
+                                        <option value="163000">16h30</option>
+                             </select>
                         </div>
                         
                         <div>
-                            <label for="text">Content1</label>
+                            <label for="text">Event Location</label>
                             <span class="red_right_add2e" id="content_error_message7" style="margin-right:70px;"></span>
                             <!-- cột hiện lỗi validate -->
                         </div>
                         <div>
-                            <textarea type="text" id="content7" cols="40" rows="5"
-                             placeholder="Enter content (required)"></textarea>
+                            <textarea type="text" id="content7" cols="40" rows="2"
+                             placeholder="Enter event location (required)" required></textarea>
                         </div>
                         
                         <div>
-                            <label for="text">Image2</label>
+                            <label for="text">Lecturer Avatar</label>
                             <span class="red_right_add2e" id="content_error_message8" style="margin-right:70px;"></span>
                             <!-- cột hiện lỗi validate -->
                         </div>
                         <div>
                             <textarea type="text" id="content8" cols="40" rows="1"
-                             placeholder="Enter image"></textarea>
+                             placeholder="Enter lecturer avatar (required)" required></textarea>
                         </div>
                         
                         <div>
-                            <label for="text">Content1</label>
+                            <label for="text">Lecturer Name</label>
                             <span class="red_right_add2e" id="content_error_message9" style="margin-right:70px;"></span>
                             <!-- cột hiện lỗi validate -->
                         </div>
                         <div>
-                            <textarea type="text" id="content9" cols="40" rows="5"
-                             placeholder="Enter content"></textarea>
+                            <textarea type="text" id="content9" cols="40" rows="1"
+                             placeholder="Enter lecturer name (required)" required></textarea>
                         </div>
                         
                         <div>
-                            <label for="text">Writer</label>
+                            <label for="text">Benefit</label>
                             <span class="red_right_add2e" id="content_error_message10" style="margin-right:70px;"></span>
                             <!-- cột hiện lỗi validate -->
                         </div>
                         <div>
-                            <input type="text" id="content10" cols="40" rows="5"
-                             placeholder="Enter writer name" />
+                            <input type="text" id="content10" cols="40" rows="2"
+                             placeholder="Enter benefit (required)" required/>
                         </div>
                 </fieldset>
                 <div>
@@ -590,7 +693,7 @@
         <div class="md-content">
             <h4 class="h4-repair-contentGr">
                 <span>
-                        Edit News
+                        Edit Event
                         <button type="button" class="close" data-dismiss="modal-4options" aria-label="Close" id="closebtn1">
                               <span aria-hidden="true">&times;</span>
                         </button>                
@@ -608,73 +711,75 @@
                         </div>
                         
                         <div>
-                            <label for="text">Title</label>
+                            <label for="text">Event Name</label>
                             <span class="red_right_add2e" id="content_error_message4" style="margin-right:70px;"></span>
                             <!-- cột hiện lỗi validate -->
                         </div>
                         <div>
                             <textarea type="text" name="content" id="content4" cols="40" rows="2"
-                             placeholder="Enter title (required)"></textarea>
+                             placeholder="Enter event name (required)" required></textarea>
                         </div>                  
                         
                         <div>
-                            <label for="text">Opening Line</label>
-                            <span class="red_right_add2e" id="content_error_message11" style="margin-right:70px;"></span>
-                            <!-- cột hiện lỗi validate -->
-                        </div>
-                        <div>
-                            <textarea type="text" id="content11" cols="40" rows="3"
-                             placeholder="Enter opening line (required)"></textarea>
+                                <label for="time" class="lbl_time">Event Date</label> 
+                                <input name="examDate" type="date" id="examDate2" class="input_time" required />
                         </div>
                         
                         <div>
-                            <label for="text">Image1</label>
-                            <span class="red_right_add2e" id="content_error_message12" style="margin-right:70px;"></span>
-                            <!-- cột hiện lỗi validate -->
-                        </div>
-                        <div>
-                            <textarea type="text" id="content12" cols="40" rows="1"
-                             placeholder="Enter image (required)"></textarea>
+                            <label for="text" class="lbl_contentgr">Event Time</label>
+                            <select name="examTime" id="examTime2" class="custom-select d-block my-3 select_contentgr" required>
+                                        <option value="90000">9h00</option>
+                                        <option value="93000">9h30</option>
+                                        <option value="100000">10h00</option>
+                                        <option value="130000">13h00</option>
+                                        <option value="133000">13h30</option>
+                                        <option value="140000">14h00</option>
+                                        <option value="143000">14h30</option>
+                                        <option value="150000">15h00</option>
+                                        <option value="153000">15h30</option>
+                                        <option value="160000">16h00</option>
+                                        <option value="163000">16h30</option>
+                             </select>
                         </div>
                         
                         <div>
-                            <label for="text">Content1</label>
+                            <label for="text">Event Location</label>
                             <span class="red_right_add2e" id="content_error_message13" style="margin-right:70px;"></span>
                             <!-- cột hiện lỗi validate -->
                         </div>
                         <div>
-                            <textarea type="text" id="content13" cols="40" rows="5"
-                             placeholder="Enter content (required)"></textarea>
+                            <textarea type="text" id="content13" cols="40" rows="2"
+                             placeholder="Enter event location (required)" required></textarea>
                         </div>
                         
                         <div>
-                            <label for="text">Image2</label>
+                            <label for="text">Lecturer Avatar</label>
                             <span class="red_right_add2e" id="content_error_message14" style="margin-right:70px;"></span>
                             <!-- cột hiện lỗi validate -->
                         </div>
                         <div>
                             <textarea type="text" id="content14" cols="40" rows="1"
-                             placeholder="Enter image"></textarea>
+                             placeholder="Enter lecturer avatar" required></textarea>
                         </div>
                         
                         <div>
-                            <label for="text">Content1</label>
+                            <label for="text">Lecturer Name</label>
                             <span class="red_right_add2e" id="content_error_message15" style="margin-right:70px;"></span>
                             <!-- cột hiện lỗi validate -->
                         </div>
                         <div>
-                            <textarea type="text" id="content15" cols="40" rows="5"
-                             placeholder="Enter content"></textarea>
+                            <textarea type="text" id="content15" cols="40" rows="1"
+                             placeholder="Enter lecturer name" required></textarea>
                         </div>
                         
                         <div>
-                            <label for="text">Writer</label>
+                            <label for="text">Benefit</label>
                             <span class="red_right_add2e" id="content_error_message16" style="margin-right:70px;"></span>
                             <!-- cột hiện lỗi validate -->
                         </div>
                         <div>
-                            <input type="text" id="content16" cols="40" rows="5"
-                             placeholder="Enter writer name" />
+                            <input type="text" id="content16" cols="40" rows="2"
+                             placeholder="Enter benefit" required />
                         </div>
                 </fieldset>
                 <div>
@@ -734,9 +839,9 @@
     <!-- Authority Manegement -->
     
      <div class="container tieude" id="content-gr" style="margin-left:100px;margin-right:100px;">
-         		<h2 class="text-center" style="color: red;font-weight: bold;margin-bottom: 20px !important;">NEWS MANEGEMENT</h2>
+         		<h2 class="text-center" style="color: red;font-weight: bold;margin-bottom: 20px !important;">EVENT MANEGEMENT</h2>
         <p class="text-right">
-        <a class="md-trigger btn" data-modal="modal-3options" id="btn_left"><button type="submit" class="btn add-employee"><i class="fa fa-plus" aria-hidden="true"></i>Add New</button></a>
+        <a class="md-trigger btn" data-modal="modal-3options" id="btn_left"><button type="submit" class="btn add-employee"><i class="fa fa-plus" aria-hidden="true"></i>Add Event</button></a>
         </p>
 	
 				<div class="table-responsive">
@@ -744,13 +849,13 @@
 						<thead>
 							<tr class="text-center">
 								<th class="text-center">ID</th>
-								<th class="text-center">____Title____</th>
-                                <th class="text-center">___________OpeningLine___________</th>
-                                <th class="text-center">Image1</th>
-                                <th class="text-center">___________________Content1___________________</th>
-                                <th class="text-center">Image2</th>
-                                <th class="text-center">___________________Content2___________________</th>
-                                <th class="text-center">Writer</th>                
+								<th class="text-center">Event Name</th>
+                                <th class="text-center">Event Date</th>
+                                <th class="text-center">Event Time</th>
+                                <th class="text-center">Event Location</th>
+                                <th class="text-center">Lecturer Avatar</th>
+                                <th class="text-center">Lecturer Name</th>
+                                <th class="text-center">Benefit</th>                
 							</tr>
 						</thead>
 						<tbody id="row" class="text-center">
@@ -778,22 +883,6 @@
     </div>
     
     
-    
-    
-    
-
-
-	<div>
-		<form method="POST" enctype="multipart/form-data" id="uploadfile">
-			<table>
-				<tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
-				<tr><td></td><td><input type="submit" value="Upload" id="btn_upload"/></td></tr>
-			</table>
-		</form>
-	</div>
-	
-	<h1>Ajax Post Result</h1>
-<a id="result"></a>
     
     
      <style>

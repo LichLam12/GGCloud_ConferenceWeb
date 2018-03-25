@@ -18,7 +18,7 @@ public class Event {
     private String eventname;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date eventdate;
-    private Time eventtime;
+    private String eventtime;
     private String eventlocation;
     private String lectureravatar;
     private String lecturername;
@@ -28,7 +28,7 @@ public class Event {
 		super();
 	}
 
-	public Event(int id, String eventname, Date eventdate, Time eventtime, String eventlocation,
+	public Event(int id, String eventname, Date eventdate, String eventtime, String eventlocation,
 			String lectureravatar, String lecturername, String benefit) {
 		super();
 		this.id = id;
@@ -65,11 +65,11 @@ public class Event {
 		this.eventdate = eventdate;
 	}
 
-	public Time getEventtime() {
+	public String getEventtime() {
 		return eventtime;
 	}
 
-	public void setEventtime(Time eventtime) {
+	public void setEventtime(String eventtime) {
 		this.eventtime = eventtime;
 	}
 

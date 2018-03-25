@@ -44,7 +44,7 @@
         		$('.page-number').remove(); //k xóa là nó sinh ra phân trang hoài
         		$('table.paginated').each(function() {
 					var currentPage = 0;
-					var numPerPage = 2;  /* Muốn hiển thị 1 page có bao nhiêu hàng */
+					var numPerPage = 3;  /* Muốn hiển thị 1 page có bao nhiêu hàng */
 					var $table = $(this);
 					$table.bind('repaginate', function() {
 						$table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
