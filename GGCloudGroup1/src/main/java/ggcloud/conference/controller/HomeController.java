@@ -18,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -63,8 +65,28 @@ public class HomeController {
 	@Autowired
 	private EventService eventService;
 
-	public static String linkTai=null;
+	public static String linkTai = null;
+
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(Model model, String error, String logout) {
+		if (error != null)
+			model.addAttribute("error", "Your username and password is invalid.");
+
+		if (logout != null)
+			model.addAttribute("message", "You have been logged out successfully.");
+
+		return "login";
+	}
 	
+	
+//	@GetMapping("/login")
+//	public String LoginChoHieu() {
+////		  request.setAttribute("mode", "MODE_TASKS");
+//		 return "login";
+//	}
+//	
+	
+
 	@GetMapping("/home")
 	public String Home(HttpServletRequest request) {
 		request.setAttribute("aboutslist", aboutService.findAllAbout());
@@ -82,12 +104,11 @@ public class HomeController {
 		return "news";
 	}
 
-
-	
-	//=============================================================================Managing news
+	// =============================================================================Managing
+	// news
 	@GetMapping("/manage-news")
 	public String NewsManagementPage(Model model, HttpServletRequest request) {
-		model.addAttribute("linkTai",linkTai);
+		model.addAttribute("linkTai", linkTai);
 		return "managingnews";
 	}
 
@@ -218,146 +239,144 @@ public class HomeController {
 		}
 	}
 
-	
-	
-	//=============================================================================Managing event
-		@GetMapping("/manage-event")
-		public String EventManagementPage(Model model, HttpServletRequest request) {
-			model.addAttribute("linkTai",linkTai);
-			return "managingevent";
+	// =============================================================================Managing
+	// event
+	@GetMapping("/manage-event")
+	public String EventManagementPage(Model model, HttpServletRequest request) {
+		model.addAttribute("linkTai", linkTai);
+		return "managingevent";
+	}
+
+	@GetMapping("/load-eventlist")
+	public void ShowEventList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		System.out.println("Success!");
+		// request.setAttribute("newss", newService.findAllNews());
+		PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
+		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("utf-8");
+
+		if (eventService.findAllEvent() != null) {
+			response.setContentType("application/json");
+			// Import gson-2.2.2.jar
+			Gson gson = new Gson();
+			String objectToReturn = gson.toJson(eventService.findAllEvent()); // Convert List -> Json
+			out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
+			out.flush();
+			// response.getWriter().write(objectToReturn);
+		} else {
+			response.setContentType("application/json");
+			out.write("{\"check\":\"fail\"}");
+			out.flush();
 		}
+	}
 
-		@GetMapping("/load-eventlist")
-		public void ShowEventList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	@GetMapping("/delete-event")
+	public void DeleteEvent(@RequestParam int id, HttpServletRequest request) {
+		try {
+			eventService.Delete(id);
+			System.out.println("Delete Successfull");
+		} catch (Exception e) {
+			System.out.println("Delete Error");
+		}
+	}
 
-			System.out.println("Success!");
-			// request.setAttribute("newss", newService.findAllNews());
+	@GetMapping("/add-event")
+	public void AddEvent(@RequestParam int id, @RequestParam String eventname, @RequestParam String eventdate,
+			@RequestParam String eventtime, @RequestParam String eventlocation, @RequestParam String lectureravatar,
+			@RequestParam String lecturername, @RequestParam String benefit, HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+
+		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date startDate = sdf.parse(eventdate);
+			java.sql.Date sqlDate = new java.sql.Date(startDate.getTime());
+			System.out.println(sqlDate);
+
+			Event eventvar = new Event(id, eventname, startDate, eventtime, eventlocation, lectureravatar, lecturername,
+					benefit);
 			PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
 			response.setContentType("text/html;charset=UTF-8");
 			request.setCharacterEncoding("utf-8");
 
-			if (eventService.findAllEvent() != null) {
-				response.setContentType("application/json");
-				// Import gson-2.2.2.jar
-				Gson gson = new Gson();
-				String objectToReturn = gson.toJson(eventService.findAllEvent()); // Convert List -> Json
-				out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
-				out.flush();
-				// response.getWriter().write(objectToReturn);
+			if (eventService.findEvent(id) == null) {
+				eventService.Save(eventvar);
+
+				if (eventService.findAllEvent() != null) {
+					response.setContentType("application/json");
+					// Import gson-2.2.2.jar
+					Gson gson = new Gson();
+					String objectToReturn = gson.toJson(eventService.findAllEvent()); // Convert List -> Json
+					out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
+					out.flush();
+					// response.getWriter().write(objectToReturn);
+				} else {
+					response.setContentType("application/json");
+					out.write("{\"check\":\"fail\"}");
+					out.flush();
+				}
 			} else {
 				response.setContentType("application/json");
 				out.write("{\"check\":\"fail\"}");
 				out.flush();
 			}
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
 
-		@GetMapping("/delete-event")
-		public void DeleteEvent(@RequestParam int id, HttpServletRequest request) {
-			try {
-				eventService.Delete(id);
-				System.out.println("Delete Successfull");
-			} catch (Exception e) {
-				System.out.println("Delete Error");
-			}
-		}
+	}
 
-		@GetMapping("/add-event")
-		public void AddEvent(@RequestParam int id, @RequestParam String eventname, @RequestParam String eventdate,
-				@RequestParam String eventtime, @RequestParam String eventlocation, @RequestParam String lectureravatar,
-				@RequestParam String lecturername, @RequestParam String benefit, HttpServletRequest request,
-				HttpServletResponse response) throws IOException {
+	@GetMapping("/edit-event")
+	public void AddEditEvent(@RequestParam int id, @RequestParam String eventname, @RequestParam String eventdate,
+			@RequestParam String eventtime, @RequestParam String eventlocation, @RequestParam String lectureravatar,
+			@RequestParam String lecturername, @RequestParam String benefit, HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
 
-			DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			try {
-				Date startDate = sdf.parse(eventdate);
-				java.sql.Date sqlDate = new java.sql.Date(startDate.getTime());
-				System.out.println(sqlDate);
-				
+		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date startDate = sdf.parse(eventdate);
+			java.sql.Date sqlDate = new java.sql.Date(startDate.getTime());
+			System.out.println(sqlDate);
 
-				Event eventvar = new Event(id, eventname, startDate, eventtime, eventlocation, lectureravatar, lecturername, benefit);
-				PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
-				response.setContentType("text/html;charset=UTF-8");
-				request.setCharacterEncoding("utf-8");
+			Event eventvar = new Event(id, eventname, startDate, eventtime, eventlocation, lectureravatar, lecturername,
+					benefit);
+			eventService.Save(eventvar);
+			PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
+			response.setContentType("text/html;charset=UTF-8");
+			request.setCharacterEncoding("utf-8");
 
-				if (eventService.findEvent(id) == null) {
-					eventService.Save(eventvar);
+			if (eventService.findEvent(id) != null) {
 
-					if (eventService.findAllEvent() != null) {
-						response.setContentType("application/json");
-						// Import gson-2.2.2.jar
-						Gson gson = new Gson();
-						String objectToReturn = gson.toJson(eventService.findAllEvent()); // Convert List -> Json
-						out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
-						out.flush();
-						// response.getWriter().write(objectToReturn);
-					} else {
-						response.setContentType("application/json");
-						out.write("{\"check\":\"fail\"}");
-						out.flush();
-					}
+				if (eventService.findAllEvent() != null) {
+					response.setContentType("application/json");
+					// Import gson-2.2.2.jar
+					Gson gson = new Gson();
+					String objectToReturn = gson.toJson(eventService.findAllEvent()); // Convert List -> Json
+					out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
+					out.flush();
+					// response.getWriter().write(objectToReturn);
 				} else {
 					response.setContentType("application/json");
 					out.write("{\"check\":\"fail\"}");
 					out.flush();
 				}
-			} catch (ParseException e) {
-				e.printStackTrace();
+			} else {
+				response.setContentType("application/json");
+				out.write("{\"check\":\"fail\"}");
+				out.flush();
 			}
-			
-			
+
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
 
-		@GetMapping("/edit-event")
-		public void AddEditEvent(@RequestParam int id, @RequestParam String eventname, @RequestParam String eventdate,
-				@RequestParam String eventtime, @RequestParam String eventlocation, @RequestParam String lectureravatar,
-				@RequestParam String lecturername, @RequestParam String benefit, HttpServletRequest request,
-				HttpServletResponse response) throws IOException {
+	}
 
-			DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			try {
-				Date startDate = sdf.parse(eventdate);
-				java.sql.Date sqlDate = new java.sql.Date(startDate.getTime());
-				System.out.println(sqlDate);
-				
-				Event eventvar = new Event(id, eventname, startDate, eventtime, eventlocation, lectureravatar, lecturername, benefit);
-				eventService.Save(eventvar);
-				PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
-				response.setContentType("text/html;charset=UTF-8");
-				request.setCharacterEncoding("utf-8");
-
-				if (eventService.findEvent(id) != null) {
-
-					if (eventService.findAllEvent() != null) {
-						response.setContentType("application/json");
-						// Import gson-2.2.2.jar
-						Gson gson = new Gson();
-						String objectToReturn = gson.toJson(eventService.findAllEvent()); // Convert List -> Json
-						out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
-						out.flush();
-						// response.getWriter().write(objectToReturn);
-					} else {
-						response.setContentType("application/json");
-						out.write("{\"check\":\"fail\"}");
-						out.flush();
-					}
-				} else {
-					response.setContentType("application/json");
-					out.write("{\"check\":\"fail\"}");
-					out.flush();
-				}
-				
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-			
-		}
-	
-	
-	
-	//=============================================================================Managing about
+	// =============================================================================Managing
+	// about
 	@GetMapping("/manage-about")
 	public String AboutManagementPage(Model model, HttpServletRequest request) {
-		
+
 		return "managingabout";
 	}
 
@@ -388,7 +407,8 @@ public class HomeController {
 	@GetMapping("/delete-about")
 	public void DeleteAbout(@RequestParam int id, HttpServletRequest request) {
 		try {
-			aboutService.Delete(id);;
+			aboutService.Delete(id);
+			;
 			System.out.println("Delete Successfull");
 		} catch (Exception e) {
 			System.out.println("Delete Error");
@@ -422,10 +442,9 @@ public class HomeController {
 
 	@GetMapping("/add-about")
 	public void AddAbout(@RequestParam int id, @RequestParam String title, @RequestParam String content,
-			@RequestParam String image, HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+			@RequestParam String image, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-		About aboutvar = new About(id,title,content,image);
+		About aboutvar = new About(id, title, content, image);
 		PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
 		response.setContentType("text/html;charset=UTF-8");
 		request.setCharacterEncoding("utf-8");
@@ -455,10 +474,9 @@ public class HomeController {
 
 	@GetMapping("/edit-about")
 	public void AddEditAbout(@RequestParam int id, @RequestParam String title, @RequestParam String content,
-			@RequestParam String image, HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+			@RequestParam String image, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-		About aboutvar = new About(id,title,content,image);
+		About aboutvar = new About(id, title, content, image);
 		aboutService.Save(aboutvar);
 		PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
 		response.setContentType("text/html;charset=UTF-8");
@@ -485,114 +503,102 @@ public class HomeController {
 			out.flush();
 		}
 	}
-	
-	
-	//=============================================================================Uploadfile to drive
+
+	// =============================================================================Uploadfile
+	// to drive
 	@PostMapping("/uploadfile")
-	public void uploadFile(@RequestParam MultipartFile file, Model model,  HttpServletResponse response) throws Exception {
+	public void uploadFile(@RequestParam MultipartFile file, Model model, HttpServletResponse response)
+			throws Exception {
 		PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
 
 		Drive service = getDriveService();
-		
+
 		File fileMetadata = new File();
 		fileMetadata.setTitle(file.getOriginalFilename());
 
 		java.io.File filePath = new java.io.File("upload-dir/" + file.getOriginalFilename());
 		filePath.createNewFile();
-		
-		FileContent mediaContent = new FileContent(file.getContentType(), filePath);
-		File f = service.files().insert(fileMetadata, mediaContent)
-		    .setFields("id")
-		    .execute();
-		
-		linkTai = "http://drive.google.com/open?id="+f.getId();
 
-		Path sourceFile = Paths.get("upload-dir/"+file.getOriginalFilename());
-		
+		FileContent mediaContent = new FileContent(file.getContentType(), filePath);
+		File f = service.files().insert(fileMetadata, mediaContent).setFields("id").execute();
+
+		linkTai = "http://drive.google.com/open?id=" + f.getId();
+
+		Path sourceFile = Paths.get("upload-dir/" + file.getOriginalFilename());
+
 		response.setContentType("application/json");
 		// Import gson-2.2.2.jar
 		Gson gson = new Gson();
 		String objectToReturn = gson.toJson(linkTai); // Convert List -> Json
 		out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
 		out.flush();
-		
-/*		return "redirect:/manage-news";
-*/	}
-	
-	
+
+		/*
+		 * return "redirect:/manage-news";
+		 */ }
+
 	/** Application name. */
-    private static final String APPLICATION_NAME =
-        "Drive API Java Quickstart";
+	private static final String APPLICATION_NAME = "Drive API Java Quickstart";
 
-    /** Directory to store user credentials for this application. */
-    private static final java.io.File DATA_STORE_DIR = new java.io.File(
-        System.getProperty("user.home"), ".credentials/drive-java-quickstart");
+	/** Directory to store user credentials for this application. */
+	private static final java.io.File DATA_STORE_DIR = new java.io.File(System.getProperty("user.home"),
+			".credentials/drive-java-quickstart");
 
-    /** Global instance of the {@link FileDataStoreFactory}. */
-    private static FileDataStoreFactory DATA_STORE_FACTORY;
+	/** Global instance of the {@link FileDataStoreFactory}. */
+	private static FileDataStoreFactory DATA_STORE_FACTORY;
 
-    /** Global instance of the JSON factory. */
-    private static final JsonFactory JSON_FACTORY =
-        JacksonFactory.getDefaultInstance();
+	/** Global instance of the JSON factory. */
+	private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
-    /** Global instance of the HTTP transport. */
-    private static HttpTransport HTTP_TRANSPORT;
+	/** Global instance of the HTTP transport. */
+	private static HttpTransport HTTP_TRANSPORT;
 
-    /** Global instance of the scopes required by this quickstart.
-     *
-     * If modifying these scopes, delete your previously saved credentials
-     * at ~/.credentials/drive-java-quickstart
-     */
-    private static final List<String> SCOPES =
-        Arrays.asList(DriveScopes.DRIVE);
+	/**
+	 * Global instance of the scopes required by this quickstart.
+	 *
+	 * If modifying these scopes, delete your previously saved credentials at
+	 * ~/.credentials/drive-java-quickstart
+	 */
+	private static final List<String> SCOPES = Arrays.asList(DriveScopes.DRIVE);
 
-    static {
-        try {
-            HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-            DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            System.exit(1);
-        }
-    }
+	static {
+		try {
+			HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+			DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
+		} catch (Throwable t) {
+			t.printStackTrace();
+			System.exit(1);
+		}
+	}
 
-    /**
-     * Creates an authorized Credential object.
-     * @return an authorized Credential object.
-     * @throws Exception 
-     */
-    public static Credential authorize() throws Exception {
-        // Load client secrets.
-        InputStream in =
-            HomeController.class.getResourceAsStream("/client_secret.json");
-        GoogleClientSecrets clientSecrets =
-            GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+	/**
+	 * Creates an authorized Credential object.
+	 * 
+	 * @return an authorized Credential object.
+	 * @throws Exception
+	 */
+	public static Credential authorize() throws Exception {
+		// Load client secrets.
+		InputStream in = HomeController.class.getResourceAsStream("/client_secret.json");
+		GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
-        // Build flow and trigger user authorization request.
-        GoogleAuthorizationCodeFlow flow =
-                new GoogleAuthorizationCodeFlow.Builder(
-                        HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                .setDataStoreFactory(DATA_STORE_FACTORY)
-                .setAccessType("offline")
-                .build();
-        Credential credential = new AuthorizationCodeInstalledApp(
-            flow, new LocalServerReceiver()).authorize("user");
-        System.out.println(
-                "Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
-        return credential;
-    }
+		// Build flow and trigger user authorization request.
+		GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT, JSON_FACTORY,
+				clientSecrets, SCOPES).setDataStoreFactory(DATA_STORE_FACTORY).setAccessType("offline").build();
+		Credential credential = new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+		System.out.println("Credentials saved to " + DATA_STORE_DIR.getAbsolutePath());
+		return credential;
+	}
 
-    /**
-     * Build and return an authorized Drive client service.
-     * @return an authorized Drive client service
-     * @throws Exception 
-     */
-    public static Drive getDriveService() throws Exception {
-        Credential credential = authorize();
-        return new Drive.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, credential)
-                .setApplicationName(APPLICATION_NAME)
-                .build();
-    }
+	/**
+	 * Build and return an authorized Drive client service.
+	 * 
+	 * @return an authorized Drive client service
+	 * @throws Exception
+	 */
+	public static Drive getDriveService() throws Exception {
+		Credential credential = authorize();
+		return new Drive.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential).setApplicationName(APPLICATION_NAME).build();
+	}
 
 }

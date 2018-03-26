@@ -73,12 +73,12 @@
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item active"><a class="nav-link"
 				href="HomeForward">HOME <span class="sr-only">(current)</span></a></li>
-			<li class="nav-item"><a class="nav-link" href="#about">ABOUT</a>
+			<li class="nav-item"><a class="nav-link"  href="#about">ABOUT</a>
 			</li>
-			<li class="nav-item"><a class="nav-link" href="#classes">EVENTS</a>
+			<li class="nav-item"><a class="nav-link"  href="#classes">EVENTS</a>
 			</li>
-			<li class="nav-item"><a class="nav-link" href="#news">NEWS</a></li>
-			<li class="nav-item"><a class="nav-link" href="/login">LOGIN</a>
+			<li class="nav-item"><a class="nav-link"  href="#news">NEWS</a></li>
+			<li class="nav-item"><a class="nav-link"  href="/login">LOGIN</a>
 			</li>
 			<!--<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="http://example.com/" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
