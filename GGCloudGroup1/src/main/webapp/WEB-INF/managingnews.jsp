@@ -44,7 +44,7 @@
         		$('.page-number').remove(); //k xóa là nó sinh ra phân trang hoài
         		$('table.paginated').each(function() {
 					var currentPage = 0;
-					var numPerPage = 2;  /* Muốn hiển thị 1 page có bao nhiêu hàng */
+					var numPerPage = 1;  /* Muốn hiển thị 1 page có bao nhiêu hàng */
 					var $table = $(this);
 					$table.bind('repaginate', function() {
 						$table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
@@ -102,7 +102,7 @@
                            }
                            }).appendTo($pager).addClass('clickable');
                    
-					$pager.insertAfter($table).find('span.page-number:first').addClass('active').css({'margin-left':'500px'});
+					$pager.insertAfter($table).find('span.page-number:first').addClass('active').css({'margin-left':'400px'});
 					}
 				});
         	}
@@ -117,21 +117,37 @@
 		                    return;
 		        }
  		        var $table = document.getElementById("row");
- 		        $.each(responseJson, function(index, product) {    // Iterate over the JSON array.
+ 		        $.each(responseJson, function(index, product) {   
+ 		        	
+ 		        	var edate = new Date(product.publishday);
  		            $("<tr>").appendTo($table)                      // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
  		                .append($("<td>").text(product.id).css('width','100px'))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
  		                .append($("<td>").text(product.title)) 
- 		                 .append($("<td>").text(product.openingline))  
- 		                  .append($("<td>").text(product.image1))  
- 		                   .append($("<td>").text(product.content1))  
- 		                   .append($("<td>").text(product.image2))  
+ 		                 .append($("<td>").text(product.openingline)) 
+ 		                  .append($("<td>").text(product.writer))
+ 		                 .append($("<td>").text(edate.getDate() + "/" + (edate.getMonth() + 1) + "/" + edate.getFullYear())) 
+ 		                  .append($("<td>").text(product.content1))  
+ 		                   .append($("<td>").text(product.image1))  
  		                   .append($("<td>").text(product.content2))  
- 		                    .append($("<td>").text(product.writer))
+ 		                   .append($("<td>").text(product.image2))  
  		                    .append($("<td>")
  		                		.append($("<a>")
  		                				.append($("<i>").addClass("fa fa-pencil edit"))
  		                			   )
  		                				.click(function(){
+ 		                					
+ 		                				if(edate.getDate()<10 && (edate.getMonth()+1)<10){
+                		     		        	$("#content17").val(edate.getFullYear()+ "-0" +(edate.getMonth()+1)+ "-0" +edate.getDate());
+        		     		        	}
+        		     		        	else if(edate.getDate()<10 && (edate.getMonth()+1)>=10){ 	
+                		     		        	$("#content17").val(edate.getFullYear()+ "-" +(edate.getMonth()+1)+ "-0" +edate.getDate());               		     		        	
+        		     		        	}
+        		     		        	else if((edate.getMonth()+1)<10 && edate.getDate()>=10){
+        		     		        		$("#content17").val(edate.getFullYear()+ "-0" +(edate.getMonth()+1)+ "-" +edate.getDate());
+        		     		        	}
+        		     		        	else{
+                		     		        	$("#content17").val(edate.getFullYear()+ "-" +(edate.getMonth()+1)+ "-" +edate.getDate());
+        		     		        	}
  		                					$("#contentGrID2").val(product.id);
              		     		        	$("#content4").val(product.title);
              		     		        	$("#content11").val(product.openingline);
@@ -140,7 +156,7 @@
              		     		        	$("#content14").val(product.image2);
              		     		        	$("#content15").val(product.content2);
              		     		        	$("#content16").val(product.writer);            		     		        	
-             		     		        	
+
  		                		           	 event.preventDefault();
   		                					$("#modal-4options").show();
 
@@ -190,21 +206,37 @@
       		      	$.each(responseJson, function(index, product) { 
              			$("#productTable > tbody > tr").remove();
              		 });
-      		        $.each(responseJson, function(index, product) {    // Iterate over the JSON array.
+      		        $.each(responseJson, function(index, product) {
+      		        	
+      		        	var edate = new Date(product.publishday);
       		            $("<tr>").appendTo($table).addClass('article-loop')                      // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
       		          .append($("<td>").text(product.id).css('width','100px'))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
       		        .append($("<td>").text(product.title)) 
 	                 .append($("<td>").text(product.openingline))  
-	                  .append($("<td>").text(product.image1))  
-	                   .append($("<td>").text(product.content1))  
-	                   .append($("<td>").text(product.image2))  
-	                   .append($("<td>").text(product.content2))  
-	                    .append($("<td>").text(product.writer))   
+	                 .append($("<td>").text(product.writer))   
+	                  .append($("<td>").text(edate.getDate() + "/" + (edate.getMonth() + 1) + "/" + edate.getFullYear()))  
+	                  .append($("<td>").text(product.content1))  
+ 		                   .append($("<td>").text(product.image1))  
+ 		                   .append($("<td>").text(product.content2))  
+ 		                   .append($("<td>").text(product.image2))  
       		          .append($("<td>")
 		                		.append($("<a>")
 		                				.append($("<i>").addClass("fa fa-pencil edit"))
 		                			   )
 		                				.click(function(){
+		                				
+		                				if(edate.getDate()<10 && (edate.getMonth()+1)<10){
+                		     		        	$("#content17").val(edate.getFullYear()+ "-0" +(edate.getMonth()+1)+ "-0" +edate.getDate());
+        		     		        	}
+        		     		        	else if(edate.getDate()<10 && (edate.getMonth()+1)>=10){ 	
+                		     		        	$("#content17").val(edate.getFullYear()+ "-" +(edate.getMonth()+1)+ "-0" +edate.getDate());               		     		        	
+        		     		        	}
+        		     		        	else if((edate.getMonth()+1)<10 && edate.getDate()>=10){
+        		     		        		$("#content17").val(edate.getFullYear()+ "-0" +(edate.getMonth()+1)+ "-" +edate.getDate());
+        		     		        	}
+        		     		        	else{
+                		     		        	$("#content17").val(edate.getFullYear()+ "-" +(edate.getMonth()+1)+ "-" +edate.getDate());
+        		     		        	}
 		                					$("#contentGrID2").val(product.id);
              		     		        	$("#content4").val(product.title);
              		     		        	$("#content11").val(product.openingline);
@@ -212,7 +244,7 @@
              		     		        	$("#content13").val(product.content1);
              		     		        	$("#content14").val(product.image2);
              		     		        	$("#content15").val(product.content2);
-             		     		        	$("#content16").val(product.writer);
+             		     		       		$("#content16").val(product.writer);            		     		        	
              		     		        	
 		                		           	 event.preventDefault();
 		                					$("#modal-4options").show();
@@ -253,7 +285,7 @@
         	$('#add1').click(function(){
            	 $.get("add-news",{id : $('#contentGrID').val(),title : $('#content3').val(), openingline : $('#content5').val(),
            		image1 : $('#content6').val(), content1 : $('#content7').val(), image2 : $('#content8').val(), 
-           		content2 : $('#content9').val(), writer : $('#content10').val(),
+           		content2 : $('#content9').val(), writer : $('#content10').val(), publishday : $('#content18').val()
            		 }, function(responseJson) {         
            		if (responseJson.check == "fail") {
                     var retVal = confirm("Please enter your full details with your request!\nDo you want to continute?");          	
@@ -276,7 +308,7 @@
         	$('#edit1').click(function(){
            	 $.get("edit-news",{id : $('#contentGrID2').val(), title : $('#content4').val(), openingline : $('#content11').val(),
             		image1 : $('#content12').val(), content1 : $('#content13').val(), image2 : $('#content14').val(), 
-               		content2 : $('#content15').val(), writer : $('#content16').val(),
+               		content2 : $('#content15').val(), writer : $('#content16').val(), publishday : $('#content17').val()
            		 }, function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
            		if (responseJson.check == "fail") {
                     var retVal = confirm("Please enter your full details with your request!\nDo you want to continute?");          	
@@ -348,7 +380,7 @@
 <body>
 	<!-- Header -->
      <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="padding: 0 10px">
-		<a class="navbar-brand" href="ForwarToLoginedHome?username=${perinfo.username }"><img src="Style/icon/logo.png" height="50px" style="margin-left: 30px"></a>
+		<a class="navbar-brand" href="#"><img src="Style/icon/logo.png" height="50px" style="margin-left: 30px"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     		<span class="navbar-toggler-icon"></span>
 		</button>
@@ -356,21 +388,16 @@
 		<div class="collapse navbar-collapse lead" id="navbar">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="home">HOME <span class="sr-only">(current)</span></a>
+					<a class="nav-link" href="manage-news?username=${username }">NEWS<span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="ForwardToPerinfo_Ques?username=${perinfo.username }">PERSIONAL INFO</a>
-				</li>
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">MANAGEMENT</a>
-					<div class="dropdown-menu" aria-labelledby="dropdown03">
-						<a class="dropdown-item" href="manage-news">NEWS</a>
-						<a class="dropdown-item" href="">EVENT</a>
-						<a class="dropdown-item" href="">ABOUT</a>
-					</div>
+					<a class="nav-link" href="manage-event?username=${username }">EVENT</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="HomeForward">LOG OUT</a>
+					<a class="nav-link" href="manage-about?username=${username }">ABOUT</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="login">LOG OUT</a>
 				</li>
 			</ul>
 			<div id="imaginary_container"> 
@@ -392,7 +419,7 @@
         <img class="d-block w-100" src="Style/images/cover/cover1.jpg" alt="First slide">
 
         <div class="carousel-caption">
-            <h2><span class="fullname_avt">${perinfo.fullName }</span><span> (</span><span class="fullname_avt" id="yourname">${perinfo.userID }</span><span>)</span></h2>
+            <h2><span class="fullname_avt">${username }</span></h2>
         </div>
     </div>
 
@@ -441,6 +468,23 @@
                              placeholder="Enter opening line (required)"></textarea>
                         </div>
                         
+                        
+                        <div>
+                            <label for="text">Writer</label>
+                            <span class="red_right_add2e" id="content_error_message10" style="margin-right:70px;"></span>
+                            <!-- cột hiện lỗi validate -->
+                        </div>
+                        <div>
+                            <input type="text" id="content10" cols="40" rows="5"
+                             placeholder="Enter writer name" />
+                        </div>
+                        
+                        
+                        <div>
+                                <label for="time" class="lbl_time">Publish Date</label> 
+                                <input type="date" id="content18" class="input_time" required />
+                        </div>
+                        
                         <div>
                             <label for="text">Image1</label>
                             <span class="red_right_add2e" id="content_error_message6" style="margin-right:70px;"></span>
@@ -482,14 +526,7 @@
                         </div>
                         
                         <div>
-                            <label for="text">Writer</label>
-                            <span class="red_right_add2e" id="content_error_message10" style="margin-right:70px;"></span>
-                            <!-- cột hiện lỗi validate -->
-                        </div>
-                        <div>
-                            <input type="text" id="content10" cols="40" rows="5"
-                             placeholder="Enter writer name" />
-                        </div>
+	
                 </fieldset>
                 <div>
                     <div id="btn">
@@ -675,6 +712,22 @@
                         </div>
                         
                         <div>
+                            <label for="text">Writer</label>
+                            <span class="red_right_add2e" id="content_error_message16" style="margin-right:70px;"></span>
+                            <!-- cột hiện lỗi validate -->
+                        </div>
+                        <div>
+                            <input type="text" id="content16" cols="40" rows="5"
+                             placeholder="Enter writer name" />
+                        </div>
+                        
+                        <div>
+                                <label for="time" class="lbl_time">Publish Date</label> 
+                                <input type="date" id="content17" class="input_time" required />
+                        </div>
+                        
+                        
+                        <div>
                             <label for="text">Image1</label>
                             <span class="red_right_add2e" id="content_error_message12" style="margin-right:70px;"></span>
                             <!-- cột hiện lỗi validate -->
@@ -714,15 +767,7 @@
                              placeholder="Enter content"></textarea>
                         </div>
                         
-                        <div>
-                            <label for="text">Writer</label>
-                            <span class="red_right_add2e" id="content_error_message16" style="margin-right:70px;"></span>
-                            <!-- cột hiện lỗi validate -->
-                        </div>
-                        <div>
-                            <input type="text" id="content16" cols="40" rows="5"
-                             placeholder="Enter writer name" />
-                        </div>
+                        
                 </fieldset>
                 <div>
                     <div id="btn">
@@ -780,10 +825,21 @@
    
     <!-- Authority Manegement -->
     
+    <h2 class="text-center" style="color: red;font-weight: bold;margin-bottom: 20px !important;margin-top:50px;">NEWS MANEGEMENT</h2>
+    
+     <form method="POST" enctype="multipart/form-data" id="uploadfile" style="float:left;margin-top:40px;margin-left:100px;">
+			<table>
+				<tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+				<tr><td></td><td><input type="submit" value="Upload" id="btn_upload"
+				style="padding:3px;border:1px solid;" /></td></tr>
+			</table>
+			<a id="result"></a>
+	</form>
+	
      <div class="container tieude" id="content-gr" style="margin-left:100px;margin-right:100px;">
-         		<h2 class="text-center" style="color: red;font-weight: bold;margin-bottom: 20px !important;">NEWS MANEGEMENT</h2>
         <p class="text-right">
-        <a class="md-trigger btn" data-modal="modal-3options" id="btn_left"><button type="submit" class="btn add-employee"><i class="fa fa-plus" aria-hidden="true"></i>Add New</button></a>
+       
+        <a class="md-trigger btn" data-modal="modal-3options" id="btn_left" style="margin-top:-30px;"><button type="submit" class="btn add-employee"><i class="fa fa-plus" aria-hidden="true"></i>Add New</button></a>
         </p>
 	
 				<div class="table-responsive">
@@ -792,12 +848,13 @@
 							<tr class="text-center">
 								<th class="text-center">ID</th>
 								<th class="text-center">____Title____</th>
-                                <th class="text-center">___________OpeningLine___________</th>
-                                <th class="text-center">Image1</th>
-                                <th class="text-center">___________________Content1___________________</th>
-                                <th class="text-center">Image2</th>
-                                <th class="text-center">___________________Content2___________________</th>
+                                <th class="text-center">__________Opening Line__________</th>
                                 <th class="text-center">Writer</th>                
+                                <th class="text-center">Publish Day</th>                                                                            
+                                <th class="text-center">___________________Content1___________________</th>
+                                <th class="text-center">Image1</th>                              
+                                <th class="text-center">___________________Content2___________________</th>
+                                <th class="text-center">Image2</th>
 							</tr>
 						</thead>
 						<tbody id="row" class="text-center">
@@ -830,17 +887,7 @@
     
 
 
-	<div>
-		<form method="POST" enctype="multipart/form-data" id="uploadfile">
-			<table>
-				<tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
-				<tr><td></td><td><input type="submit" value="Upload" id="btn_upload"/></td></tr>
-			</table>
-		</form>
-	</div>
 	
-	<h1>Ajax Post Result</h1>
-<a id="result"></a>
     
     
      <style>

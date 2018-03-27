@@ -1,6 +1,5 @@
 package ggcloud.conference.model;
 
-import java.sql.Time;
 import java.util.Date;
 
 import javax.persistence.Entity;

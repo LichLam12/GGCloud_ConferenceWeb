@@ -402,7 +402,7 @@
 <body>
 	<!-- Header -->
      <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="padding: 0 10px">
-		<a class="navbar-brand" href="ForwarToLoginedHome?username=${perinfo.username }"><img src="Style/icon/logo.png" height="50px" style="margin-left: 30px"></a>
+		<a class="navbar-brand" href="#"><img src="Style/icon/logo.png" height="50px" style="margin-left: 30px"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     		<span class="navbar-toggler-icon"></span>
 		</button>
@@ -410,21 +410,16 @@
 		<div class="collapse navbar-collapse lead" id="navbar">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="home">HOME <span class="sr-only">(current)</span></a>
+					<a class="nav-link" href="manage-news?username=${username }">NEWS<span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="ForwardToPerinfo_Ques?username=${perinfo.username }">PERSIONAL INFO</a>
-				</li>
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">MANAGEMENT</a>
-					<div class="dropdown-menu" aria-labelledby="dropdown03">
-						<a class="dropdown-item" href="manage-news">NEWS</a>
-						<a class="dropdown-item" href="manage-event">EVENT</a>
-						<a class="dropdown-item" href="manage-about">ABOUT</a>
-					</div>
+					<a class="nav-link" href="manage-event?username=${username }">EVENT</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="HomeForward">LOG OUT</a>
+					<a class="nav-link" href="manage-about?username=${username }">ABOUT</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="login">LOG OUT</a>
 				</li>
 			</ul>
 			<div id="imaginary_container"> 
@@ -446,7 +441,7 @@
         <img class="d-block w-100" src="Style/images/cover/cover1.jpg" alt="First slide">
 
         <div class="carousel-caption">
-            <h2><span class="fullname_avt">${perinfo.fullName }</span><span> (</span><span class="fullname_avt" id="yourname">${perinfo.userID }</span><span>)</span></h2>
+            <h2><span class="fullname_avt">${username }</span></h2>
         </div>
     </div>
 

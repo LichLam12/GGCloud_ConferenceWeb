@@ -67,13 +67,9 @@ public class HomeController {
 
 	public static String linkTai = null;
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Model model, String error, String logout) {
-		if (error != null)
-			model.addAttribute("error", "Your username and password is invalid.");
+	@GetMapping("/login")
+	public String login() {
 
-		if (logout != null)
-			model.addAttribute("message", "You have been logged out successfully.");
 
 		return "login";
 	}
@@ -89,13 +85,12 @@ public class HomeController {
 
 	@GetMapping("/home")
 	public String Home(HttpServletRequest request) {
-		request.setAttribute("aboutslist", aboutService.findAllAbout());
-		request.setAttribute("eventlist", eventService.findAllEvent());
-		request.setAttribute("newslist", newService.findAllNews());
+			
+			request.setAttribute("aboutslist", aboutService.findAllAbout());
+			request.setAttribute("eventlist", eventService.findAllEvent());
+			request.setAttribute("newslist", newService.findAllNews());
 
-		/*
-		 * request.setAttribute("mode", "MODE_TASKS");
-		 */ return "index";
+			return "index";
 	}
 
 	@GetMapping("/news")
@@ -106,10 +101,26 @@ public class HomeController {
 
 	// =============================================================================Managing
 	// news
-	@GetMapping("/manage-news")
-	public String NewsManagementPage(Model model, HttpServletRequest request) {
-		model.addAttribute("linkTai", linkTai);
-		return "managingnews";
+	@PostMapping("/manage-news")
+	public String NewsManagementPage(Model model, HttpServletRequest request, 
+			@RequestParam String username, @RequestParam String password) {
+		
+		String result="login";
+
+		if(username.equals("admingroup1") && password.equals("12345678"))
+		{
+			System.out.println("Success2222!");
+			
+			model.addAttribute("linkTai", linkTai);
+			model.addAttribute("username", username);
+
+			result = "managingnews";
+		}
+		else {
+			request.setAttribute("error", "Username or password is not correct");
+			result="login";
+		}
+		return result;		
 	}
 
 	@GetMapping("/load-newslist")
@@ -146,104 +157,107 @@ public class HomeController {
 		}
 	}
 
-	@GetMapping("/show-one-news")
-	public void ShowOneNews(@RequestParam int id, HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
-
-		newService.findOneNews(id);
-
-		PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
-		response.setContentType("text/html;charset=UTF-8");
-		request.setCharacterEncoding("utf-8");
-
-		if (newService.findOneNews(id) != null) {
-			response.setContentType("application/json");
-			// Import gson-2.2.2.jar
-			Gson gson = new Gson();
-			String objectToReturn = gson.toJson((News) newService.findOneNews(id)); // Convert List -> Json
-			out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
-			out.flush();
-		} else {
-			response.setContentType("application/json");
-			out.write("{\"check\":\"fail\"}");
-			out.flush();
-		}
-
-	}
-
 	@GetMapping("/add-news")
 	public void AddNews(@RequestParam int id, @RequestParam String title, @RequestParam String openingline,
+			@RequestParam String writer, @RequestParam String publishday,
 			@RequestParam String image1, @RequestParam String content1, @RequestParam String image2,
-			@RequestParam String content2, @RequestParam String writer, HttpServletRequest request,
+			@RequestParam String content2, HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
+		
+		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date startDate = sdf.parse(publishday);
+			java.sql.Date sqlDate = new java.sql.Date(startDate.getTime());
+			System.out.println(sqlDate);
+			
+			
+			News newsvar = new News(id, title, openingline, writer, startDate,image1, content1, image2, content2);
+			PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
+			response.setContentType("text/html;charset=UTF-8");
+			request.setCharacterEncoding("utf-8");
 
-		News newsvar = new News(id, title, openingline, image1, content1, image2, content2, writer);
-		PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
-		response.setContentType("text/html;charset=UTF-8");
-		request.setCharacterEncoding("utf-8");
+			if (newService.findOneNews(id) == null) {
+				newService.UpdateNew(newsvar);
 
-		if (newService.findOneNews(id) == null) {
-			newService.UpdateNew(newsvar);
-
-			if (newService.findAllNews() != null) {
-				response.setContentType("application/json");
-				// Import gson-2.2.2.jar
-				Gson gson = new Gson();
-				String objectToReturn = gson.toJson(newService.findAllNews()); // Convert List -> Json
-				out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
-				out.flush();
-				// response.getWriter().write(objectToReturn);
+				if (newService.findAllNews() != null) {
+					response.setContentType("application/json");
+					// Import gson-2.2.2.jar
+					Gson gson = new Gson();
+					String objectToReturn = gson.toJson(newService.findAllNews()); // Convert List -> Json
+					out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
+					out.flush();
+					// response.getWriter().write(objectToReturn);
+				} else {
+					response.setContentType("application/json");
+					out.write("{\"check\":\"fail\"}");
+					out.flush();
+				}
 			} else {
 				response.setContentType("application/json");
 				out.write("{\"check\":\"fail\"}");
 				out.flush();
 			}
-		} else {
-			response.setContentType("application/json");
-			out.write("{\"check\":\"fail\"}");
-			out.flush();
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
+		
 	}
 
 	@GetMapping("/edit-news")
-	public void AddEditNews(@RequestParam int id, @RequestParam String title, @RequestParam String openingline,
+	public void AddEditNews(@RequestParam int id, @RequestParam String title, @RequestParam String openingline,		
+			@RequestParam String writer, @RequestParam String publishday,
 			@RequestParam String image1, @RequestParam String content1, @RequestParam String image2,
-			@RequestParam String content2, @RequestParam String writer, HttpServletRequest request,
+			@RequestParam String content2, HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
+		
+		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			Date startDate = sdf.parse(publishday);
+			java.sql.Date sqlDate = new java.sql.Date(startDate.getTime());
+			System.out.println(sqlDate);
+			
+			
+			News newsvar = new News(id, title, openingline, writer, startDate,image1, content1, image2, content2);
+			newService.UpdateNew(newsvar);
+			PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
+			response.setContentType("text/html;charset=UTF-8");
+			request.setCharacterEncoding("utf-8");
 
-		News newsvar = new News(id, title, openingline, image1, content1, image2, content2, writer);
-		newService.UpdateNew(newsvar);
-		PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
-		response.setContentType("text/html;charset=UTF-8");
-		request.setCharacterEncoding("utf-8");
+			if (newService.findOneNews(id) != null) {
 
-		if (newService.findOneNews(id) != null) {
-
-			if (newService.findAllNews() != null) {
-				response.setContentType("application/json");
-				// Import gson-2.2.2.jar
-				Gson gson = new Gson();
-				String objectToReturn = gson.toJson(newService.findAllNews()); // Convert List -> Json
-				out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
-				out.flush();
-				// response.getWriter().write(objectToReturn);
+				if (newService.findAllNews() != null) {
+					response.setContentType("application/json");
+					// Import gson-2.2.2.jar
+					Gson gson = new Gson();
+					String objectToReturn = gson.toJson(newService.findAllNews()); // Convert List -> Json
+					out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
+					out.flush();
+					// response.getWriter().write(objectToReturn);
+				} else {
+					response.setContentType("application/json");
+					out.write("{\"check\":\"fail\"}");
+					out.flush();
+				}
 			} else {
 				response.setContentType("application/json");
 				out.write("{\"check\":\"fail\"}");
 				out.flush();
 			}
-		} else {
-			response.setContentType("application/json");
-			out.write("{\"check\":\"fail\"}");
-			out.flush();
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
+		
 	}
 
 	// =============================================================================Managing
 	// event
 	@GetMapping("/manage-event")
-	public String EventManagementPage(Model model, HttpServletRequest request) {
+	public String EventManagementPage(Model model, HttpServletRequest request, @RequestParam String username) {
 		model.addAttribute("linkTai", linkTai);
+		model.addAttribute("username", username);
+
 		return "managingevent";
 	}
 
@@ -375,7 +389,8 @@ public class HomeController {
 	// =============================================================================Managing
 	// about
 	@GetMapping("/manage-about")
-	public String AboutManagementPage(Model model, HttpServletRequest request) {
+	public String AboutManagementPage(Model model, HttpServletRequest request, @RequestParam String username) {
+		model.addAttribute("username", username);
 
 		return "managingabout";
 	}
@@ -522,7 +537,7 @@ public class HomeController {
 		FileContent mediaContent = new FileContent(file.getContentType(), filePath);
 		File f = service.files().insert(fileMetadata, mediaContent).setFields("id").execute();
 
-		linkTai = "http://drive.google.com/open?id=" + f.getId();
+		linkTai = "https://drive.google.com/open?id=" + f.getId();
 
 		Path sourceFile = Paths.get("upload-dir/" + file.getOriginalFilename());
 
