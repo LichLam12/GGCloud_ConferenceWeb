@@ -42,7 +42,7 @@
 <body>
 	<!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="padding: 0 10px">
-		<a class="navbar-brand" href="HomeForward"><img src="Style/icon/logo.png" height="50px" style="margin-left: 30px"></a>
+		<a class="navbar-brand" href="#"><img src="Style/icon/logo.png" height="50px" style="margin-left: 30px"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     		<span class="navbar-toggler-icon"></span>
 		</button>
@@ -50,19 +50,16 @@
 		<div class="collapse navbar-collapse lead" id="navbar">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="HomeForward">HOME <span class="sr-only">(current)</span></a>
+					<a class="nav-link" href="home">HOME <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="HomeForward">ABOUT</a>
+					<a class="nav-link" href="home">ABOUT</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="HomeForward">CLASSES</a>
+					<a class="nav-link" href="home">EVENT</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="HomeForward">NEWS</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#contact">CONTACT</a>
+					<a class="nav-link" href="home">NEWS</a>
 				</li>
 				<!--<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="http://example.com/" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
@@ -108,27 +105,16 @@
 
 
 	<!-- New -->
-	<c:forEach var="row" items="${newslist}" >
-		<div id="new1" class="container lead">
-			<h1 class="text-center">${row.title}</h1>
-			<h3>${row.openingline}</h3>
-			<p>
-				<b>${row.content1}</b>
-			</p>
-			<img
-				src="${row.image1}"
-				class="rounded mx-auto d-block" width="650px">
-			<p>
-				${row.content2}
-			</p>
-			<img
-				src="${row.image2}"
-				class="rounded mx-auto d-block" width="650px">
-			
-
-			<p class="text-right">Nguồn: kenh14.vn</p>
+		<div id="new1" class="container lead" style="width: 78%">
+			<h1 class="text-center">${onenews.title }</h1>
+			<h6><fmt:formatDate value="${onenews.publishday }" pattern="yyyy-MM-dd" /></h3>
+			<h3 style="margin: 25px 0;">${onenews.openingline }</h3>
+			<img src="${onenews.image1 }" class="rounded mx-auto d-block" width="650px" style="margin: 30px 0;">
+			<p style="margin: 25px 0;">${onenews.content1 }</p>
+			<img src="${onenews.image2 }" class="rounded mx-auto d-block" width="650px" style="margin: 30px 0;">
+			<p style="margin: 25px 0;">${onenews.content2 }</p>	
+			<p class="text-right" style="margin: 25px 0;">${onenews.writer }</p>
 		</div>
-	</c:forEach>
 
 
 

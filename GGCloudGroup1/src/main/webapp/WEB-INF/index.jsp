@@ -72,13 +72,12 @@
 	<div class="collapse navbar-collapse lead" id="navbar">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item active"><a class="nav-link"
-				href="HomeForward">HOME <span class="sr-only">(current)</span></a></li>
+				href="home">HOME <span class="sr-only">(current)</span></a></li>
 			<li class="nav-item"><a class="nav-link"  href="#about">ABOUT</a>
 			</li>
 			<li class="nav-item"><a class="nav-link"  href="#classes">EVENTS</a>
 			</li>
 			<li class="nav-item"><a class="nav-link"  href="#news">NEWS</a></li>
-			<li class="nav-item"><a class="nav-link"  href="/login">LOGIN</a>
 			</li>
 			<!--<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="http://example.com/" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
@@ -324,9 +323,9 @@
 				<div class="item col-lg-3 col-sm-4 col-xs-6 rounded float-left">
 					<div class="dtl05">
 						<img src="Style/images/blog/new1.jpg" alt=""
-							class="rounded float-left"> <a href="/news"><div
+							class="rounded float-left"> <a href="news?id=${row.id }"><div
 								class="dtl">
-								<h3>${row.title } </h3>
+								<h3>${row.title } <fmt:formatDate value="${row.publishday }" pattern="yyyy-MM-dd" /></h3>
 								<p>By ${row.writer } </p>
 							</div></a>
 					</div>
@@ -337,9 +336,9 @@
 			
 				<div class="item col-lg-3 col-sm-4 col-xs-6 rounded mx-auto d-block">
 					<div class="dtl05">
-						<img src="Style/images/blog/new2.jpg" alt="/news"> <a
-							href="ForwardToNews"><div class="dtl">
-								<h3>${row.title } </h3>
+						<img src="Style/images/blog/new2.jpg" alt=""> <a
+							href="news?id=${row.id }"><div class="dtl">
+								<h3>${row.title } <fmt:formatDate value="${row.publishday }" pattern="yyyy-MM-dd" /></h3>
 								<p>By ${row.writer } </p>
 							</div></a>
 					</div>
@@ -351,8 +350,8 @@
 				<div class="item col-lg-3 col-sm-4 col-xs-6 rounded float-right">
 					<div class="dtl05">
 						<img src="Style/images/blog/new3.jpg" alt=""> <a
-							href="ForwardToNews"><div class="dtl">
-								<h3>${row.title } </h3>
+							href="news?id=${row.id }"><div class="dtl">
+								<h3>${row.title } <fmt:formatDate value="${row.publishday }" pattern="yyyy-MM-dd" /></h3>
 								<p>By ${row.writer } </p>
 							</div></a>
 					</div>
@@ -364,9 +363,9 @@
 				<div class="item col-lg-3 col-sm-4 col-xs-6 rounded float-right">
 					<div class="dtl05">
 						<img src="Style/images/blog/new4.jpg" alt=""> <a
-							href="ForwardToNews">
+							href="news?id=${row.id }">
 							<div class="dtl">
-								<h3>${row.title } </h3>
+								<h3>${row.title } <fmt:formatDate value="${row.publishday }" pattern="yyyy-MM-dd" /></h3>
 								<p>By ${row.writer } </p>
 							</div>
 						</a>
@@ -379,9 +378,9 @@
 				<div class="item col-lg-3 col-sm-4 col-xs-6 rounded float-left">
 					<div class="dtl05">
 						<img src="Style/images/blog/new1.jpg" alt=""
-							class="rounded float-left"> <a href="/news"><div
+							class="rounded float-left"> <a href="news?id=${row.id }"><div
 								class="dtl">
-								<h3>${row.title } </h3>
+								<h3>${row.title } <fmt:formatDate value="${row.publishday }" pattern="yyyy-MM-dd" /></h3>
 								<p>By ${row.writer } </p>
 							</div></a>
 					</div>
@@ -393,8 +392,8 @@
 				<div class="item col-lg-3 col-sm-4 col-xs-6 rounded mx-auto d-block">
 					<div class="dtl05">
 						<img src="Style/images/blog/new2.jpg" alt="/news"> <a
-							href="ForwardToNews"><div class="dtl">
-								<h3>${row.title } </h3>
+							href="news?id=${row.id }"><div class="dtl">
+								<h3>${row.title } <fmt:formatDate value="${row.publishday }" pattern="yyyy-MM-dd" /></h3>
 								<p>By ${row.writer } </p>
 							</div></a>
 					</div>
@@ -406,8 +405,8 @@
 				<div class="item col-lg-3 col-sm-4 col-xs-6 rounded float-right">
 					<div class="dtl05">
 						<img src="Style/images/blog/new3.jpg" alt=""> <a
-							href="ForwardToNews"><div class="dtl">
-								<h3>${row.title } </h3>
+							href="news?id=${row.id }"><div class="dtl">
+								<h3>${row.title } <fmt:formatDate value="${row.publishday }" pattern="yyyy-MM-dd" /></h3>
 								<p>By ${row.writer } </p>
 							</div></a>
 					</div>
@@ -419,9 +418,9 @@
 				<div class="item col-lg-3 col-sm-4 col-xs-6 rounded float-right">
 					<div class="dtl05">
 						<img src="Style/images/blog/new4.jpg" alt=""> <a
-							href="ForwardToNews">
+							href="news?id=${row.id }">
 							<div class="dtl">
-								<h3>${row.title } </h3>
+								<h3>${row.title } <fmt:formatDate value="${row.publishday }" pattern="yyyy-MM-dd" /></h3>
 								<p>By ${row.writer } </p>
 							</div>
 						</a>

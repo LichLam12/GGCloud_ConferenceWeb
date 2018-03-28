@@ -824,6 +824,9 @@
 
    
     <!-- Authority Manegement -->
+   <%--  <div th:if="${message}">
+		<h2 th:text="${message}" />
+	</div> --%>
     
     <h2 class="text-center" style="color: red;font-weight: bold;margin-bottom: 20px !important;margin-top:50px;">NEWS MANEGEMENT</h2>
     
@@ -834,6 +837,7 @@
 				style="padding:3px;border:1px solid;" /></td></tr>
 			</table>
 			<a id="result"></a>
+			
 	</form>
 	
      <div class="container tieude" id="content-gr" style="margin-left:100px;margin-right:100px;">

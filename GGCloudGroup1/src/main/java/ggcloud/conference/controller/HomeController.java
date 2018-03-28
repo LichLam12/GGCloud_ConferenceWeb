@@ -14,14 +14,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 
@@ -32,6 +39,8 @@ import ggcloud.conference.model.Event;
 import ggcloud.conference.service.AboutService;
 import ggcloud.conference.service.EventService;
 import ggcloud.conference.service.NewsService;
+import ggcloud.conference.storage.StorageService;
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -53,6 +62,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class HomeController {
@@ -84,8 +94,8 @@ public class HomeController {
 	
 
 	@GetMapping("/home")
-	public String Home(HttpServletRequest request) {
-			
+	public String Home(Model model,HttpServletRequest request) {
+	
 			request.setAttribute("aboutslist", aboutService.findAllAbout());
 			request.setAttribute("eventlist", eventService.findAllEvent());
 			request.setAttribute("newslist", newService.findAllNews());
@@ -94,9 +104,13 @@ public class HomeController {
 	}
 
 	@GetMapping("/news")
-	public String News(HttpServletRequest request) {
-		request.setAttribute("newslist", newService.findAllNews());
-		return "news";
+	public String News(@RequestParam int id, HttpServletRequest request) {
+		String result="home";
+		if(newService.findOneNews(id) != null) {
+			request.setAttribute("onenews", newService.findOneNews(id));
+			result = "news";
+		}
+		return result;
 	}
 
 	// =============================================================================Managing
@@ -124,8 +138,14 @@ public class HomeController {
 	}
 
 	@GetMapping("/load-newslist")
-	public void ShowNewsList(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
+	public void ShowNewsList(Model model, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		model.addAttribute("files", storageService
+                .loadAll()
+                .map(path ->
+                        MvcUriComponentsBuilder
+                                .fromMethodName(HomeController.class, "serveFile", path.getFileName().toString())
+                                .build().toString())
+                .collect(Collectors.toList()));
 		System.out.println("Success!");
 		// request.setAttribute("newss", newService.findAllNews());
 		PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
@@ -171,7 +191,7 @@ public class HomeController {
 			System.out.println(sqlDate);
 			
 			
-			News newsvar = new News(id, title, openingline, writer, startDate,image1, content1, image2, content2);
+			News newsvar = new News(id, title, openingline, writer, startDate, content1,image1, content2,image2);
 			PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
 			response.setContentType("text/html;charset=UTF-8");
 			request.setCharacterEncoding("utf-8");
@@ -218,7 +238,7 @@ public class HomeController {
 			System.out.println(sqlDate);
 			
 			
-			News newsvar = new News(id, title, openingline, writer, startDate,image1, content1, image2, content2);
+			News newsvar = new News(id, title, openingline, writer, startDate, content1,image1, content2,image2);
 			newService.UpdateNew(newsvar);
 			PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
 			response.setContentType("text/html;charset=UTF-8");
@@ -521,9 +541,62 @@ public class HomeController {
 
 	// =============================================================================Uploadfile
 	// to drive
-	@PostMapping("/uploadfile")
+	
+	 private final StorageService storageService;
+
+	    @Autowired
+	    public HomeController(StorageService storageService) {
+	        this.storageService = storageService;
+	    }
+	    
+	    @GetMapping("/files/{filename:.+}")
+	    @ResponseBody
+	    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
+
+	        Resource file = storageService.loadAsResource(filename);
+	        return ResponseEntity
+	                .ok()
+	                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+file.getFilename()+"\"")
+	                .body(file);
+	    }
+
+	    @PostMapping("/uploadfile")
+	    public void handleFileUpload(@RequestParam("file") MultipartFile file,
+	                                   RedirectAttributes redirectAttributes,HttpServletResponse response) throws Exception {
+	    	PrintWriter out = response.getWriter();
+	    	storageService.store(file);
+	       
+	    	//google drive
+	        Drive service = getDriveService();
+	    	
+			File fileMetadata = new File(); //kdl file của gg
+			fileMetadata.setTitle(file.getOriginalFilename()); //file ở đây là dòng 115, lấy tên chính thống của file đã up
+			//Upload xg tạo file mới dựa vào đường dẫn này
+			java.io.File filePath = new java.io.File("upload-dir/"+file.getOriginalFilename());
+			//Lấy kdl của file (image/docs...)
+			FileContent mediaContent = new FileContent(file.getContentType(),filePath);
+			File f = service.files().insert(fileMetadata, mediaContent) //tìm all dvu insert vào file mới với id để thực thi
+	        .setFields("id")
+	        .execute();
+			//System.out.println("File ID: " + f.getId()+" | "+f.getWebContentLink());
+			//message trong file html
+			 redirectAttributes.addFlashAttribute("message",
+		                "You successfully uploaded " + file.getOriginalFilename() );
+			 redirectAttributes.addFlashAttribute("linktai","https://drive.google.com/open?id="+f.getId());
+			 
+			 response.setContentType("application/json");
+				// Import gson-2.2.2.jar
+				Gson gson = new Gson();
+				String objectToReturn = gson.toJson("https://drive.google.com/open?id="+f.getId()); // Convert List -> Json
+				out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
+				out.flush();
+				
+	        /*return "redirect:/";*/
+	    }
+	/*@PostMapping("/uploadfile")
 	public void uploadFile(@RequestParam MultipartFile file, Model model, HttpServletResponse response)
 			throws Exception {
+		
 		PrintWriter out = response.getWriter(); // Ä‘á»ƒ cho code gá»�n hÆ¡n
 
 		Drive service = getDriveService();
@@ -536,7 +609,13 @@ public class HomeController {
 
 		FileContent mediaContent = new FileContent(file.getContentType(), filePath);
 		File f = service.files().insert(fileMetadata, mediaContent).setFields("id").execute();
-
+		
+		Permission newPermission = new Permission();
+		newPermission.setValue("");
+		newPermission.setType("anyone");
+		newPermission.setRole("reader");
+		service.permissions().insert(f.getId(), newPermission).execute();
+		
 		linkTai = "https://drive.google.com/open?id=" + f.getId();
 
 		Path sourceFile = Paths.get("upload-dir/" + file.getOriginalFilename());
@@ -548,16 +627,16 @@ public class HomeController {
 		out.write(objectToReturn); // Ä�Æ°a Json tráº£ vá»� Ajax
 		out.flush();
 
-		/*
+		
 		 * return "redirect:/manage-news";
-		 */ }
-
+		  }
+*/
 	/** Application name. */
 	private static final String APPLICATION_NAME = "Drive API Java Quickstart";
 
 	/** Directory to store user credentials for this application. */
 	private static final java.io.File DATA_STORE_DIR = new java.io.File(System.getProperty("user.home"),
-			".credentials/drive-java-quickstart");
+			".credentials2/drive-java-quickstart");
 
 	/** Global instance of the {@link FileDataStoreFactory}. */
 	private static FileDataStoreFactory DATA_STORE_FACTORY;
