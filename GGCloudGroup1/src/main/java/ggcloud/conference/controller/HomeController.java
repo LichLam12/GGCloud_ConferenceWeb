@@ -1,5 +1,7 @@
 package ggcloud.conference.controller;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.io.PrintWriter;
@@ -10,10 +12,22 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
+import org.apache.tomcat.util.http.fileupload.FileItem;
+import org.apache.tomcat.util.http.fileupload.FileItemFactory;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.apache.tomcat.util.http.fileupload.RequestContext;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +55,16 @@ import ggcloud.conference.service.EventService;
 import ggcloud.conference.service.NewsService;
 import ggcloud.conference.storage.StorageService;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -60,13 +84,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
-@Controller
-public class HomeController {
 
+@Controller
+public class HomeController extends HttpServlet{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Autowired
 	private NewsService newService;
 	@Autowired
@@ -84,6 +116,56 @@ public class HomeController {
 		return "login";
 	}
 	
+	@GetMapping("/upload")
+	public String upload() {
+
+
+		return "uploadfile";
+	}
+	
+	private static String bucketName     = "samuelbucket1group1";
+	private static String endpointUrl     = "https://s3.ap-southeast-1.amazonaws.com";
+
+	@PostMapping("/uploadFile")
+	protected String doPost(@RequestParam("file") MultipartFile file,
+			HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException {
+		
+		String fileUrl = "";
+		java.io.File file5 = convertMultiPartToFile(file);
+        String fileName5 = generateFileName(file);
+        fileUrl = endpointUrl + "/" + bucketName + "/" + fileName5;
+        
+        System.out.println("urrl: "+fileUrl);
+		
+        request.setAttribute("linkaws", fileUrl);
+		AmazonS3 s3client2 = new AmazonS3Client(new ProfileCredentialsProvider());
+        try {
+            System.out.println("Uploading a new object to S3 from a file\n");
+            
+            s3client2.putObject(new PutObjectRequest(
+	                 bucketName, fileName5, file5).withCannedAcl(CannedAccessControlList.PublicRead));
+
+         } catch (AmazonServiceException ase) {
+            System.out.println("Caught an AmazonServiceException, which " +
+            		"means your request made it " +
+                    "to Amazon S3, but was rejected with an error response" +
+                    " for some reason.");
+            System.out.println("Error Message:    " + ase.getMessage());
+            System.out.println("HTTP Status Code: " + ase.getStatusCode());
+            System.out.println("AWS Error Code:   " + ase.getErrorCode());
+            System.out.println("Error Type:       " + ase.getErrorType());
+            System.out.println("Request ID:       " + ase.getRequestId());
+        } catch (AmazonClientException ace) {
+            System.out.println("Caught an AmazonClientException, which " +
+            		"means the client encountered " +
+                    "an internal error while trying to " +
+                    "communicate with S3, " +
+                    "such as not being able to access the network.");
+            System.out.println("Error Message: " + ace.getMessage());
+        }
+            
+            return "uploadfile_output";
+	}
 	
 //	@GetMapping("/login")
 //	public String LoginChoHieu() {
@@ -91,8 +173,23 @@ public class HomeController {
 //		 return "login";
 //	}
 //	
+	private java.io.File convertMultiPartToFile(MultipartFile file) throws IOException {
+	    java.io.File convFile = new java.io.File(file.getOriginalFilename());
+	    FileOutputStream fos = new FileOutputStream(convFile);
+	    fos.write(file.getBytes());
+	    fos.close();
+	    return convFile;
+	}
+
+	private String generateFileName(MultipartFile multiPart) {
+	    return multiPart.getOriginalFilename().replace(" ", "_");
+	    
+
+	}
 	
 
+	
+	
 	@GetMapping("/home")
 	public String Home(Model model,HttpServletRequest request) {
 	
