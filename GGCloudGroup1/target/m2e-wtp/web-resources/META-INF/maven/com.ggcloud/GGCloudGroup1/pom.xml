@@ -4,6 +4,7 @@
 	<groupId>com.ggcloud</groupId>
 	<artifactId>GGCloudGroup1</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>Spring Boot</name>
 
 	<parent>
